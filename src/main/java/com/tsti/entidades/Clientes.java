@@ -17,6 +17,11 @@ public class Clientes {
 		private long nroPasaporte;
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
 		
+		
+		public Clientes() {
+			super();
+		}
+
 		public long getDni() {
 			return dni;
 		}
