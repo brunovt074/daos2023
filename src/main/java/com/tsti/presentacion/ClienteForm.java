@@ -14,7 +14,7 @@ public class ClienteForm {
 	private String apellido;
 	private String domicilio;
 	private String email;
-	private Date fechaNacimiento; // ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
+	private Date fechaNacimiento;
 	private long nroPasaporte;
 	private Date vencimientoPasaporte;
 	
