@@ -2,14 +2,21 @@ package com.tsti.entidades;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+
 /**
  *
  * @author cecilia
  *  Establece/Actualiza/Retorna los datos de cliente
  */
+@Entity
 public class Clientes {
+		@Id
 		private long dni; 
 		private String nombre;
+		@NotNull
 		private String apellido;
 		private String domicilio;
 		private String email;

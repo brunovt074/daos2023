@@ -2,12 +2,18 @@ package com.tsti.entidades;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 /**
  * Establece/Actualiza/Retorna los datos de un vuelo
  * @author cecilia
  *
  */
+ @Entity
 public class Vuelo {
+	@Id
+	private int id;
 	private long nroVuelo; // No podrá haber dos vuelos con el mismo nro
 	private Date fecha_HoraVuelo;// ver tema fechas y aca iria con hora 
 	private int nroFila;
