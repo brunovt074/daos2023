@@ -1,5 +1,6 @@
 package com.tsti.dto;
 
+import org.hibernate.annotations.FetchProfile.FetchOverride;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.tsti.entidades.Clientes;
