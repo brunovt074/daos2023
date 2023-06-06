@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tsti.accesoAdatos.ClienteDAO;
 import com.tsti.entidades.Clientes;
+import com.tsti.excepcion.Excepcion;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -51,7 +52,7 @@ public class ClienteServiceImpl implements ClienteService {
 			for (ConstraintViolation<Clientes> constraintViolation : cv) {
 				err+=constraintViolation.getPropertyPath()+": "+constraintViolation.getMessage()+"\n";
 			}
-			//throw new Excepcion(err,400);
+			throw new Excepcion(err,400);
 		}
 		else
 			dao.save(c);
