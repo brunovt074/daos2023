@@ -16,7 +16,7 @@ public interface ClienteService {
 	
 	public void delete(Long id);
 	
-	public List<Clientes> filtar(String apellido, String nombre);
+	public List<Clientes> filtrar(String apellido, String nombre);
 	
 	
 }
