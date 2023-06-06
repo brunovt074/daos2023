@@ -3,7 +3,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.tsti.entidades.Clientes;
-
+/**
+ * 
+ * @author cecilia
+ *
+ */
 public interface ClienteService {
 	
 	public List<Clientes> getAll();
