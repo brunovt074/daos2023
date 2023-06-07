@@ -8,7 +8,7 @@ import com.tsti.entidades.Clientes;
  * @author cecilia
  *
  */
-public interface ClienteService {
+public interface IClienteService {
 	
 	public List<Clientes> getAll();
 	
