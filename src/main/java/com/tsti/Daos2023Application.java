@@ -3,8 +3,6 @@ package com.tsti;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.tsti.entidades.Clientes;
-
 @SpringBootApplication
 public class Daos2023Application {
 

@@ -1,8 +1,11 @@
-package com.tsti.entidades;
+package com.tsti.entidades; 
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,14 +17,17 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Clientes {
 		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)		
 		private long dni; 
 		private String nombre;
 		@NotNull
 		private String apellido;
 		private String domicilio;
-		private String email;
+		@Column(unique = true)
+		private String email;		
 		private Date fechaNacimiento; // ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
-		private long nroPasaporte;
+		@Column(unique = true)
+		private long nroPasaporte;		
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
 		
 		

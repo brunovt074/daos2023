@@ -2,6 +2,7 @@ package com.tsti.entidades;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -13,7 +14,8 @@ import jakarta.persistence.Id;
  @Entity
 public class Vuelo {
 	@Id
-	private int id;
+	private int id; 
+	@Column(unique = true)
 	private long nroVuelo; // No podrá haber dos vuelos con el mismo nro
 	private Date fecha_HoraVuelo;// ver tema fechas y aca iria con hora 
 	private int nroFila;
@@ -27,10 +29,12 @@ public class Vuelo {
 	 * El estado es autocalculado por el sistema, no puede ser establecido por
 		el usuario.
 		No podrá haber dos vuelos con el mismo nro.
-		Una vez registrado, solo se permitirá cambiar la fecha y hora del mismo(lo cual pasa el vuelo al estado
-		reprogramado) o eliminar el mismo (lo cual pasa el vuelo al estado cancelado).Tanto la reprogramación 
-		como la cancelación de un vuelo dispararía la notificación automática del evento a todos los pasajeros 
-		aunque por simplicidad, no se pide implementar el servicio de alertas. */
+		Una vez registrado, solo se permitirá cambiar la fecha y hora 
+		del mismo(lo cual pasa el vuelo al estado reprogramado) 
+		o eliminar el mismo (lo cual pasa el vuelo al estado cancelado).
+		Tanto la reprogramación como la cancelación de un vuelo dispararía la
+		notificación automática del evento a todos los pasajeros aunque por 
+		simplicidad, no se pide implementar el servicio de alertas. */
 	
 	
 	

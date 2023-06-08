@@ -21,7 +21,7 @@ import jakarta.validation.Validator;
  */
 
 @Service
-public class ClienteServiceImpl implements IClienteService {
+public class ClienteServiceImpl implements ClienteService {
 	
 	@Autowired
 	private  Validator validator;
