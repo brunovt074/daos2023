@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
  * el arbol del proyecto
  * */
 @Service
-public class VueloServiceImpl implements VueloService {
+public class VueloServiceImpl implements IVueloService {
 
 }
