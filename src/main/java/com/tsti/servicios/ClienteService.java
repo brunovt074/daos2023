@@ -2,7 +2,7 @@ package com.tsti.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import com.tsti.entidades.Cliente;
+import com.tsti.entidades.Clientes;
 /**
  * 
  * @author cecilia
@@ -10,17 +10,17 @@ import com.tsti.entidades.Cliente;
  */
 public interface ClienteService {
 	
-	public List<Cliente> getAll();
+	public List<Clientes> getAll();
 	
-	public Optional<Cliente> getById(Long Id);
+	public Optional<Clientes> getById(Long Id);
 	
-	public void update(Cliente c);
+	public void update(Clientes c);
 	
-	public void insert(Cliente c) throws Exception;
+	public void insert(Clientes c) throws Exception;
 	
 	public void delete(Long id);
 	
-	public List<Cliente> filtrar(String apellido, String nombre);
+	public List<Clientes> filtrar(String apellido, String nombre);
 	
 	
 }

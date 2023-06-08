@@ -21,8 +21,7 @@ import jakarta.validation.constraints.NotNull;
  *  Establece/Actualiza/Retorna los datos de cliente
  */
 @Entity
-@Table(name="clientes")
-public class Cliente {
+public class Clientes {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
@@ -59,7 +58,7 @@ public class Cliente {
 		List<Vuelo> vuelos;
 		
 		//CONSTRUCTOR
-		public Cliente() {
+		public Clientes() {
 			super();
 		}
 		

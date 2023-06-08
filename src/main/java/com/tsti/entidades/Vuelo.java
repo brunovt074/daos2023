@@ -47,7 +47,7 @@ public class Vuelo {
 	private String estado; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones
 	@ManyToOne
 	@JoinColumn(name = "pasajero_id")	
-	private Cliente pasajero;
+	private Clientes pasajero;
 	/* 
 	 * El estado es autocalculado por el sistema, no puede ser establecido por
 		el usuario.
