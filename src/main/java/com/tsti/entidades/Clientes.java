@@ -1,12 +1,18 @@
 package com.tsti.entidades; 
-
+//import com.tsti.entidades.Domicilio;
 import java.util.Date;
+import java.util.List;
+
+//import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -17,24 +23,46 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Clientes {
 		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)		
-		private long dni; 
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private Long id;
+		
+		@NotNull
+		private Long dni;
+		
+		@NotNull
 		private String nombre;
+		
 		@NotNull
 		private String apellido;
-		private String domicilio;
+		
+		//Relacion 1:1 con domicilio
+		@OneToOne
+		@JoinColumn(name = "domicilio_id")
+		private Domicilio domicilio;
+		
 		@Column(unique = true)
-		private String email;		
+		private String tel;
+		
+		@Column(unique = true)
+		private String email;
+		
 		private Date fechaNacimiento; // ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
+		
 		@Column(unique = true)
-		private long nroPasaporte;		
+		private Long nroPasaporte;
+		
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
 		
+		//Un pasajero puede realizar muchos vuelos
+		@OneToMany(mappedBy = "pasajero")
+		List<Vuelo> vuelos;
 		
+		//CONSTRUCTOR
 		public Clientes() {
 			super();
 		}
-
+		
+		//METODOS
 		public long getDni() {
 			return dni;
 		}
@@ -59,11 +87,11 @@ public class Clientes {
 			this.apellido = apellido;
 		}
 		
-		public String getDomicilio() {
+		public Domicilio getDomicilio() {
 			return domicilio;
 		}
 		
-		public void setDomicilio(String domicilio) {
+		public void setDomicilio(Domicilio domicilio) {
 			this.domicilio = domicilio;
 		}
 		

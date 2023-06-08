@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.tsti.entidades;
 
 /**
@@ -9,4 +6,9 @@ package com.tsti.entidades;
  */
 public class Pasaje {
 
+	//ATRIBUTOS
+	
+	//CONSTRUCTOR
+	
+	//METODOS
 }
