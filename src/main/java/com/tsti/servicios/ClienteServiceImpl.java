@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tsti.dao.ClienteDAO;
-import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Cliente;
 import com.tsti.excepcion.Excepcion;
 
 import jakarta.validation.ConstraintViolation;
@@ -30,26 +30,26 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteDAO dao;
 	
 	@Override
-	public List<Clientes> getAll(){
+	public List<Cliente> getAll(){
 		return dao.findAll();
 	}
 	
-	public Optional<Clientes> getById(Long id){
+	public Optional<Cliente> getById(Long id){
 		return dao.findById(id);
 	}
 	
 	@Override
-	public void update(Clientes c) {
+	public void update(Cliente c) {
 		dao.save(c);
 	}
 	
 	@Override
-	public void insert(Clientes c) throws Exception {
-		Set<ConstraintViolation<Clientes>> cv = validator.validate(c);
+	public void insert(Cliente c) throws Exception {
+		Set<ConstraintViolation<Cliente>> cv = validator.validate(c);
 		if(cv.size()>0)
 		{
 			String err="";
-			for (ConstraintViolation<Clientes> constraintViolation : cv) {
+			for (ConstraintViolation<Cliente> constraintViolation : cv) {
 				err+=constraintViolation.getPropertyPath()+": "+constraintViolation.getMessage()+"\n";
 			}
 			throw new Excepcion(err,400);
@@ -64,7 +64,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 	
 	@Override
-	public List<Clientes> filtrar(String apellido, String nombre) {
+	public List<Cliente> filtrar(String apellido, String nombre) {
 		if(apellido==null && nombre==null)
 			return dao.findAll();
 		else

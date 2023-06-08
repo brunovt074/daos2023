@@ -3,7 +3,7 @@ package com.tsti.dto;
 import org.hibernate.annotations.FetchProfile.FetchOverride;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Cliente;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> 
 	private String apellido;
 	private String nombre;
 	
-	public ClienteResponseDTO(Clientes pojo) {
+	public ClienteResponseDTO(Cliente pojo) {
 		
 		super();
 		this.apellido=pojo.getApellido();

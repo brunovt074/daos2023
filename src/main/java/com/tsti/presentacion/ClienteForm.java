@@ -2,7 +2,7 @@ package com.tsti.presentacion;
 
 import java.util.Date;
 
-import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Cliente;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -68,8 +68,8 @@ public class ClienteForm {
 		this.vencimientoPasaporte = vencimientoPasaporte;
 	}
 	
-	public Clientes toPojo() {
-		Clientes c = new Clientes();
+	public Cliente toPojo() {
+		Cliente c = new Cliente();
 		c.setDni(this.getDni());
 		c.setApellido(this.getApellido());
 		c.setNombre(this.getNombre());

@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Collection;
 import java.util.List;
 
-import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Cliente;
 
-public interface ClienteDAO extends JpaRepository<Clientes, Long> {
+public interface ClienteDAO extends JpaRepository<Cliente, Long> {
 	@Query("SELECT c FROM Clientes c WHERE c.nombre like '%?1%'")
-	Collection<Clientes> findClientesLike(String parte);
+	Collection<Cliente> findClientesLike(String parte);
 	
-	public List<Clientes> findByApellidoOrNombre(String apellido, String nombre);
+	public List<Cliente> findByApellidoOrNombre(String apellido, String nombre);
 }
