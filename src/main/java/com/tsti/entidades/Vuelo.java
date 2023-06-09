@@ -24,17 +24,20 @@ import jakarta.validation.constraints.NotNull;
 public class Vuelo {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id; 
-	@Column(unique = true)
-	@NotNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	 
+	@Column(name = "nro_vuelo", unique = true)
+	@NotNull	
 	private Long nroVuelo; // No podrá haber dos vuelos con el mismo nro
+	@Column(name = "fecha_hora_partida")
 	@NotNull
-	private Date fecha_HoraVuelo;// ver tema fechas y aca iria con hora 
+	private Date fechaHoraVuelo;// ver tema fechas y aca iria con hora 
+	@Column(name = "nro_fila")
 	@NotNull
 	private Integer nroFila;
+	@Column(name = "nro_asiento")
 	@NotNull
 	private Integer nroAsiento;
+	@Column(name = "tipo_vuelo")
 	@NotNull
 	private String tipoVuelo;
 	@ManyToOne
@@ -76,13 +79,13 @@ public class Vuelo {
 	}
 
 
-	public Date getFecha_HoraVuelo() {
-		return fecha_HoraVuelo;
+	public Date getFechaHoraVuelo() {
+		return fechaHoraVuelo;
 	}
 
 
-	public void setFecha_HoraVuelo(Date fecha_HoraVuelo) {
-		this.fecha_HoraVuelo = fecha_HoraVuelo;
+	public void setFechaHoraVuelo(Date fecha_HoraVuelo) {
+		this.fechaHoraVuelo = fecha_HoraVuelo;
 	}
 
 
@@ -145,16 +148,11 @@ public class Vuelo {
 		this.estado = estado;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fecha_HoraVuelo + ", nroFila=" + nroFila
+		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraVuelo + ", nroFila=" + nroFila
 				+ ", nroAsiento=" + nroAsiento + ", tipoVuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estado + "]";
-	}
-	
-	
-	
-	
+	}	
 	
 }
