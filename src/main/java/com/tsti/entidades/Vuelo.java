@@ -1,6 +1,8 @@
 package com.tsti.entidades;
 
 import java.util.Date;
+import java.util.Set;
+import java.util.HashSet;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,9 +10,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+//import jakarta.persistence.OneToMany;
+//import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -30,7 +33,8 @@ public class Vuelo {
 	private Long nroVuelo; // No podrá haber dos vuelos con el mismo nro
 	@Column(name = "fecha_hora_partida")
 	@NotNull
-	private Date fechaHoraVuelo;// ver tema fechas y aca iria con hora 
+	private Date fechaHoraPartida;// ver tema fechas y aca iria con hora
+	
 	@Column(name = "nro_fila")
 	@NotNull
 	private Integer nroFila;
@@ -45,12 +49,9 @@ public class Vuelo {
 	private Ciudad origen;
 	@ManyToOne
 	@JoinColumn(name = "destino_id")	
-	private Ciudad destino;// creada la entidad Ciudad 
-	@NotNull
-	private String estado; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones
-	@ManyToOne
-	@JoinColumn(name = "pasajero_id")	
-	private Clientes pasajero;
+	private Ciudad destino;// creada la entidad Ciudad	
+	@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
+	private Set<Clientes> pasajeros = new HashSet<>();
 	/* 
 	 * El estado es autocalculado por el sistema, no puede ser establecido por
 		el usuario.
@@ -61,8 +62,9 @@ public class Vuelo {
 		Tanto la reprogramación como la cancelación de un vuelo dispararía la
 		notificación automática del evento a todos los pasajeros aunque por 
 		simplicidad, no se pide implementar el servicio de alertas. */
-	
-	
+	@NotNull
+	private String estado; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
+						   //Obs: Ver tipo ENUM para este caso. 	
 	//CONSTRUCTOR
 	public Vuelo() {
 		super();
@@ -79,13 +81,13 @@ public class Vuelo {
 	}
 
 
-	public Date getFechaHoraVuelo() {
-		return fechaHoraVuelo;
+	public Date getFechaHoraPartida() {
+		return fechaHoraPartida;
 	}
 
 
-	public void setFechaHoraVuelo(Date fecha_HoraVuelo) {
-		this.fechaHoraVuelo = fecha_HoraVuelo;
+	public void setFechaHoraPartida(Date fecha_HoraVuelo) {
+		this.fechaHoraPartida = fecha_HoraVuelo;
 	}
 
 
@@ -147,10 +149,16 @@ public class Vuelo {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	
+	public Set<Clientes>getPasajeros(){
+		
+		return pasajeros;
+		
+	}
 
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraVuelo + ", nroFila=" + nroFila
+		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraPartida + ", nroFila=" + nroFila
 				+ ", nroAsiento=" + nroAsiento + ", tipoVuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estado + "]";
 	}	

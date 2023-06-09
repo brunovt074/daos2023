@@ -1,14 +1,19 @@
 package com.tsti.entidades; 
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+//import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,8 +33,8 @@ public class Clientes {
 		private String nombre;		
 		@NotNull
 		private String apellido;		
-		//Relacion 1:1 con domicilio
-		@OneToOne
+		//Relacion 1:1 con domicilio, si se borra un cliente se borra el domicilio
+		@OneToOne(cascade = CascadeType.REMOVE)
 		@JoinColumn(name = "domicilio_id")
 		private Domicilio domicilio;		
 		@Column(unique = true)
@@ -40,9 +45,15 @@ public class Clientes {
 		@Column(unique = true)
 		private Long nroPasaporte;		
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
-		//Un pasajero puede realizar muchos vuelos
-		@OneToMany(mappedBy = "pasajero")
-		List<Vuelo> vuelos;
+		
+		//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
+		//muchos pasajeros. Se creara una nueva tabla.
+		@ManyToMany(cascade = CascadeType.ALL)
+		@JoinTable(name = "vuelo_pasajeros", 
+				   joinColumns = @JoinColumn(name="pasajero_id"),
+				   inverseJoinColumns = @JoinColumn(name="vuelo_id"))
+		//atributo vuelos tipo HashSet.
+		private Set<Vuelo> vuelos = new HashSet<>();
 		
 		//CONSTRUCTOR
 		public Clientes() {
@@ -113,6 +124,16 @@ public class Clientes {
 		public void setVencimientoPasaporte(Date vencimientoPasaporte) {
 			this.vencimientoPasaporte = vencimientoPasaporte;
 		}
+		
+		public void addVuelo(Vuelo vuelo) {
+	        vuelos.add(vuelo);
+	        vuelo.getPasajeros().add(this);
+	    }
+	    
+	    public void removeVuelo(Vuelo vuelo) {
+	        vuelos.remove(vuelo);
+	        vuelo.getPasajeros().remove(this);
+	    }
 		
 		@Override
 		public String toString() {
