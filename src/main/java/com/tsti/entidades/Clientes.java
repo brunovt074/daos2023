@@ -51,7 +51,7 @@ public class Clientes {
 		//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
 		//muchos pasajeros. Se creara una nueva tabla.
 		@ManyToMany(cascade = CascadeType.ALL)
-		@JoinTable(name = "vuelo_pasajeros", 
+		@JoinTable(name = "vuelos_pasajeros", 
 				   joinColumns = @JoinColumn(name="pasajero_id"),
 				   inverseJoinColumns = @JoinColumn(name="vuelo_id"))
 		//atributo vuelos tipo HashSet.
