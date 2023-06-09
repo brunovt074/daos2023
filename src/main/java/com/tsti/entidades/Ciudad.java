@@ -21,35 +21,27 @@ import jakarta.validation.constraints.NotNull;
 public class Ciudad {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+	private Long id;	
 	//COD de aeropuerto por ej EZE (ezeiza)
 	@Column(name="cod_ciudad", unique = true)
 	@NotNull
-	private String codCiudad;
-	
+	private String codCiudad;	
 	@NotNull
 	@Column(name="nombre_ciudad")
-	private String nombreCiudad;
-	
+	private String nombreCiudad;	
 	@NotNull	
-	private String provincia;
-	
+	private String provincia;	
 	@NotNull
-	private String pais;
-	
+	private String pais;	
 	@NotNull
 	@Column(name="cod_postal")
-	private String codPostal;
-	
+	private String codPostal;	
 	//Una ciudad puede tener muchos domicilios	
 	@OneToMany(mappedBy = "ciudad")
-    private List<Domicilio> domicilios;
-	
+    private List<Domicilio> domicilios;	
 	//Una ciudad puede ser el origen de muchos vuelos
 	@OneToMany(mappedBy = "origen")
-    private List<Vuelo> vuelosOrigen;
-	
+    private List<Vuelo> vuelosOrigen;	
 	//Una ciudad puede ser el destino de muchos vuelos
 	@OneToMany(mappedBy = "destino")
     private List<Vuelo> vuelosDestino;

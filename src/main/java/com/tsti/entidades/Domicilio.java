@@ -1,8 +1,5 @@
 package com.tsti.entidades;
 
-//import org.springframework.beans.factory.annotation.Autowired;
-
-//import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,22 +21,17 @@ public class Domicilio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@NotNull
 	private String direccion;
-	
 	@NotNull
 	private int nro;
-	
 	private String depto;
-	
 	@NotNull	
 	//Un domicilio pertenece a una ciudad, pero una ciudad tiene muchos domicilios
 	@ManyToOne
 	@JoinColumn(name = "ciudad_id")	
 	private Ciudad ciudad;
-	
-	
+		
 	//CONSTRUCTOR
 	public Domicilio() {
 		super();
@@ -94,8 +86,6 @@ public class Domicilio {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return super.toString();
-	}
-
-	
+	}	
 	
 }

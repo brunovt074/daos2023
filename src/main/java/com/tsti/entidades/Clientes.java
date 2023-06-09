@@ -1,9 +1,6 @@
 package com.tsti.entidades; 
-//import com.tsti.entidades.Domicilio;
 import java.util.Date;
 import java.util.List;
-
-//import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,35 +21,25 @@ import jakarta.validation.constraints.NotNull;
 public class Clientes {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Long id;
-		
+		private Long id;		
 		@NotNull
-		private Long dni;
-		
+		private Long dni;		
 		@NotNull
-		private String nombre;
-		
+		private String nombre;		
 		@NotNull
-		private String apellido;
-		
+		private String apellido;		
 		//Relacion 1:1 con domicilio
 		@OneToOne
 		@JoinColumn(name = "domicilio_id")
-		private Domicilio domicilio;
-		
+		private Domicilio domicilio;		
 		@Column(unique = true)
-		private String tel;
-		
+		private String tel;		
 		@Column(unique = true)
-		private String email;
-		
-		private Date fechaNacimiento; // ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
-		
+		private String email;		
+		private Date fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
 		@Column(unique = true)
-		private Long nroPasaporte;
-		
+		private Long nroPasaporte;		
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
-		
 		//Un pasajero puede realizar muchos vuelos
 		@OneToMany(mappedBy = "pasajero")
 		List<Vuelo> vuelos;
