@@ -40,10 +40,12 @@ public class Clientes {
 		@Column(unique = true)
 		private String tel;		
 		@Column(unique = true)
-		private String email;		
+		private String email;
+		@Column(name = "fecha_nac", unique = true)
 		private Date fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
-		@Column(unique = true)
+		@Column(name = "nro_pasaporte", unique = true)
 		private Long nroPasaporte;		
+		@Column(name = "exp_pasaporte", unique = true)
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
 		
 		//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
