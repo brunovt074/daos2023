@@ -1,6 +1,5 @@
 package com.tsti.entidades; 
 import java.util.Date;
-//import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -13,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-//import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
