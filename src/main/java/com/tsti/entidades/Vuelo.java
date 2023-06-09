@@ -40,9 +40,9 @@ public class Vuelo {
 	@Column(name = "nro_asiento")
 	@NotNull
 	private Integer nroAsiento;
-	@Column(name = "tipo_vuelo")
+	@Column(name = "vuelo_internac")
 	@NotNull
-	private boolean vueloInternac;
+	private boolean esVueloInternac;
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
 	private Ciudad origen;
@@ -111,12 +111,20 @@ public class Vuelo {
 
 
 	public boolean getVueloInternac() {
-		return vueloInternac;
+		return getEsVueloInternac();
+	}
+
+	public boolean getEsVueloInternac() {
+		return esVueloInternac;
 	}
 
 
 	public void setVueloInternac(boolean vueloInternac) {
-		this.vueloInternac = vueloInternac;
+		setEsVueloInternac(vueloInternac);
+	}
+
+	public void setEsVueloInternac(boolean vueloInternac) {
+		this.esVueloInternac = vueloInternac;
 	}
 
 
@@ -158,7 +166,7 @@ public class Vuelo {
 	@Override
 	public String toString() {
 		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraPartida + ", nroFila=" + nroFila
-				+ ", nroAsiento=" + nroAsiento + ", vueloInternac=" + vueloInternac + ", Origen=" + origen + ", Destino="
+				+ ", nroAsiento=" + nroAsiento + ", esVueloInternac=" + esVueloInternac + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estado + "]";
 	}	
 	
