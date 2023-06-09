@@ -36,7 +36,10 @@ public class Ciudad {
 	@NotNull
 	@Column(name="cod_postal")
 	private String codPostal;	
-	//Una ciudad puede tener muchos domicilios	
+	//Una ciudad puede tener muchos domicilios
+	//!!SI SE ELIMINA UNA CIUDAD PROBABLEMENTE HAYA UN ERROR CON LOS DOMICILIOS ASOCIADOS.
+	//EL MANEJO DE ESTO DEBERIA HACERSE CON LOGICA A LA HORA DE TAL ELIMINACION
+	//U OMITIR QUE SE PUEDA ELIMINAR UNA CIUDAD
 	@OneToMany(mappedBy = "ciudad")
     private List<Domicilio> domicilios;	
 	//Una ciudad puede ser el origen de muchos vuelos

@@ -31,8 +31,7 @@ public class Vuelo {
 	private Long nroVuelo; // No podrá haber dos vuelos con el mismo nro
 	@Column(name = "fecha_hora_partida")
 	@NotNull
-	private Date fechaHoraPartida;// ver tema fechas y aca iria con hora
-	
+	private Date fechaHoraPartida;// ver tema fechas y aca iria con hora	
 	@Column(name = "nro_fila")
 	@NotNull
 	private Integer nroFila;
