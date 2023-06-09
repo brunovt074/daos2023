@@ -45,7 +45,8 @@ public class Clientes {
 		private Long nroPasaporte;		
 		@Column(name = "exp_pasaporte", unique = true)
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
-		
+		@Column(name = "primer_vuelo")
+		private boolean esPrimerVuelo;
 		//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
 		//muchos pasajeros. Se creara una nueva tabla.
 		@ManyToMany(cascade = CascadeType.ALL)
