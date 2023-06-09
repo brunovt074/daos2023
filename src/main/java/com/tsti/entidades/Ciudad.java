@@ -23,9 +23,8 @@ public class Ciudad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	//COD de aeropuerto por ej EZE (ezeiza)
-	@Column(name="cod_ciudad", unique = true)
-	@NotNull
-	private String codCiudad;	
+	@Column(name="cod_aeropuerto", unique = true)	
+	private String codAeropuerto;	
 	@NotNull
 	@Column(name="nombre_ciudad")
 	private String nombreCiudad;	
@@ -37,9 +36,9 @@ public class Ciudad {
 	@Column(name="cod_postal")
 	private String codPostal;	
 	//Una ciudad puede tener muchos domicilios
-	//!!SI SE ELIMINA UNA CIUDAD PROBABLEMENTE HAYA UN ERROR CON LOS DOMICILIOS ASOCIADOS.
-	//EL MANEJO DE ESTO DEBERIA HACERSE CON LOGICA A LA HORA DE TAL ELIMINACION
-	//U OMITIR QUE SE PUEDA ELIMINAR UNA CIUDAD
+	//!!SI SE ELIMINA UNA CIUDAD HABRA UN ERROR CON LOS DOMICILIOS ASOCIADOS.
+	//1-OMITIR QUE SE PUEDA ELIMINAR UNA CIUDAD.
+	//2-EL MANEJO DE ESTO DEBERIA HACERSE CON LOGICA A LA HORA DE TAL ELIMINACION
 	@OneToMany(mappedBy = "ciudad")
     private List<Domicilio> domicilios;	
 	//Una ciudad puede ser el origen de muchos vuelos
@@ -63,11 +62,11 @@ public class Ciudad {
 		this.id = id;
 	}
 	
-	public String getCodCiudad() {
-		return codCiudad;
+	public String getcodAeropuerto() {
+		return codAeropuerto;
 	}
-	public void setCodCiudad(String codCiudad) {
-		this.codCiudad = codCiudad;
+	public void setcodAeropuerto(String codCiudad) {
+		this.codAeropuerto = codCiudad;
 	}
 	public String getNombreCiudad() {
 		return nombreCiudad;
@@ -122,12 +121,12 @@ public class Ciudad {
 
 	@Override
 	public String toString() {
-		return "Ciudad [codCiudad=" + codCiudad + ", nombreCiudad=" + nombreCiudad + ", provincia=" + provincia
+		return "Ciudad [codCiudad=" + codAeropuerto + ", nombreCiudad=" + nombreCiudad + ", provincia=" + provincia
 				+ ", pais=" + pais + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(codCiudad, nombreCiudad, pais, provincia);
+		return Objects.hash(codAeropuerto, nombreCiudad, pais, provincia);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -138,7 +137,7 @@ public class Ciudad {
 		if (getClass() != obj.getClass())
 			return false;
 		Ciudad other = (Ciudad) obj;
-		return Objects.equals(codCiudad, other.codCiudad) && Objects.equals(nombreCiudad, other.nombreCiudad)
+		return Objects.equals(codAeropuerto, other.codAeropuerto) && Objects.equals(nombreCiudad, other.nombreCiudad)
 				&& Objects.equals(pais, other.pais) && Objects.equals(provincia, other.provincia);
 	}	
 	
