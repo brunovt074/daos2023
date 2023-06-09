@@ -42,13 +42,13 @@ public class Vuelo {
 	private Integer nroAsiento;
 	@Column(name = "tipo_vuelo")
 	@NotNull
-	private String tipoVuelo;
+	private boolean vueloInternac;
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
 	private Ciudad origen;
 	@ManyToOne
 	@JoinColumn(name = "destino_id")	
-	private Ciudad destino;// creada la entidad Ciudad	
+	private Ciudad destino;//creada la entidad Ciudad	
 	@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
 	private Set<Clientes> pasajeros = new HashSet<>();
 	/* 
@@ -110,13 +110,13 @@ public class Vuelo {
 	}
 
 
-	public String getTipoVuelo() {
-		return tipoVuelo;
+	public boolean getVueloInternac() {
+		return vueloInternac;
 	}
 
 
-	public void setTipoVuelo(String tipoVuelo) {
-		this.tipoVuelo = tipoVuelo;
+	public void setVueloInternac(boolean vueloInternac) {
+		this.vueloInternac = vueloInternac;
 	}
 
 
@@ -158,7 +158,7 @@ public class Vuelo {
 	@Override
 	public String toString() {
 		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraPartida + ", nroFila=" + nroFila
-				+ ", nroAsiento=" + nroAsiento + ", tipoVuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
+				+ ", nroAsiento=" + nroAsiento + ", vueloInternac=" + vueloInternac + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estado + "]";
 	}	
 	
