@@ -1,5 +1,10 @@
 package com.tsti.dao;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class VueloDAO {
+/**
+ * @author Bruno
+ *
+ */
+public interface VueloDAO extends JpaRepository<Vuelo, Long> {
 
 }

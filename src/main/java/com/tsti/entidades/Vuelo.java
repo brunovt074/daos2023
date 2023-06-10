@@ -62,7 +62,7 @@ public class Vuelo {
 		simplicidad, no se pide implementar el servicio de alertas.*/
 	@NotNull
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
-						   //Obs: Ver tipo ENUM para este caso. 	
+						   			//Creado tipo ENUM para este caso. 	
 	//CONSTRUCTOR
 	public Vuelo() {
 		super();
