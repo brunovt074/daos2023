@@ -28,7 +28,7 @@ public class Vuelo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	 
 	@Column(name = "nro_vuelo", unique = true)
 	@NotNull	
-	private Long nroVuelo; // No podrá haber dos vuelos con el mismo nro
+	private Long nroVuelo; 
 	@Column(name = "fecha_hora_partida")
 	@NotNull
 	private Date fechaHoraPartida;// ver tema fechas y aca iria con hora
@@ -54,19 +54,26 @@ public class Vuelo {
 	/* 
 	 * El estado es autocalculado por el sistema, no puede ser establecido por
 		el usuario.
-		No podrá haber dos vuelos con el mismo nro.
 		Una vez registrado, solo se permitirá cambiar la fecha y hora 
 		del mismo(lo cual pasa el vuelo al estado reprogramado) 
 		o eliminar el mismo (lo cual pasa el vuelo al estado cancelado).
 		Tanto la reprogramación como la cancelación de un vuelo dispararía la
 		notificación automática del evento a todos los pasajeros aunque por 
-		simplicidad, no se pide implementar el servicio de alertas. */
+		simplicidad, no se pide implementar el servicio de alertas.*/
 	@NotNull
-	private String estado; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
+	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   //Obs: Ver tipo ENUM para este caso. 	
 	//CONSTRUCTOR
 	public Vuelo() {
 		super();
+	}
+	
+	//ENUM para estado de los vuelos.
+	public enum EstadoVuelo {
+		REGISTRADO,
+	    DEMORADO,
+	    CANCELADO,
+	    REPROGRAMADO
 	}
 
 	//METODOS
@@ -148,13 +155,13 @@ public class Vuelo {
 	}
 
 
-	public String getEstado() {
-		return estado;
+	public EstadoVuelo getEstado() {
+		return this.estadoVuelo;
 	}
 
-
-	public void setEstado(String estado) {
-		this.estado = estado;
+	//ej de parametro: EstadoVuelo.CANCELADO
+	public void setEstado(EstadoVuelo estado) {
+		this.estadoVuelo = estado;
 	}
 	
 	public Set<Clientes>getPasajeros(){
@@ -167,7 +174,7 @@ public class Vuelo {
 	public String toString() {
 		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraPartida + ", nroFila=" + nroFila
 				+ ", nroAsiento=" + nroAsiento + ", esVueloInternac=" + esVueloInternac + ", Origen=" + origen + ", Destino="
-				+ destino + ", Estado=" + estado + "]";
+				+ destino + ", Estado=" + estadoVuelo + "]";
 	}	
 	
 }
