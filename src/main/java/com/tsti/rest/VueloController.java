@@ -1,7 +1,5 @@
 package com.tsti.rest;
 
-import java.util.HashSet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +17,13 @@ public class VueloController {
 	@Autowired
 	VueloServiceImpl vueloService;
 	
-	@GetMapping()
-	public ResponseEntity<HashSet<Vuelo>> getAll(){
-		
-		HashSet<Vuelo> vuelos = vueloService.getAll();
-		
-		return new ResponseEntity<HashSet<Vuelo>>(vuelos, HttpStatus.OK);
-		
-	}
+	/*
+	 * @GetMapping() public ResponseEntity<HashSet<Vuelo>> getAll(){
+	 * 
+	 * HashSet<Vuelo> vuelos = vueloService.getAll();
+	 * 
+	 * return new ResponseEntity<HashSet<Vuelo>>(vuelos, HttpStatus.OK);
+	 * 
+	 * }
+	 */
 }

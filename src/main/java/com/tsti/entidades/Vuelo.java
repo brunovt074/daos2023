@@ -1,5 +1,6 @@
 package com.tsti.entidades;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
@@ -22,16 +23,20 @@ import jakarta.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "vuelos")
-public class Vuelo {
-	
+public class Vuelo {	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	 
 	@Column(name = "nro_vuelo", unique = true)
 	@NotNull	
-	private Long nroVuelo; 
-	@Column(name = "fecha_hora_partida")
+	private Long nroVuelo;
+	//Se opto por separar fechas y horas para poder buscar los vuelos 
+	//por fechas y tratar de simplificar el manejo de las mismas.
+	@Column(name = "fecha_partida")
 	@NotNull
-	private Date fechaHoraPartida;// ver tema fechas y aca iria con hora
+	private LocalDate fechaPartida;
+	@Column(name = "hora_partida")
+	@NotNull
+	private LocalDate horaPartida;		
 	@NotNull
 	private String aerolinea;
 	@Column(name = "nro_fila")
@@ -93,14 +98,20 @@ public class Vuelo {
 		this.nroVuelo = nroVuelo;
 	}
 
-
-	public Date getFechaHoraPartida() {
-		return fechaHoraPartida;
+	public LocalDate getFechaPartida() {
+		return fechaPartida;
 	}
 
+	public void setFechaPartida(LocalDate fechaPartida) {
+		this.fechaPartida = fechaPartida;
+	}
+	
+	public LocalDate getHoraPartida() {
+		return horaPartida;
+	}
 
-	public void setFechaHoraPartida(Date fecha_HoraVuelo) {
-		this.fechaHoraPartida = fecha_HoraVuelo;
+	public void setHoraPartida(LocalDate horaPartida) {
+		this.horaPartida = horaPartida;
 	}
 
 
@@ -169,7 +180,7 @@ public class Vuelo {
 
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraPartida + ", nroFila=" + nroFila
+		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha de partida=" + fechaPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFila
 				+ ", nroAsiento=" + nroAsiento + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}	
