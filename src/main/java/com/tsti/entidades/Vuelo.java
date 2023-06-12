@@ -40,9 +40,9 @@ public class Vuelo {
 	@Column(name = "nro_asiento")
 	@NotNull
 	private Integer nroAsiento;
-	@Column(name = "vuelo_internac")
+	@Column(name = "tipo_vuelo")
 	@NotNull
-	private boolean esVueloInternac;
+	private TipoVuelo tipoVuelo;
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
 	private Ciudad origen;
@@ -50,7 +50,10 @@ public class Vuelo {
 	@JoinColumn(name = "destino_id")	
 	private Ciudad destino;//creada la entidad Ciudad	
 	@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
-	private Set<Clientes> pasajeros = new HashSet<>();
+	private Set<Clientes> pasajeros = new HashSet<>();	
+	@NotNull
+	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
+						   			//Creado tipo ENUM para este caso. 
 	/* 
 	 * El estado es autocalculado por el sistema, no puede ser establecido por
 		el usuario.
@@ -60,9 +63,7 @@ public class Vuelo {
 		Tanto la reprogramación como la cancelación de un vuelo dispararía la
 		notificación automática del evento a todos los pasajeros aunque por 
 		simplicidad, no se pide implementar el servicio de alertas.*/
-	@NotNull
-	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
-						   			//Creado tipo ENUM para este caso. 	
+		
 	//CONSTRUCTOR
 	public Vuelo() {
 		super();
@@ -75,7 +76,13 @@ public class Vuelo {
 	    CANCELADO,
 	    REPROGRAMADO
 	}
-
+	
+	//ENUM para tipo de vuelo.
+	public enum TipoVuelo {
+		NACIONAL,
+		INTERNACIONAL
+	}
+	
 	//METODOS
 	public long getNroVuelo() {
 		return nroVuelo;
@@ -117,23 +124,13 @@ public class Vuelo {
 	}
 
 
-	public boolean getVueloInternac() {
-		return getEsVueloInternac();
+	public TipoVuelo getTipoVuelo() {
+		return this.tipoVuelo;
 	}
 
-	public boolean getEsVueloInternac() {
-		return esVueloInternac;
+	public void setTipoVuelo(TipoVuelo tipoVuelo) {
+		this.tipoVuelo = tipoVuelo;
 	}
-
-
-	public void setVueloInternac(boolean vueloInternac) {
-		setEsVueloInternac(vueloInternac);
-	}
-
-	public void setEsVueloInternac(boolean vueloInternac) {
-		this.esVueloInternac = vueloInternac;
-	}
-
 
 	public Ciudad getOrigen() {
 		return origen;
@@ -173,7 +170,7 @@ public class Vuelo {
 	@Override
 	public String toString() {
 		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha_HoraVuelo=" + fechaHoraPartida + ", nroFila=" + nroFila
-				+ ", nroAsiento=" + nroAsiento + ", esVueloInternac=" + esVueloInternac + ", Origen=" + origen + ", Destino="
+				+ ", nroAsiento=" + nroAsiento + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}	
 	
