@@ -45,6 +45,7 @@ public class VueloController {
 			vueloDTO.setNroVuelo(vuelo.getNroVuelo());
 			vueloDTO.setAerolinea(vuelo.getAerolinea());
 			vueloDTO.setDestino(vuelo.getDestino());
+			vueloDTO.setTipoVuelo(vuelo.getTipoVuelo());
 			vueloDTO.setFechaPartida(vuelo.getFechaPartida());
 			vueloDTO.setHoraPartida(vuelo.getHoraPartida());
 			
