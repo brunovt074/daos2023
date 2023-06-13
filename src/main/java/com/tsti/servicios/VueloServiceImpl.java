@@ -20,9 +20,9 @@ public class VueloServiceImpl implements IVueloService {
 	
 	public VueloServiceImpl(VueloDAO vueloDAO) {
 		this.vueloDAO = vueloDAO;
-	}
-	
-	public List<Vuelo> buscarVuelosPorDestinoYFechaPartida(String destino, LocalDate fecha) {
+	}	
+
+	public List<Vuelo> findByDestinoAndFechaPartida(String destino, LocalDate fecha) {
         return vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
     }
 	

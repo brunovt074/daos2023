@@ -8,7 +8,7 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 
 public interface IVueloService {
 
-	List<Vuelo> buscarVuelosPorDestinoYFechaPartida(String destino, LocalDate fecha);
+	List<Vuelo> findByDestinoAndFechaPartida(String destino, LocalDate fecha);
 	List<Vuelo> obtenerVuelosPorTipo(TipoVuelo tipoVuelo);
 	
 

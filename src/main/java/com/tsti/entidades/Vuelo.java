@@ -1,9 +1,11 @@
 package com.tsti.entidades;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,9 +34,11 @@ public class Vuelo {
 	//Se opto por separar fechas y horas para poder buscar los vuelos 
 	//por fechas y tratar de simplificar el manejo de las mismas.
 	@Column(name = "fecha_partida")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@NotNull
 	private LocalDate fechaPartida;
 	@Column(name = "hora_partida")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@NotNull
 	private LocalDate horaPartida;		
 	@NotNull
@@ -55,7 +59,7 @@ public class Vuelo {
 	@JoinColumn(name = "destino_id")	
 	private Ciudad destino;//creada la entidad Ciudad	
 	@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
-	private Set<Clientes> pasajeros = new HashSet<>();	
+	private HashSet<Clientes> pasajeros = new HashSet<>();	
 	@NotNull
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   			//Creado tipo ENUM para este caso. 
@@ -86,11 +90,21 @@ public class Vuelo {
 	public enum TipoVuelo {
 		NACIONAL,
 		INTERNACIONAL
-	}
+	}	
 	
 	//METODOS
 	public long getNroVuelo() {
 		return nroVuelo;
+	}
+
+	
+	public String getAerolinea() {
+		return aerolinea;
+	}
+
+
+	public void setAerolinea(String aerolinea) {
+		this.aerolinea = aerolinea;
 	}
 
 
@@ -138,9 +152,18 @@ public class Vuelo {
 	public TipoVuelo getTipoVuelo() {
 		return this.tipoVuelo;
 	}
-
-	public void setTipoVuelo(TipoVuelo tipoVuelo) {
-		this.tipoVuelo = tipoVuelo;
+	
+	@Autowired //fuerzo a spring que utilice este metodo durante la IOC
+	public void setTipoVuelo() {		
+		String argentina = "Argentina";
+		
+		if(argentina.equalsIgnoreCase(this.destino.getPais())) {
+			
+			this.tipoVuelo = TipoVuelo.NACIONAL;
+		}
+		else {			
+			this.tipoVuelo = TipoVuelo.INTERNACIONAL;			
+		}		
 	}
 
 	public Ciudad getOrigen() {
