@@ -1,4 +1,4 @@
-package com.tsti.excepcion;
+package tsti.excepcion;
 
 /**
  * 

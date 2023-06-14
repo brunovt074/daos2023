@@ -1,4 +1,4 @@
-package com.tsti.entidades; 
+package tsti.entidades; 
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
@@ -109,6 +109,14 @@ public class Clientes {
 			this.fechaNacimiento = fechaNacimiento;
 		}
 		
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
 		public long getNroPasaporte() {
 			return nroPasaporte;
 		}

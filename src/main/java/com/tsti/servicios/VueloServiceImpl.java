@@ -1,4 +1,4 @@
-package com.tsti.servicios;
+package tsti.servicios;
 
 import org.springframework.stereotype.Service;
 /**

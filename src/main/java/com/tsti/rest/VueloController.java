@@ -1,4 +1,4 @@
-package com.tsti.rest;
+package tsti.rest;
 
 public class VueloController {
 

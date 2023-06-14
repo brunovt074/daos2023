@@ -1,4 +1,4 @@
-package com.tsti.entidades;
+package tsti.entidades;
 
 /**
  * @author Bruno

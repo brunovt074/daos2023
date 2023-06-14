@@ -46,9 +46,9 @@ public class ClienteController {
 	
 	
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<ClienteResponseDTO> getById(@PathVariable Long id) throws Excepcion
+	public ResponseEntity<ClienteResponseDTO> getById(@PathVariable Long Id) throws Excepcion
 	{
-		Optional<Clientes> rta = service.getById(id);
+		Optional<Clientes> rta = service.getById(Id);
 		if(rta.isPresent())
 		{
 			Clientes pojo=rta.get();
