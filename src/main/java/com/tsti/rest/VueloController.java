@@ -27,69 +27,69 @@ public class VueloController {
 	private VueloServiceImpl vueloService;
 	
 	//Request recibido desde el momento que se busca un vuelo.
-	@GetMapping
-	public ResponseEntity<List<VueloDisponibleDTO>> obtenerVuelosDisponibles(@RequestParam("destino")String destino, 
-		  													@RequestParam("fecha") 
-  															@DateTimeFormat(pattern = "dd-MM-yyyy")
-		  													LocalDate fecha){
-		
-		/*
-		 * //Usamos el VueloService para buscar en la BDD los vuelos por destino y
-		 * fecha. List<Vuelo> vuelos =
-		 * vueloService.findByDestinoAndFechaPartida(destino, fecha);
-		 */
-		
-		//Instanciamos el DTO para nuestra respuesta
-//		List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
+//	@GetMapping
+//	public ResponseEntity<List<VueloDisponibleDTO>> obtenerVuelosDisponibles(@RequestParam("destino")String destino, 
+//		  													@RequestParam("fecha") 
+//  															@DateTimeFormat(pattern = "dd-MM-yyyy")
+//		  													LocalDate fecha){
 //		
-//		Ciudad ciudad = new Ciudad();
-//		ciudad.setCodPostal("3230");
-//		ciudad.setNombreCiudad("Buenos Aires");
-//		ciudad.setPais("Argentina");
-//		ciudad.setProvincia("Buenos Aires");		
-//		
-//		for(int i = 0; i < 10; i++) {
-//			
-//			Vuelo vuelo = new Vuelo();
-//			vuelo.setNroVuelo((long)i);
-//			
-//			VueloDisponibleDTO vueloDTO = new VueloDisponibleDTO(vuelo);
-//			 
-//			 vueloDTO.setNroVuelo((long) i);
-//			 vueloDTO.setAerolinea("aero" + i);
-//			 vueloDTO.setDestino(ciudad);
-//			 vueloDTO.setFechaPartida(LocalDate.parse("2022-12-12"));
-//			 vueloDTO.setHoraPartida(LocalTime.parse("22:22:00"));			 
-//			 
-//			 vuelosDTO.add(vueloDTO);
-//			
-//		}
-//		
-//		
-//		//Iteramos sobre el array de vuelos con esa fecha y destino.
 //		/*
-//		 * for(Vuelo vuelo : vuelos) {
-//		 * 
-//		 * VueloDisponibleDTO vueloDTO = new VueloDisponibleDTO(vuelo);
-//		 * 
-//		 * vueloDTO.setNroVuelo(vuelo.getNroVuelo());
-//		 * vueloDTO.setAerolinea(vuelo.getAerolinea());
-//		 * vueloDTO.setDestino(vuelo.getDestino());
-//		 * vueloDTO.setFechaPartida(vuelo.getFechaPartida());
-//		 * vueloDTO.setHoraPartida(vuelo.getHoraPartida());
-//		 * 
-//		 * 
-//		 * vuelosDTO.add(vueloDTO); }
+//		 * //Usamos el VueloService para buscar en la BDD los vuelos por destino y
+//		 * fecha. List<Vuelo> vuelos =
+//		 * vueloService.findByDestinoAndFechaPartida(destino, fecha);
 //		 */
-		
-		//Se crea la response de acuerdo a si el arraylist esta vacio o no.
-		if(vuelosDTO.isEmpty()) {
-			return ResponseEntity.noContent().build(); //ERROR 204 No Content
-		}
-		else {
-			return ResponseEntity.ok(vuelosDTO); //Mensaje 200 OK.
-		}		
-  
-  }
+//		
+//		//Instanciamos el DTO para nuestra respuesta
+////		List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
+////		
+////		Ciudad ciudad = new Ciudad();
+////		ciudad.setCodPostal("3230");
+////		ciudad.setNombreCiudad("Buenos Aires");
+////		ciudad.setPais("Argentina");
+////		ciudad.setProvincia("Buenos Aires");		
+////		
+////		for(int i = 0; i < 10; i++) {
+////			
+////			Vuelo vuelo = new Vuelo();
+////			vuelo.setNroVuelo((long)i);
+////			
+////			VueloDisponibleDTO vueloDTO = new VueloDisponibleDTO(vuelo);
+////			 
+////			 vueloDTO.setNroVuelo((long) i);
+////			 vueloDTO.setAerolinea("aero" + i);
+////			 vueloDTO.setDestino(ciudad);
+////			 vueloDTO.setFechaPartida(LocalDate.parse("2022-12-12"));
+////			 vueloDTO.setHoraPartida(LocalTime.parse("22:22:00"));			 
+////			 
+////			 vuelosDTO.add(vueloDTO);
+////			
+////		}
+////		
+////		
+////		//Iteramos sobre el array de vuelos con esa fecha y destino.
+////		/*
+////		 * for(Vuelo vuelo : vuelos) {
+////		 * 
+////		 * VueloDisponibleDTO vueloDTO = new VueloDisponibleDTO(vuelo);
+////		 * 
+////		 * vueloDTO.setNroVuelo(vuelo.getNroVuelo());
+////		 * vueloDTO.setAerolinea(vuelo.getAerolinea());
+////		 * vueloDTO.setDestino(vuelo.getDestino());
+////		 * vueloDTO.setFechaPartida(vuelo.getFechaPartida());
+////		 * vueloDTO.setHoraPartida(vuelo.getHoraPartida());
+////		 * 
+////		 * 
+////		 * vuelosDTO.add(vueloDTO); }
+////		 */
+//		
+//		//Se crea la response de acuerdo a si el arraylist esta vacio o no.
+//		if(vuelosDTO.isEmpty()) {
+//			return ResponseEntity.noContent().build(); //ERROR 204 No Content
+//		}
+//		else {
+//			return ResponseEntity.ok(vuelosDTO); //Mensaje 200 OK.
+//		}		
+//  
+//  }
 	 
 }
