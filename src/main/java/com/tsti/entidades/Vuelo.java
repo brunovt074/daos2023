@@ -1,6 +1,7 @@
 package com.tsti.entidades;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -34,13 +35,13 @@ public class Vuelo {
 	//Se opto por separar fechas y horas para poder buscar los vuelos 
 	//por fechas y tratar de simplificar el manejo de las mismas.
 	@Column(name = "fecha_partida")
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat
 	@NotNull
 	private LocalDate fechaPartida;
 	@Column(name = "hora_partida")
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	
 	@NotNull
-	private LocalDate horaPartida;		
+	private LocalTime horaPartida;		
 	@NotNull
 	private String aerolinea;
 	@Column(name = "nro_fila")
@@ -120,11 +121,11 @@ public class Vuelo {
 		this.fechaPartida = fechaPartida;
 	}
 	
-	public LocalDate getHoraPartida() {
+	public LocalTime getHoraPartida() {
 		return horaPartida;
 	}
 
-	public void setHoraPartida(LocalDate horaPartida) {
+	public void setHoraPartida(LocalTime horaPartida) {
 		this.horaPartida = horaPartida;
 	}
 

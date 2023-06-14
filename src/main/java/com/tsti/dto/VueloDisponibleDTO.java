@@ -4,6 +4,7 @@
 package com.tsti.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
@@ -19,7 +20,7 @@ public class VueloDisponibleDTO {
 	private Ciudad destino;
 	private TipoVuelo tipoVuelo;
 	private LocalDate fechaPartida;
-	private LocalDate horaPartida;	
+	private LocalTime horaPartida;	
 	
 	
 	public VueloDisponibleDTO (Vuelo pojo){
@@ -30,7 +31,7 @@ public class VueloDisponibleDTO {
 		this.destino = pojo.getDestino();
 		this.tipoVuelo = pojo.getTipoVuelo();
 		this.fechaPartida = pojo.getFechaPartida();
-		this.horaPartida = pojo.getFechaPartida();
+		this.horaPartida = pojo.getHoraPartida();
 		
 	}
 
@@ -58,11 +59,11 @@ public class VueloDisponibleDTO {
 		this.fechaPartida = fechaPartida;
 	}
 
-	public LocalDate getHoraPartida() {
+	public LocalTime getHoraPartida() {
 		return horaPartida;
 	}
 
-	public void setHoraPartida(LocalDate horaPartida) {
+	public void setHoraPartida(LocalTime horaPartida) {
 		this.horaPartida = horaPartida;
 	}
 
