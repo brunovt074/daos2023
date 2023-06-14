@@ -3,7 +3,11 @@
  */
 package com.tsti.faker;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,14 +44,21 @@ public class VueloFactory {
 		this.ciudadFactory = new CiudadFactory();
 	}
 	
-	public void crearVueloNacionalVacio(/*int nroPasajeros, EstadoVuelo estado*/) {
+	public void crearVueloNacionalOrigenLocal(/*int nroPasajeros, EstadoVuelo estado*/) {
 		
 		Vuelo vuelo = new Vuelo();
 		
-		Ciudad origen = ciudadFactory.getCiudadArgentina();
+		Ciudad origen = ciudadFactory.getCiudadSauceViejo();
 		Ciudad destino = ciudadFactory.getCiudadArgentina();
 		ciudadDAO.save(origen);
 		ciudadDAO.save(destino);
+		
+		//Obtener fecha.
+		LocalDateTime fechaPartidaTimestamp = (faker.date().future(60,0,TimeUnit.DAYS)).toLocalDateTime();
+		LocalDate fechaPartida = fechaPartidaTimestamp.toLocalDate();
+		//Obtener hora.
+		LocalDateTime horaPartidaTimestamp = (faker.date().future(12,0,TimeUnit.HOURS)).toLocalDateTime();
+		LocalTime horaPartida = horaPartidaTimestamp.toLocalTime().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
 		
 		vuelo.setAerolinea(faker.aviation().airline());
 		vuelo.setAvion(faker.aviation().airplane());
@@ -55,11 +66,12 @@ public class VueloFactory {
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
 		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
-//		vuelo.setFechaPartida();
-//		vuelo.setHoraPartida();
+		vuelo.setFechaPartida(fechaPartida);
+		vuelo.setHoraPartida(horaPartida);
 		//logica de clientes
 		
-		System.out.println(vuelo.getEstadoVuelo());		
+		System.out.println("Fecha de partida: " + vuelo.getFechaPartida().toString());
+		System.out.println("Fecha de partida: " + vuelo.getHoraPartida().toString());		
 		
 	}
 

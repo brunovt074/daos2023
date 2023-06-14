@@ -43,6 +43,18 @@ public class CiudadFactory {
 		return nuevaCiudad;			
 	}
 	
+	public Ciudad getCiudadSauceViejo() {
+		
+		Ciudad nuevaCiudad = new Ciudad();
+		nuevaCiudad.setcodAeropuerto("SAAV");
+		nuevaCiudad.setNombreCiudad("Sauce Viejo");
+		nuevaCiudad.setProvincia("Santa Fe");
+		nuevaCiudad.setCodPostal("S3017");
+		nuevaCiudad.setPais("Argentina");	
+		
+		return nuevaCiudad;			
+	}
+	
 	public void crearCiudadArgentina() {
 			
 		Ciudad nuevaCiudad = new Ciudad();

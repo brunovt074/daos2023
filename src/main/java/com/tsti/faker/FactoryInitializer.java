@@ -47,7 +47,7 @@ public class FactoryInitializer {
 //        domicilioFactory.crearDomiciliosAleatorios();
         
         //creando vuelos
-        vueloFactory.crearVueloNacionalVacio();
+        vueloFactory.crearVueloNacionalOrigenLocal();
     }
 }
 

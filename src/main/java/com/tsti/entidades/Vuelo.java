@@ -1,5 +1,6 @@
 package com.tsti.entidades;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
@@ -40,8 +41,9 @@ public class Vuelo {
 	private LocalDate fechaPartida;
 	@Column(name = "hora_partida")	
 	@NotNull
-	private LocalTime horaPartida;		
-	@NotNull
+	private LocalTime horaPartida;
+	private Timestamp fechaHoraPartida;
+	@NotNull	
 	private String aerolinea;
 	private String avion;
 	@Column(name = "nro_fila")
@@ -133,6 +135,14 @@ public class Vuelo {
 	public void setHoraPartida(LocalTime horaPartida) {
 		this.horaPartida = horaPartida;
 	}
+	
+	public Timestamp getFechaHoraPartida() {
+		return fechaHoraPartida;
+	}
+
+	public void setFechaHoraPartida(Timestamp timestamp) {
+		this.fechaHoraPartida = timestamp;
+	}
 
 
 	public int getNroFila() {
@@ -209,10 +219,12 @@ public class Vuelo {
 
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha de partida=" + fechaPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFila
+		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha y hora de partida=" + fechaHoraPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFila
 				+ ", nroAsiento=" + nroAsiento + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}
+
+	
 
 		
 	
