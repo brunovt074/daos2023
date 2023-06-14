@@ -31,6 +31,18 @@ public class CiudadFactory {
 
 	}
 	
+	public Ciudad getCiudadArgentina() {
+		
+		Ciudad nuevaCiudad = new Ciudad();
+		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
+		nuevaCiudad.setNombreCiudad(faker.address().cityName());
+		nuevaCiudad.setProvincia(faker.address().state());
+		nuevaCiudad.setCodPostal(faker.address().zipCode());
+		nuevaCiudad.setPais("Argentina");	
+		
+		return nuevaCiudad;			
+	}
+	
 	public void crearCiudadArgentina() {
 			
 		Ciudad nuevaCiudad = new Ciudad();
@@ -59,6 +71,18 @@ public class CiudadFactory {
 			ciudadDAO.save(nuevaCiudad);
 			System.out.println("CIUDAD GUARDADA: "+ nuevaCiudad.toString());
 		}
+	}
+	
+	public Ciudad getCiudadAleatoria() {
+		
+		Ciudad nuevaCiudad = new Ciudad();
+		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
+		nuevaCiudad.setNombreCiudad(faker.address().cityName());
+		nuevaCiudad.setProvincia(faker.address().state());
+		nuevaCiudad.setCodPostal(faker.address().zipCode());
+		nuevaCiudad.setPais(faker.address().country());
+		
+		return nuevaCiudad;			
 	}
 	
 	public void crearCiudadAleatoria() {

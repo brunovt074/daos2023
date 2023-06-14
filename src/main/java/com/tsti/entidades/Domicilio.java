@@ -84,8 +84,8 @@ public class Domicilio {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "Domicilio [id=" + id + ", direccion=" + direccion + ", nro=" + nro + ", depto=" + depto + ", ciudad="
+				+ ciudad + "]";
 	}	
 	
 }

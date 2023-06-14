@@ -13,30 +13,36 @@ public class FactoryInitializer {
 
     private final CiudadFactory ciudadFactory;
     private final ClienteFactory clienteFactory;
+    private final DomicilioFactory domicilioFactory;
     
-    public FactoryInitializer(CiudadFactory ciudadFactory,ClienteFactory clienteFactory) {
-        this.ciudadFactory = ciudadFactory;
-        this.clienteFactory = clienteFactory; 
+    public FactoryInitializer(CiudadFactory ciudadFactory,ClienteFactory clienteFactory,
+    						DomicilioFactory domicilioFactory) {
+        
+    	this.ciudadFactory = ciudadFactory;
+        this.clienteFactory = clienteFactory;
+        this.domicilioFactory = domicilioFactory;
     }  
     
 
     @EventListener(ApplicationReadyEvent.class)
     public void initialize() {
     	//creando ciudades
-    	ciudadFactory.crearCiudadArgentina();
-    	ciudadFactory.crearCiudadesArgentina();
-        ciudadFactory.crearCiudadAleatoria();
-        ciudadFactory.crearCiudadesAleatoria();
+//    	ciudadFactory.crearCiudadArgentina();
+//    	ciudadFactory.crearCiudadesArgentina();
+//        ciudadFactory.crearCiudadAleatoria();
+//        ciudadFactory.crearCiudadesAleatoria();
         
         //creando clientes
-        clienteFactory.crearUnPasajeroInternacional();
+        clienteFactory.crearUnPasajeroNacional();
         clienteFactory.crearPasajerosNacionales();
         clienteFactory.crearUnPasajeroInternacional();
         clienteFactory.crearPasajerosInternacionales();
         
         //creando domicilios
-        
-        //
+        //domicilioFactory.crearUnDomicilioArgentino();
+        //domicilioFactory.crearUnDomicilioAleatorio();
+//        domicilioFactory.crearDomiciliosArgentinos();
+//        domicilioFactory.crearDomiciliosAleatorios();
     }
 }
 

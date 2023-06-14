@@ -19,6 +19,9 @@ import jakarta.validation.constraints.NotNull;
  *
  * @author cecilia
  *  Establece/Actualiza/Retorna los datos de cliente
+ *  
+ *  LAS RESTRICCIONES UNIQUE ESTAN DESACTIVADAS PARA FACILITAR LA POBLACION
+ *  DE LA BD CON FAKER.
  */
 @Entity
 public class Clientes {
