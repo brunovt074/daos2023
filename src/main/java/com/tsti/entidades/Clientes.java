@@ -39,14 +39,15 @@ public class Clientes {
 	private String tel;		
 	@Column(unique = true)
 	private String email;
-	@Column(name = "fecha_nac", unique = true)
-	private Date fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
+	@Column(name = "fecha_nac")
+	private Date  fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
 	@Column(name = "nro_pasaporte", unique = true)
 	private Long nroPasaporte;		
 	@Column(name = "exp_pasaporte", unique = true)
 	private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
-	@Column(name = "primer_vuelo")
-	private boolean esPrimerVuelo;
+	/*
+	 * @Column(name = "primer_vuelo") private boolean esPrimerVuelo;
+	 */
 	//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
 	//muchos pasajeros. Se creara una nueva tabla.
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -62,11 +63,15 @@ public class Clientes {
 	}
 	
 	//METODOS
-	public long getDni() {
-		return dni;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
-	public void setDni(long dni) {
+	public void setDni(Long dni) {
 		this.dni = dni;
 	}
 	
@@ -92,8 +97,36 @@ public class Clientes {
 	
 	public void setDomicilio(Domicilio domicilio) {
 		this.domicilio = domicilio;
+	}	
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	/*
+	 * public boolean isEsPrimerVuelo() { return esPrimerVuelo; }
+	 * 
+	 * public void setEsPrimerVuelo(boolean esPrimerVuelo) { this.esPrimerVuelo =
+	 * esPrimerVuelo; }
+	 */
+
+	public Set<Vuelo> getVuelos() {
+		return vuelos;
+	}
+
+	public void setVuelos(Set<Vuelo> vuelos) {
+		this.vuelos = vuelos;
 	}
 	
+
+	public void setNroPasaporte(Long nroPasaporte) {
+		this.nroPasaporte = nroPasaporte;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -110,11 +143,11 @@ public class Clientes {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
-	public long getNroPasaporte() {
+	public Long getNroPasaporte() {
 		return nroPasaporte;
 	}
 	
-	public void setNroPasaporte(long nroPasaporte) {
+	public void setNroPasaporte(Long nroPasaporte) {
 		this.nroPasaporte = nroPasaporte;
 	}
 	
