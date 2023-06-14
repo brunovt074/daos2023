@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 public class Pasaje {
 
 	/*
-	 *SI, NECESITAMOS.a
+	 *SI, NECESITAMOS.
 	 * */
 	
 	//ATRIBUTOS
@@ -29,9 +29,11 @@ public class Pasaje {
 	//CONSTRUCTOR
 	public Pasaje() {
 		super();
+	}
+	public Pasaje(Long dni, Long nroVuelo, Integer nroAsiento) {
+		super();
 		
 	}
-	
 	//METODOS
 	public void setDni(Long dni) {
 		this.dni = dni;
