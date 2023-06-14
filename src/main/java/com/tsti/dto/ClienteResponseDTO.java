@@ -20,8 +20,7 @@ public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> 
 		super();
 		this.apellido=pojo.getApellido();
 		this.nombre=pojo.getNombre();
-		this.dni=pojo.getDni();
-		
+		this.dni=pojo.getDni();		
 		
 	}
 	

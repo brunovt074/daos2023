@@ -35,15 +35,15 @@ public class Clientes {
 	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "domicilio_id")
 	private Domicilio domicilio;		
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String tel;		
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String email;
 	@Column(name = "fecha_nac")
 	private Date  fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
-	@Column(name = "nro_pasaporte", unique = true)
+	@Column(name = "nro_pasaporte"/*, unique = true*/)
 	private Long nroPasaporte;		
-	@Column(name = "exp_pasaporte", unique = true)
+	@Column(name = "exp_pasaporte"/*, unique = true*/)
 	private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
 	/*
 	 * @Column(name = "primer_vuelo") private boolean esPrimerVuelo;
@@ -69,6 +69,11 @@ public class Clientes {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Long getDni() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	public void setDni(Long dni) {
@@ -122,11 +127,6 @@ public class Clientes {
 		this.vuelos = vuelos;
 	}
 	
-
-	public void setNroPasaporte(Long nroPasaporte) {
-		this.nroPasaporte = nroPasaporte;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -172,6 +172,6 @@ public class Clientes {
 	@Override
 	public String toString() {
 		return dni+" - "+ nombre +" "+ apellido;
-	}
+	}	
 		
 }

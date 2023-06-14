@@ -15,6 +15,8 @@ import net.datafaker.Faker;
 
 /**
  * @author Bruno
+ *
+ * LA ANOTACION COMPONENT ES PARA MATCHEARLOS CON FactoryInitializer
  */
 @Component
 public class CiudadFactory {
@@ -30,6 +32,20 @@ public class CiudadFactory {
 	}
 	
 	public void crearCiudadArgentina() {
+			
+		Ciudad nuevaCiudad = new Ciudad();
+		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
+		nuevaCiudad.setNombreCiudad(faker.address().cityName());
+		nuevaCiudad.setProvincia(faker.address().state());
+		nuevaCiudad.setCodPostal(faker.address().zipCode());
+		nuevaCiudad.setPais("Argentina");
+		
+		ciudadDAO.save(nuevaCiudad);
+		System.out.println("UNA CIUDAD ARG GUARDADA: "+ nuevaCiudad.toString());
+			
+	}
+	
+	public void crearCiudadesArgentina() {
 		
 		for (int i = 0; i < 100; i++){
 			
@@ -44,8 +60,22 @@ public class CiudadFactory {
 			System.out.println("CIUDAD GUARDADA: "+ nuevaCiudad.toString());
 		}
 	}
-
+	
 	public void crearCiudadAleatoria() {
+		
+		Ciudad nuevaCiudad = new Ciudad();
+		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
+		nuevaCiudad.setNombreCiudad(faker.address().cityName());
+		nuevaCiudad.setProvincia(faker.address().state());
+		nuevaCiudad.setPais(faker.address().country());
+		nuevaCiudad.setCodPostal(faker.address().zipCode());
+		
+		ciudadDAO.save(nuevaCiudad);
+		System.out.println("UNA CIUDAD INTERNAC GUARDADA: "+ nuevaCiudad.toString());
+		
+	}
+
+	public void crearCiudadesAleatoria() {
 		
 		for (int i = 0; i < 100; i++){
 			
