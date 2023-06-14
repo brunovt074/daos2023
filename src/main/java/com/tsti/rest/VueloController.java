@@ -27,7 +27,7 @@ public class VueloController {
 	private VueloServiceImpl vueloService;
 	
 	//Request recibido desde el momento que se busca un vuelo.
-<<<<<<< HEAD
+
 //	@GetMapping
 //	public ResponseEntity<List<VueloDisponibleDTO>> obtenerVuelosDisponibles(@RequestParam("destino")String destino, 
 //		  													@RequestParam("fecha") 
@@ -65,7 +65,7 @@ public class VueloController {
 //		}		
 //  
 //  }
-=======
+
 //	@GetMapping
 //	public ResponseEntity<List<VueloDisponibleDTO>> obtenerVuelosDisponibles(@RequestParam("destino")String destino, 
 //		  													@RequestParam("fecha") 
@@ -130,6 +130,6 @@ public class VueloController {
 //		}		
 //  
 //  }
->>>>>>> bruno-feature-vuelo-0.1.2
+
 	 
 }
