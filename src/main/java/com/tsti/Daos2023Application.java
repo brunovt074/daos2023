@@ -10,5 +10,5 @@ public class Daos2023Application {
 		SpringApplication.run(Daos2023Application.class, args);	
 		
 	}
-
+	
 }
