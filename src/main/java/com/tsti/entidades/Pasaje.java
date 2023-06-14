@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 public class Pasaje {
 
 	/*
-	 *SI, NECESITAMOS.
+	 *SI, NECESITAMOS.a
 	 * */
 	
 	//ATRIBUTOS
