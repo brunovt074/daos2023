@@ -32,7 +32,6 @@ public class Pasaje {
 	}
 	public Pasaje(Long dni, Long nroVuelo, Integer nroAsiento) {
 		super();
-		
 	}
 	//METODOS
 	public void setDni(Long dni) {
