@@ -29,7 +29,7 @@ import jakarta.validation.constraints.NotNull;
 public class Vuelo {	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	 
-	@Column(name = "nro_vuelo", unique = true)
+	@Column(name = "nro_vuelo")
 	@NotNull	
 	private Long nroVuelo;
 	//Se opto por separar fechas y horas para poder buscar los vuelos 
@@ -38,12 +38,12 @@ public class Vuelo {
 	@DateTimeFormat
 	@NotNull
 	private LocalDate fechaPartida;
-	@Column(name = "hora_partida")
-	
+	@Column(name = "hora_partida")	
 	@NotNull
 	private LocalTime horaPartida;		
 	@NotNull
 	private String aerolinea;
+	private String avion;
 	@Column(name = "nro_fila")
 	@NotNull
 	private Integer nroFila;
@@ -94,23 +94,28 @@ public class Vuelo {
 	}	
 	
 	//METODOS
-	public long getNroVuelo() {
+	public Long getNroVuelo() {
 		return nroVuelo;
 	}
-
+	
+	public void setNroVuelo(long nroVuelo) {
+		this.nroVuelo = nroVuelo;
+	}
 	
 	public String getAerolinea() {
 		return aerolinea;
 	}
 
-
 	public void setAerolinea(String aerolinea) {
 		this.aerolinea = aerolinea;
+	}	
+
+	public String getAvion() {
+		return avion;
 	}
 
-
-	public void setNroVuelo(long nroVuelo) {
-		this.nroVuelo = nroVuelo;
+	public void setAvion(String avion) {
+		this.avion = avion;
 	}
 
 	public LocalDate getFechaPartida() {
@@ -187,12 +192,12 @@ public class Vuelo {
 	}
 
 
-	public EstadoVuelo getEstado() {
+	public EstadoVuelo getEstadoVuelo() {
 		return this.estadoVuelo;
 	}
 
 	//ej de parametro: EstadoVuelo.CANCELADO
-	public void setEstado(EstadoVuelo estado) {
+	public void setEstadoVuelo(EstadoVuelo estado) {
 		this.estadoVuelo = estado;
 	}
 	
@@ -207,6 +212,8 @@ public class Vuelo {
 		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha de partida=" + fechaPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFila
 				+ ", nroAsiento=" + nroAsiento + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
-	}	
+	}
+
+		
 	
 }
