@@ -29,7 +29,7 @@ public class VueloDisponibleDTO {
 		this.nroVuelo = pojo.getNroVuelo();
 		this.aerolinea = pojo.getAerolinea();
 		this.destino = pojo.getDestino();
-		this.tipoVuelo = pojo.getTipoVuelo(tipoVuelo);
+		this.tipoVuelo = pojo.getTipoVuelo();
 		this.fechaPartida = pojo.getFechaPartida();
 		this.horaPartida = pojo.getHoraPartida();
 		
