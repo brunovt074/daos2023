@@ -4,6 +4,7 @@
  * */
 package com.tsti.faker;
 
+import java.util.Random;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -49,73 +50,100 @@ public class FactoryInitializer {
         //creando vuelos 
     	//PARAMETROS:(nroVuelos, nroPasajeros, estado, tipo)
     	
-    	//VUELO VACIO    	
-    	//REGISTRADOS
+    	//VUELO VACIO
     	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
     	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+    	    	    	
+//    	//REGISTRADOS
+    	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+    	
     	//CANCELADOS
     	crearVuelos(6, 0, EstadoVuelo.CANCELADO, TipoVuelo.INTERNACIONAL);
     	crearVuelos(6, 0, EstadoVuelo.CANCELADO, TipoVuelo.NACIONAL);
-//    	//REPROGRAMADOS
+////    //REPROGRAMADOS
     	crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
-//    	//DEMORADOS
-//    	crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+    	crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+////    //DEMORADOS
+    	crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
     	crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
     	
-    	//UN TERCIO DE OCUPACION    	 	    	
-    	crearVuelos(1, 30, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 30, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
-    	   	
-    	//crearVuelos(1, 30, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 30, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+    	//VUELOS NRO PASAJEROS ALEATORIOS
+    	crearVuelosNroPasajerosAleatorios(2, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	crearVuelosNroPasajerosAleatorios(2, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+//    	   	
+    	crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+//    	
+    	crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
     	
-    	crearVuelos(1, 30, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-    	//crearVuelos(1, 30, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
-    
-    	//MITAD DE OCUPACION
-    	crearVuelos(2, 45, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(2, 45, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
-    	    	
-    	//crearVuelos(1, 45, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 45, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
-    	
-    	crearVuelos(1, 45, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-    	//crearVuelos(1, 45, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
-    	
-    	//DOS TERCIO DE OCUPACION
-    	crearVuelos(1, 60, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 60, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
-    	//    	
-    	//crearVuelos(1, 60, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 60, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
-    	
-    	crearVuelos(1, 60, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-    	//crearVuelos(1, 60, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
     	//VUELO LLENO
-    	crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
     	crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
     	    	
-    	//crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);    	
-    	crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+    	crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);    	
+    	//crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
     	
     	crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);    	
     	//crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
+//    
+//    	//UN TERCIO DE OCUPACION    	 	    	
+//    	crearVuelos(1, 30, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+//    	crearVuelos(1, 30, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+//    	   	
+//    	//crearVuelos(1, 30, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
+//    	crearVuelos(1, 30, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+//    	
+//    	crearVuelos(1, 30, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+//    	//crearVuelos(1, 30, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
+//    
+//    	//MITAD DE OCUPACION
+//    	crearVuelos(2, 45, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+//    	crearVuelos(2, 45, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+//    	    	
+//    	//crearVuelos(1, 45, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
+//    	crearVuelos(1, 45, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+//    	
+//    	crearVuelos(1, 45, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+//    	//crearVuelos(1, 45, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
+//    	
+//    	//DOS TERCIOS DE OCUPACION
+//    	crearVuelos(1, 60, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+//    	crearVuelos(1, 60, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+//    	//    	
+//    	//crearVuelos(1, 60, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
+//    	crearVuelos(1, 60, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+//    	
+//    	crearVuelos(1, 60, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+//    	//crearVuelos(1, 60, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
+//    	
     	
     	System.out.println("--Ejecucion de inserciones terminada.--");
     }
     
-    	private void crearVuelos(int nroVuelos, int nroPasajeros, EstadoVuelo estado, TipoVuelo tipo) {
+    private void crearVuelos(int nroVuelos, int nroPasajeros, EstadoVuelo estado, TipoVuelo tipo) {
     		
-    		for(int i = 0; i < nroVuelos; i++) {
-    		
-    			vueloFactory.crearVueloOrigenLocal(nroPasajeros, estado, tipo);
-    			
-    		}       	
-        	
-    	}
+    	for(int i = 0; i < nroVuelos; i++) {
+    	    		
+       			vueloFactory.crearVueloOrigenLocal(nroPasajeros, estado, tipo);
+        			
+       	}       	
+    }
+    
+    private void crearVuelosNroPasajerosAleatorios(int nroVuelos, EstadoVuelo estado, TipoVuelo tipo) {
     	
+    	Random  random = new Random();
+        
+        int pasajerosRandom = random.nextInt(91);  
+ 		
+		for(int i = 0; i < nroVuelos; i++) {
+ 		
+			vueloFactory.crearVueloOrigenLocal(pasajerosRandom, estado, tipo);
+ 			
+		}
     	
+    }
 }
 
   

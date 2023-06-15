@@ -1,4 +1,5 @@
 package com.tsti.entidades; 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
@@ -10,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
@@ -43,23 +43,11 @@ public class Clientes {
 	//@Column(unique = true)
 	private String email;
 	@Column(name = "fecha_nac")
-	private Date  fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
+	private LocalDate  fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
 	@Column(name = "nro_pasaporte"/*, unique = true*/)
 	private Long nroPasaporte;		
 	@Column(name = "exp_pasaporte"/*, unique = true*/)
-	private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
-	/*
-	 * @Column(name = "primer_vuelo") private boolean esPrimerVuelo;
-	 */
-	//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
-	//muchos pasajeros. Se creara una nueva tabla.
-	/*
-	 * @ManyToMany(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "vuelos_pasajeros", joinColumns
-	 * = @JoinColumn(name="pasajero_id"), inverseJoinColumns
-	 * = @JoinColumn(name="vuelo_id"))
-	 */
+	private LocalDate vencimientoPasaporte; // lo mismo que fechaNacimiento	
 	//atributo vuelos tipo HashSet.
 	@ManyToMany(mappedBy = "pasajeros")
 	private Set<Vuelo> vuelos = new HashSet<>();
@@ -142,11 +130,11 @@ public class Clientes {
 		this.email = email;
 	}
 	
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 	
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
@@ -158,11 +146,11 @@ public class Clientes {
 		this.nroPasaporte = nroPasaporte;
 	}
 	
-	public Date getVencimientoPasaporte() {
+	public LocalDate getVencimientoPasaporte() {
 		return vencimientoPasaporte;
 	}
 	
-	public void setVencimientoPasaporte(Date vencimientoPasaporte) {
+	public void setVencimientoPasaporte(LocalDate vencimientoPasaporte) {
 		this.vencimientoPasaporte = vencimientoPasaporte;
 	}
 	
