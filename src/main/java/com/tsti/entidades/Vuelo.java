@@ -94,7 +94,7 @@ public class Vuelo {
 		super();
 	}
 	
-	//ENUM para estado de los vuelos.
+	//ENUM para estado de los vuelos. Se puede acceder por getEstadoVuelo(int estadoVuelo)
 	public enum EstadoVuelo {
 		REGISTRADO,
 	    DEMORADO,
@@ -102,7 +102,7 @@ public class Vuelo {
 	    REPROGRAMADO
 	}
 	
-	//ENUM para tipo de vuelo.
+	//ENUM para tipo de vuelo. Se puede acceder por getTipoVuelo(int tipoVuelo)
 	public enum TipoVuelo {
 		NACIONAL,
 		INTERNACIONAL
@@ -176,7 +176,7 @@ public class Vuelo {
 	}
 	
 	public int getNroAsientos() {
-		return nroAsientos;
+		return nroFilas * nroColumnas;
 	}
 
 	public int getNroColumnas() {
@@ -192,7 +192,9 @@ public class Vuelo {
 	}
 	
 	public TipoVuelo getTipoVuelo() {
+		
 		return this.tipoVuelo;
+		
 	}
 	
 	@Autowired //fuerzo a spring que utilice este metodo durante la IOC
@@ -229,6 +231,7 @@ public class Vuelo {
 
 
 	public EstadoVuelo getEstadoVuelo() {
+		
 		return this.estadoVuelo;
 	}
 

@@ -23,13 +23,13 @@ public class VueloDisponibleDTO {
 	private LocalTime horaPartida;	
 	
 	
-	public VueloDisponibleDTO (Vuelo pojo){
+	public VueloDisponibleDTO (Vuelo pojo, int tipoVuelo){
 		
 		super();
 		this.nroVuelo = pojo.getNroVuelo();
 		this.aerolinea = pojo.getAerolinea();
 		this.destino = pojo.getDestino();
-		this.tipoVuelo = pojo.getTipoVuelo();
+		this.tipoVuelo = pojo.getTipoVuelo(tipoVuelo);
 		this.fechaPartida = pojo.getFechaPartida();
 		this.horaPartida = pojo.getHoraPartida();
 		
