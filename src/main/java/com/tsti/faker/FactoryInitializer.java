@@ -79,7 +79,7 @@ public class FactoryInitializer {
     	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
     	
     	//VUELO LLENO
-    	//crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
     	crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
     	    	
     	crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);    	
