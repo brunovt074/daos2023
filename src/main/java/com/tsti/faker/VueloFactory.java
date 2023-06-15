@@ -34,7 +34,6 @@ public class VueloFactory {
 	private Faker faker;	
 	private CiudadFactory ciudadFactory;
 	private ClienteFactory clienteFactory;
-	//private DomicilioFactory domicilioFactory;
 	private Ciudad origen;
 	private Ciudad destino;
 	
@@ -54,7 +53,7 @@ public class VueloFactory {
 		this.faker = new Faker(new Locale("es") );
 		this.ciudadFactory = new CiudadFactory();
 		this.clienteFactory = new ClienteFactory();
-		//this.domicilioFactory = new DomicilioFactory();
+		
 	}
 	
 	public void crearVueloOrigenLocal(int nroPasajeros, EstadoVuelo estadoVuelo, TipoVuelo tipoVuelo) {

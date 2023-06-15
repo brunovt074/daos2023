@@ -3,7 +3,9 @@
  */
 package com.tsti.faker;
 
+import java.time.LocalDate;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,8 +49,7 @@ public class ClienteFactory {
 		Clientes nuevoCliente = new Clientes();
 
 		inicializarCliente(nuevoCliente, ciudadDAO, domicilioDAO, true);
-		//inicializarCliente(nuevoCliente, true);
-		//clienteDAO.save(nuevoCliente);
+		
 		System.out.println("CREADO 1 PASAJERO NAC: " + nuevoCliente.toString());
 		return nuevoCliente;
 		
@@ -153,8 +154,7 @@ public class ClienteFactory {
 			nuevoCliente.setTel(faker.phoneNumber().cellPhone());
 			nuevoCliente.setEmail(faker.internet().emailAddress());
 			nuevoCliente.setDomicilio(domicilio);
-			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
-			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
+			nuevoCliente.setFechaNacimiento(faker.date().birthday().toLocalDateTime().toLocalDate());
 		}else {
 			domicilio = domicilioFactory.getUnDomicilioAleatorio(ciudadDAO);
 			domicilioDAO.save(domicilio);
@@ -167,9 +167,8 @@ public class ClienteFactory {
 			nuevoCliente.setEmail(faker.internet().emailAddress());
 			nuevoCliente.setDomicilio(domicilio);
 			nuevoCliente.setNroPasaporte(faker.number().numberBetween(1000000L, 999999999L));
-			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
-			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
-			//nuevoCliente.vencimientoPasaporte(faker.date().future(i, null);
+			nuevoCliente.setFechaNacimiento(faker.date().birthday().toLocalDateTime().toLocalDate());
+			nuevoCliente.setVencimientoPasaporte(faker.date().future(3650, TimeUnit.DAYS).toLocalDateTime().toLocalDate());
 			
 		}		
 		

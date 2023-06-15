@@ -96,10 +96,14 @@ public class Vuelo {
 	
 	//ENUM para estado de los vuelos. Se puede acceder por getEstadoVuelo(int estadoVuelo)
 	public enum EstadoVuelo {
-		REGISTRADO,
-	    DEMORADO,
-	    CANCELADO,
-	    REPROGRAMADO
+		REGISTRADO(0),
+	    DEMORADO(1),
+	    CANCELADO(2),
+	    REPROGRAMADO(3);
+
+		EstadoVuelo(int i) {
+			
+		}
 	}
 	
 	//ENUM para tipo de vuelo. Se puede acceder por getTipoVuelo(int tipoVuelo)
