@@ -28,26 +28,23 @@ public class FactoryInitializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initialize() {
-    	//creando ciudades
-//    	ciudadFactory.crearCiudadArgentina();
-//    	ciudadFactory.crearCiudadesArgentina();
-//        ciudadFactory.crearCiudadAleatoria();
+    	//creando ciudades//    	ciudadFactory.crearCiudadArgentina();//    	ciudadFactory.crearCiudadesArgentina();//        ciudadFactory.crearCiudadAleatoria();
 //        ciudadFactory.crearCiudadesAleatoria();
         
         //creando clientes
-//        clienteFactory.crearUnPasajeroNacional();
-//        clienteFactory.crearPasajerosNacionales();
-//        clienteFactory.crearUnPasajeroInternacional();
-//        clienteFactory.crearPasajerosInternacionales();
+        //clienteFactory.crearUnPasajeroNacional();
+        clienteFactory.crearPasajerosNacionales();
+        //clienteFactory.crearUnPasajeroInternacional();
+        //clienteFactory.crearPasajerosInternacionales();
         
         //creando domicilios
         //domicilioFactory.crearUnDomicilioArgentino();
         //domicilioFactory.crearUnDomicilioAleatorio();
-//        domicilioFactory.crearDomiciliosArgentinos();
-//        domicilioFactory.crearDomiciliosAleatorios();
+        //domicilioFactory.crearDomiciliosArgentinos();
+        //domicilioFactory.crearDomiciliosAleatorios();
         
         //creando vuelos
-        vueloFactory.crearVueloNacionalOrigenLocal();
+        //vueloFactory.crearVueloNacionalOrigenLocal();
     }
 }
 

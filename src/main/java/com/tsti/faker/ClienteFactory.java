@@ -44,19 +44,21 @@ public class ClienteFactory {
 	
 	public void crearUnPasajeroNacional() {
 		faker = new Faker(new Locale("es"));
-		Clientes nuevoCliente = new Clientes();
-		domicilio = domicilioFactory.obtenerUnDomicilioArgentino(ciudadDAO);
-		domicilioDAO.save(domicilio);
-		//String pasaporte = "[A-Za-z]{3}\\d{6}";
 		
-		nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
-		nuevoCliente.setNombre(faker.name().firstName());
-		nuevoCliente.setApellido(faker.name().lastName());
-		nuevoCliente.setTel(faker.phoneNumber().cellPhone());
-		nuevoCliente.setEmail(faker.internet().emailAddress());
-		nuevoCliente.setDomicilio(domicilio);
-		//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
-		//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
+		Clientes nuevoCliente = new Clientes();
+		inicializarCliente(nuevoCliente, true);
+//		domicilio = domicilioFactory.getUnDomicilioArgentino(ciudadDAO);
+//		domicilioDAO.save(domicilio);
+//		//String pasaporte = "[A-Za-z]{3}\\d{6}";
+//		
+//		nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
+//		nuevoCliente.setNombre(faker.name().firstName());
+//		nuevoCliente.setApellido(faker.name().lastName());
+//		nuevoCliente.setTel(faker.phoneNumber().cellPhone());
+//		nuevoCliente.setEmail(faker.internet().emailAddress());
+//		nuevoCliente.setDomicilio(domicilio);
+//		//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
+//		//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
 		clienteDAO.save(nuevoCliente);
 		System.out.println("CARGADO 1 PASAJERO NAC: " + nuevoCliente.toString());
 	}
@@ -66,18 +68,19 @@ public class ClienteFactory {
 		
 		for (int i = 0; i < 100; i++){
 			Clientes nuevoCliente = new Clientes();
-			domicilio = domicilioFactory.obtenerUnDomicilioArgentino(ciudadDAO);
-			domicilioDAO.save(domicilio);			
-			//String pasaporte = "[A-Za-z]{3}\\d{6}";
-			
-			nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
-			nuevoCliente.setNombre(faker.name().firstName());
-			nuevoCliente.setApellido(faker.name().lastName());
-			nuevoCliente.setTel(faker.phoneNumber().cellPhone());
-			nuevoCliente.setEmail(faker.internet().emailAddress());
-			nuevoCliente.setDomicilio(domicilio);
-			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
-			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
+			inicializarCliente(nuevoCliente, true);
+//			domicilio = domicilioFactory.getUnDomicilioArgentino(ciudadDAO);
+//			domicilioDAO.save(domicilio);			
+//			//String pasaporte = "[A-Za-z]{3}\\d{6}";
+//			
+//			nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
+//			nuevoCliente.setNombre(faker.name().firstName());
+//			nuevoCliente.setApellido(faker.name().lastName());
+//			nuevoCliente.setTel(faker.phoneNumber().cellPhone());
+//			nuevoCliente.setEmail(faker.internet().emailAddress());
+//			nuevoCliente.setDomicilio(domicilio);
+//			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
+//			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
 			clienteDAO.save(nuevoCliente);
 			System.out.println("CARGADO PASAJERO NAC: " + nuevoCliente.toString());
 		}
@@ -86,18 +89,20 @@ public class ClienteFactory {
 	public void crearUnPasajeroInternacional() {
 		faker = new Faker();
 		Clientes nuevoCliente = new Clientes();
-		domicilio = domicilioFactory.obtenerUnDomicilioAleatorio(ciudadDAO);
-		domicilioDAO.save(domicilio);
-		//String pasaporte = "[A-Za-z]{3}\\d{6}";
+		inicializarCliente(nuevoCliente, false);
 		
-		
-		nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
-		nuevoCliente.setNombre(faker.name().firstName());
-		nuevoCliente.setApellido(faker.name().lastName());
-		nuevoCliente.setTel(faker.phoneNumber().cellPhone());
-		nuevoCliente.setEmail(faker.internet().emailAddress());
-		nuevoCliente.setNroPasaporte(faker.number().numberBetween(1000000L, 999999999L));
-		nuevoCliente.setDomicilio(domicilio);
+//		domicilio = domicilioFactory.getUnDomicilioAleatorio(ciudadDAO);
+//		domicilioDAO.save(domicilio);
+//		//String pasaporte = "[A-Za-z]{3}\\d{6}";
+//		
+//		
+//		nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
+//		nuevoCliente.setNombre(faker.name().firstName());
+//		nuevoCliente.setApellido(faker.name().lastName());
+//		nuevoCliente.setTel(faker.phoneNumber().cellPhone());
+//		nuevoCliente.setEmail(faker.internet().emailAddress());
+//		nuevoCliente.setNroPasaporte(faker.number().numberBetween(1000000L, 999999999L));
+//		nuevoCliente.setDomicilio(domicilio);
 		//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
 		//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
 		//Se deberia castear pasaporte a String.		
@@ -109,11 +114,50 @@ public class ClienteFactory {
 	}
 	
 	public void crearPasajerosInternacionales() {
+		faker = new Faker();
 		
 		for (int i = 0; i < 100; i++){
 			
 			Clientes nuevoCliente = new Clientes();
-			domicilio = domicilioFactory.obtenerUnDomicilioAleatorio(ciudadDAO);
+			inicializarCliente(nuevoCliente, false);
+			
+//			domicilio = domicilioFactory.getUnDomicilioAleatorio(ciudadDAO);
+//			domicilioDAO.save(domicilio);
+//			//String pasaporte = "[A-Za-z]{3}\\d{6}";
+//			
+//			nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
+//			nuevoCliente.setNombre(faker.name().firstName());
+//			nuevoCliente.setApellido(faker.name().lastName());
+//			nuevoCliente.setTel(faker.phoneNumber().cellPhone());
+//			nuevoCliente.setEmail(faker.internet().emailAddress());
+//			nuevoCliente.setDomicilio(domicilio);
+//			nuevoCliente.setNroPasaporte(faker.number().numberBetween(1000000L, 999999999L));
+			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
+			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
+			//nuevoCliente.vencimientoPasaporte(faker.date().future(i, null);
+			
+			clienteDAO.save(nuevoCliente);
+			System.out.println("CARGADO PASAJERO INTER: " + nuevoCliente.toString());
+		}
+	}
+	
+	private Clientes inicializarCliente(Clientes nuevoCliente, boolean esNacional){
+		
+		if(esNacional) {
+			domicilio = domicilioFactory.getUnDomicilioArgentino(ciudadDAO);
+			domicilioDAO.save(domicilio);			
+			//String pasaporte = "[A-Za-z]{3}\\d{6}";
+			
+			nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
+			nuevoCliente.setNombre(faker.name().firstName());
+			nuevoCliente.setApellido(faker.name().lastName());
+			nuevoCliente.setTel(faker.phoneNumber().cellPhone());
+			nuevoCliente.setEmail(faker.internet().emailAddress());
+			nuevoCliente.setDomicilio(domicilio);
+			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
+			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
+		}else {
+			domicilio = domicilioFactory.getUnDomicilioAleatorio(ciudadDAO);
 			domicilioDAO.save(domicilio);
 			//String pasaporte = "[A-Za-z]{3}\\d{6}";
 			
@@ -127,9 +171,11 @@ public class ClienteFactory {
 			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
 			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
 			//nuevoCliente.vencimientoPasaporte(faker.date().future(i, null);
-			clienteDAO.save(nuevoCliente);
-			System.out.println("CARGADO PASAJERO INTER: " + nuevoCliente.toString());
+			
 		}
+		
+		
+		return nuevoCliente;
 	}
 
 }

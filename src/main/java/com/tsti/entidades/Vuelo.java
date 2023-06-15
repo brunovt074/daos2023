@@ -18,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -46,12 +47,15 @@ public class Vuelo {
 	@NotNull	
 	private String aerolinea;
 	private String avion;
-	@Column(name = "nro_fila")
+	@Transient
+	private int nroFilas;
+	@Transient
+	private int nroColumnas;
+	@Transient
+	private Clientes plazas[][];
+	@Column(name = "nro_asientos")
 	@NotNull
-	private Integer nroFila;
-	@Column(name = "nro_asiento")
-	@NotNull
-	private Integer nroAsiento;
+	private int nroAsientos;	
 	@Column(name = "tipo_vuelo")
 	@NotNull
 	private TipoVuelo tipoVuelo;
@@ -66,6 +70,8 @@ public class Vuelo {
 	@NotNull
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   			//Creado tipo ENUM para este caso. 
+	
+	
 	/* 
 	 * El estado es autocalculado por el sistema, no puede ser establecido por
 		el usuario.
@@ -145,26 +151,39 @@ public class Vuelo {
 	}
 
 
-	public int getNroFila() {
-		return nroFila;
+	public int getNroFilas() {
+		return nroFilas;
 	}
 
 
-	public void setNroFila(int nroFila) {
-		this.nroFila = nroFila;
+	public void setNroFilas(int nroFila) {
+		this.nroFilas = nroFila;
 	}
 
-
-	public int getNroAsiento() {
-		return nroAsiento;
+	public Clientes[][] getPlazas() {
+		return plazas;
+	}	
+	
+	public void setNroAsientos(int nroFilas, int nroColumnas) {
+		this.nroAsientos = nroFilas * nroColumnas;
+	}
+	
+	public int getNroAsientos() {
+		return nroAsientos;
 	}
 
-
-	public void setNroAsiento(int nroAsiento) {
-		this.nroAsiento = nroAsiento;
+	public int getNroColumnas() {
+		return nroColumnas;
 	}
 
-
+	public void setNroColumnas(int nroColumnas) {
+		this.nroColumnas = nroColumnas;
+	}
+	
+	public void setPlazas(Clientes[][] plazas) {
+		this.plazas = plazas;
+	}
+	
 	public TipoVuelo getTipoVuelo() {
 		return this.tipoVuelo;
 	}
@@ -211,16 +230,28 @@ public class Vuelo {
 		this.estadoVuelo = estado;
 	}
 	
-	public Set<Clientes>getPasajeros(){
+	public HashSet<Clientes> getPasajeros(){
 		
 		return pasajeros;
+		
+	}
+	
+	public void setPasajeros(HashSet<Clientes> pasajeros){
+		
+		this.pasajeros = pasajeros;	
+		
+	}
+	
+	public void addPasajero(Clientes pasajero){
+		
+		this.pasajeros.add(pasajero);		
 		
 	}
 
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha y hora de partida=" + fechaHoraPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFila
-				+ ", nroAsiento=" + nroAsiento + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
+		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha y hora de partida=" + fechaHoraPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
+				+ ", nroColumnas=" + nroColumnas + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}
 

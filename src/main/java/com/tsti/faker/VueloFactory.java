@@ -17,6 +17,7 @@ import com.tsti.dao.ClienteDAO;
 import com.tsti.dao.DomicilioDAO;
 import com.tsti.dao.VueloDAO;
 import com.tsti.entidades.Vuelo;
+import com.tsti.entidades.Clientes;
 import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.entidades.Ciudad;
 
@@ -46,12 +47,38 @@ public class VueloFactory {
 	
 	public void crearVueloNacionalOrigenLocal(/*int nroPasajeros, EstadoVuelo estado*/) {
 		
-		Vuelo vuelo = new Vuelo();
-		
 		Ciudad origen = ciudadFactory.getCiudadSauceViejo();
 		Ciudad destino = ciudadFactory.getCiudadArgentina();
 		ciudadDAO.save(origen);
 		ciudadDAO.save(destino);
+		
+		Vuelo vuelo = new Vuelo();
+		//Metodo mejorado para obtener fecha y hora en un array y evitar repetir codigo.
+		Object[] fechaHoraPartida = fechaHora();
+				
+		vuelo.setAerolinea(faker.aviation().airline());
+		vuelo.setAvion(faker.aviation().airplane());
+		vuelo.setNroFilas(3);
+		vuelo.setNroColumnas(30);
+		Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
+		vuelo.setPlazas(plazas); 
+		vuelo.setOrigen(origen);
+		vuelo.setDestino(destino);
+		vuelo.setTipoVuelo();
+		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
+		vuelo.setFechaPartida((LocalDate) fechaHoraPartida[0]);
+		vuelo.setHoraPartida((LocalTime) fechaHoraPartida[1]);
+		//logica de clientes
+		
+		System.out.println("Fecha de partida: " + vuelo.getFechaPartida().toString());
+		System.out.println("Fecha de partida: " + vuelo.getHoraPartida().toString());		
+		
+	}
+	
+
+	private Object[] fechaHora() {
+		
+		Object[] fechaHoraPartida = new Object[2];		
 		
 		//Obtener fecha.
 		LocalDateTime fechaPartidaTimestamp = (faker.date().future(60,0,TimeUnit.DAYS)).toLocalDateTime();
@@ -60,19 +87,21 @@ public class VueloFactory {
 		LocalDateTime horaPartidaTimestamp = (faker.date().future(12,0,TimeUnit.HOURS)).toLocalDateTime();
 		LocalTime horaPartida = horaPartidaTimestamp.toLocalTime().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
 		
-		vuelo.setAerolinea(faker.aviation().airline());
-		vuelo.setAvion(faker.aviation().airplane());
-		vuelo.setOrigen(origen);
-		vuelo.setDestino(destino);
-		vuelo.setTipoVuelo();
-		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
-		vuelo.setFechaPartida(fechaPartida);
-		vuelo.setHoraPartida(horaPartida);
-		//logica de clientes
+		fechaHoraPartida[0] = fechaPartida; //Elemento de tipo LocalDate
+		fechaHoraPartida[1] = horaPartida; //Elemento de tipo LocalTime
 		
-		System.out.println("Fecha de partida: " + vuelo.getFechaPartida().toString());
-		System.out.println("Fecha de partida: " + vuelo.getHoraPartida().toString());		
+		return fechaHoraPartida;
 		
+	}
+	
+	private Vuelo cargarPasajeros (Vuelo vuelo, int nroPasajeros) {
+		
+		//Cliente = clienteFactory.crearUnPasajeroNacional();
+		vuelo.addPasajero(null);
+		
+		 
+		
+		return vuelo;
 	}
 
 }
