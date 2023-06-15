@@ -46,12 +46,8 @@ public class CiudadFactory {
 	public Ciudad getCiudadArgentina() {
 		
 		Ciudad nuevaCiudad = new Ciudad();
-		inicializarCiudad (nuevaCiudad, true);
-//		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
-//		nuevaCiudad.setNombreCiudad(faker.address().cityName());
-//		nuevaCiudad.setProvincia(faker.address().state());
-//		nuevaCiudad.setCodPostal(faker.address().zipCode());
-//		nuevaCiudad.setPais("Argentina");	
+		
+		inicializarCiudad (nuevaCiudad, true);	
 		
 		return nuevaCiudad;			
 	}
@@ -59,12 +55,8 @@ public class CiudadFactory {
 	public void crearCiudadArgentina() {
 			
 		Ciudad nuevaCiudad = new Ciudad();
+		
 		inicializarCiudad (nuevaCiudad, true);
-//		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
-//		nuevaCiudad.setNombreCiudad(faker.address().cityName());
-//		nuevaCiudad.setProvincia(faker.address().state());
-//		nuevaCiudad.setCodPostal(faker.address().zipCode());
-//		nuevaCiudad.setPais("Argentina");
 		
 		ciudadDAO.save(nuevaCiudad);
 		System.out.println("UNA CIUDAD ARG GUARDADA: "+ nuevaCiudad.toString());
@@ -76,12 +68,8 @@ public class CiudadFactory {
 		for (int i = 0; i < 100; i++){
 			
 			Ciudad nuevaCiudad = new Ciudad();
+			
 			inicializarCiudad (nuevaCiudad, true);
-//			nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
-//			nuevaCiudad.setNombreCiudad(faker.address().cityName());
-//			nuevaCiudad.setProvincia(faker.address().state());
-//			nuevaCiudad.setCodPostal(faker.address().zipCode());
-//			nuevaCiudad.setPais("Argentina");
 			
 			ciudadDAO.save(nuevaCiudad);
 			System.out.println("CIUDAD GUARDADA: "+ nuevaCiudad.toString());
@@ -91,11 +79,7 @@ public class CiudadFactory {
 	public Ciudad getCiudadAleatoria() {
 		
 		Ciudad nuevaCiudad = new Ciudad();
-//		nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
-//		nuevaCiudad.setNombreCiudad(faker.address().cityName());
-//		nuevaCiudad.setProvincia(faker.address().state());
-//		nuevaCiudad.setCodPostal(faker.address().zipCode());
-//		nuevaCiudad.setPais(faker.address().country());
+
 		inicializarCiudad (nuevaCiudad, false);
 		
 		System.out.println("UNA CIUDAD INTERNAC CREADA: "+ nuevaCiudad.toString());

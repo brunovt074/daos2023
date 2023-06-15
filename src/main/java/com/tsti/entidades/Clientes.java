@@ -53,11 +53,15 @@ public class Clientes {
 	 */
 	//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
 	//muchos pasajeros. Se creara una nueva tabla.
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "vuelos_pasajeros", 
-			   joinColumns = @JoinColumn(name="pasajero_id"),
-			   inverseJoinColumns = @JoinColumn(name="vuelo_id"))
+	/*
+	 * @ManyToMany(cascade = CascadeType.ALL)
+	 * 
+	 * @JoinTable(name = "vuelos_pasajeros", joinColumns
+	 * = @JoinColumn(name="pasajero_id"), inverseJoinColumns
+	 * = @JoinColumn(name="vuelo_id"))
+	 */
 	//atributo vuelos tipo HashSet.
+	@ManyToMany(mappedBy = "pasajeros")
 	private Set<Vuelo> vuelos = new HashSet<>();
 	
 	//CONSTRUCTOR
@@ -126,7 +130,7 @@ public class Clientes {
 		return vuelos;
 	}
 
-	public void setVuelos(Set<Vuelo> vuelos) {
+	public void setVuelos(HashSet<Vuelo> vuelos) {
 		this.vuelos = vuelos;
 	}
 	

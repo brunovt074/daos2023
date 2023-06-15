@@ -33,16 +33,21 @@ public class VueloFactory {
 	private Faker faker;	
 	private CiudadFactory ciudadFactory;
 	private ClienteFactory clienteFactory;
+	private DomicilioFactory domicilioFactory; 
 	@Autowired
 	private VueloDAO vueloDAO;
 	@Autowired
 	private ClienteDAO clienteDAO;	
 	@Autowired
 	private CiudadDAO ciudadDAO;
-		
+	@Autowired
+	private DomicilioDAO domicilioDAO;
+	
 	public VueloFactory() {
 		this.faker = new Faker(new Locale("es") );
 		this.ciudadFactory = new CiudadFactory();
+		this.clienteFactory = new ClienteFactory();
+		this.domicilioFactory = new DomicilioFactory();
 	}
 	
 	public void crearVueloNacionalOrigenLocal(/*int nroPasajeros, EstadoVuelo estado*/) {
@@ -68,11 +73,15 @@ public class VueloFactory {
 		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
 		vuelo.setFechaPartida((LocalDate) fechaHoraPartida[0]);
 		vuelo.setHoraPartida((LocalTime) fechaHoraPartida[1]);
-		//logica de clientes
+		//Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
+		//vuelo.addPasajero(pasajero);		
+		cargarPasajeros(vuelo, clienteDAO, ciudadDAO, domicilioDAO, 1);
+		//
+		//System.out.println(pasajero.toString());
+		System.out.println(vuelo.getPasajeros().toString());
+		System.out.println(vuelo.toString());				
 		
-		System.out.println("Fecha de partida: " + vuelo.getFechaPartida().toString());
-		System.out.println("Fecha de partida: " + vuelo.getHoraPartida().toString());		
-		
+		vueloDAO.save(vuelo);
 	}
 	
 
@@ -94,14 +103,15 @@ public class VueloFactory {
 		
 	}
 	
-	private Vuelo cargarPasajeros (Vuelo vuelo, int nroPasajeros) {
+	private void cargarPasajeros(Vuelo vuelo, ClienteDAO clienteDAO, CiudadDAO ciudadDAO, DomicilioDAO domicilioDAO, int nroPasajeros) {
 		
-		//Cliente = clienteFactory.crearUnPasajeroNacional();
-		vuelo.addPasajero(null);
+		Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
+		vuelo.addPasajero(pasajero);
 		
-		 
+		System.out.println(pasajero.toString());
+		System.out.println(vuelo.getPasajeros().toString());
+		System.out.println(vuelo.toString());	
 		
-		return vuelo;
 	}
 
 }

@@ -39,14 +39,8 @@ public class DomicilioFactory {
 		
 		faker = new Faker(new Locale("es"));
 		Domicilio nuevoDomicilio = new Domicilio();
-		inicializarDomicilio (nuevoDomicilio, ciudadDAO, true);
-//		Ciudad nuevaCiudad = ciudadFactory.getCiudadArgentina(); 
-//		ciudadDAO.save(nuevaCiudad);
-//		
-//		nuevoDomicilio.setDireccion(faker.address().streetAddress());
-//		nuevoDomicilio.setNro(Integer.parseInt(faker.address().streetAddressNumber()));
-		//nuevoDomicilio.setDepto;
-		//nuevoDomicilio.setCiudad(nuevaCiudad);		
+		
+		inicializarDomicilio (nuevoDomicilio, ciudadDAO, true);		
 		
 		return nuevoDomicilio;		
 		
@@ -56,16 +50,8 @@ public class DomicilioFactory {
 		
 		faker = new Faker(new Locale("es"));
 		Domicilio nuevoDomicilio = new Domicilio();
-		inicializarDomicilio (nuevoDomicilio, true);
-//		Ciudad nuevaCiudad = ciudadFactory.getCiudadArgentina(); 
-//		ciudadDAO.save(nuevaCiudad);
-//		
-//		nuevoDomicilio.setDireccion(faker.address().streetAddress());
-//		nuevoDomicilio.setNro(Integer.parseInt(faker.address().streetAddressNumber()));
-//		//nuevoDomicilio.setDepto;
-//		nuevoDomicilio.setCiudad(nuevaCiudad);		
 		
-		domicilioDAO.save(nuevoDomicilio);
+		inicializarDomicilio (nuevoDomicilio, true);
 		
 		System.out.println("DOMICILIO CREADO: " + nuevoDomicilio.toString());
 	}
@@ -76,14 +62,8 @@ public class DomicilioFactory {
 		
 		for (int i = 0; i < 100; i++){
 			Domicilio nuevoDomicilio = new Domicilio();
+			
 			inicializarDomicilio (nuevoDomicilio, true);
-//			Ciudad nuevaCiudad = ciudadFactory.getCiudadArgentina(); 
-//			ciudadDAO.save(nuevaCiudad);
-//			
-//			nuevoDomicilio.setDireccion(faker.address().streetAddress());
-//			nuevoDomicilio.setNro(Integer.parseInt(faker.address().streetAddressNumber()));
-//			//nuevoDomicilio.setDepto;
-//			nuevoDomicilio.setCiudad(nuevaCiudad);		
 			
 			domicilioDAO.save(nuevoDomicilio);
 			
@@ -95,14 +75,9 @@ public class DomicilioFactory {
 		faker = new Faker();
 		
 		Domicilio nuevoDomicilio = new Domicilio();
+		
 		inicializarDomicilio (nuevoDomicilio,ciudadDAO, true);
-//		Ciudad nuevaCiudad = ciudadFactory.getCiudadAleatoria(); 
-//		ciudadDAO.save(nuevaCiudad);
-//		
-//		nuevoDomicilio.setDireccion(faker.address().streetAddress());
-//		nuevoDomicilio.setNro(Integer.parseInt(faker.address().streetAddressNumber()));
-//		//nuevoDomicilio.setDepto;
-//		nuevoDomicilio.setCiudad(nuevaCiudad);		
+		
 		
 		return nuevoDomicilio;	
 		
@@ -114,13 +89,6 @@ public class DomicilioFactory {
 		Domicilio nuevoDomicilio = new Domicilio();		
 		
 		inicializarDomicilio (nuevoDomicilio, false);
-//		Ciudad nuevaCiudad = ciudadFactory.getCiudadAleatoria(); 
-//		ciudadDAO.save(nuevaCiudad);
-//		
-//		nuevoDomicilio.setDireccion(faker.address().streetAddress());
-//		nuevoDomicilio.setNro(Integer.parseInt(faker.address().streetAddressNumber()));
-//		//nuevoDomicilio.setDepto;
-//		nuevoDomicilio.setCiudad(nuevaCiudad);		
 		
 		domicilioDAO.save(nuevoDomicilio);
 		
@@ -135,12 +103,6 @@ public class DomicilioFactory {
 				Domicilio nuevoDomicilio = new Domicilio();		
 				
 				inicializarDomicilio (nuevoDomicilio, false);
-//				Ciudad nuevaCiudad = ciudadFactory.getCiudadAleatoria(); 
-//				ciudadDAO.save(nuevaCiudad);
-//				nuevoDomicilio.setDireccion(faker.address().streetAddress());
-//				nuevoDomicilio.setNro(Integer.parseInt(faker.address().streetAddressNumber()));
-//				//nuevoDomicilio.setDepto;
-//				nuevoDomicilio.setCiudad(nuevaCiudad);		
 				
 				domicilioDAO.save(nuevoDomicilio);
 				

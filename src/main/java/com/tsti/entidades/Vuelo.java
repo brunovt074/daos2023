@@ -9,12 +9,14 @@ import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -31,8 +33,7 @@ import jakarta.validation.constraints.NotNull;
 public class Vuelo {	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	 
-	@Column(name = "nro_vuelo")
-	@NotNull	
+	@Column(name = "nro_vuelo")		
 	private Long nroVuelo;
 	//Se opto por separar fechas y horas para poder buscar los vuelos 
 	//por fechas y tratar de simplificar el manejo de las mismas.
@@ -65,8 +66,14 @@ public class Vuelo {
 	@ManyToOne
 	@JoinColumn(name = "destino_id")	
 	private Ciudad destino;//creada la entidad Ciudad	
-	@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
-	private HashSet<Clientes> pasajeros = new HashSet<>();	
+	//@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+	    name = "vuelos_pasajeros",
+	    joinColumns = @JoinColumn(name = "vuelo_id"),
+	    inverseJoinColumns = @JoinColumn(name = "pasajero_id")
+	)
+	private Set<Clientes> pasajeros = new HashSet<>();	
 	@NotNull
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   			//Creado tipo ENUM para este caso. 
@@ -106,7 +113,7 @@ public class Vuelo {
 		return nroVuelo;
 	}
 	
-	public void setNroVuelo(long nroVuelo) {
+	public void setNroVuelo(Long nroVuelo) {
 		this.nroVuelo = nroVuelo;
 	}
 	
@@ -230,7 +237,7 @@ public class Vuelo {
 		this.estadoVuelo = estado;
 	}
 	
-	public HashSet<Clientes> getPasajeros(){
+	public Set<Clientes> getPasajeros(){
 		
 		return pasajeros;
 		
