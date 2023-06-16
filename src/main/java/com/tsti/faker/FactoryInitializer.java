@@ -32,7 +32,16 @@ public class FactoryInitializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initialize() {
-    	//creando ciudades    	//ciudadFactory.crearCiudadArgentina();    	//ciudadFactory.crearCiudadesArgentina();        //ciudadFactory.crearCiudadAleatoria();
+    	
+    	creadorVuelos();
+    	
+    }
+    
+    private void creadorVuelos() {
+    	//creando ciudades
+    	//ciudadFactory.crearCiudadArgentina();
+    	//ciudadFactory.crearCiudadesArgentina();
+        //ciudadFactory.crearCiudadAleatoria();
         //ciudadFactory.crearCiudadesAleatoria();
         
         //creando clientes
@@ -120,6 +129,7 @@ public class FactoryInitializer {
 //    	
     	
     	System.out.println("--Ejecucion de inserciones terminada.--");
+    	
     }
     
     private void crearVuelos(int nroVuelos, int nroPasajeros, EstadoVuelo estado, TipoVuelo tipo) {

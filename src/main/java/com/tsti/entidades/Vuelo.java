@@ -43,8 +43,7 @@ public class Vuelo {
 	private LocalDate fechaPartida;
 	@Column(name = "hora_partida")	
 	@NotNull
-	private LocalTime horaPartida;
-	private Timestamp fechaHoraPartida;
+	private LocalTime horaPartida;	
 	@NotNull	
 	private String aerolinea;
 	private String avion;
@@ -153,15 +152,6 @@ public class Vuelo {
 		this.horaPartida = horaPartida;
 	}
 	
-	public Timestamp getFechaHoraPartida() {
-		return fechaHoraPartida;
-	}
-
-	public void setFechaHoraPartida(Timestamp timestamp) {
-		this.fechaHoraPartida = timestamp;
-	}
-
-
 	public int getNroFilas() {
 		return nroFilas;
 	}
@@ -264,7 +254,7 @@ public class Vuelo {
 
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha y hora de partida=" + fechaHoraPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
+		return "Vuelo [nroVuelo=" + nroVuelo + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
 				+ ", nroColumnas=" + nroColumnas + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}

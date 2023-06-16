@@ -76,7 +76,8 @@ public class VueloFactory {
 		Vuelo vuelo = new Vuelo();
 		
 		//Metodo mejorado para obtener fecha y hora en un array y evitar repetir codigo.
-		Object[] fechaHoraPartida = fechaHora();
+		//1er parametro dias de partida hacia adelante, 2do: horas +
+		Object[] fechaHoraPartida = fechaHora(10,24);
 				
 		vuelo.setAerolinea(faker.aviation().airline());
 		vuelo.setAvion(faker.aviation().airplane());
@@ -100,15 +101,15 @@ public class VueloFactory {
 	}
 	
 
-	private Object[] fechaHora() {
+	private Object[] fechaHora(int diasFechaPartida, int horasPartida) {
 		
 		Object[] fechaHoraPartida = new Object[2];		
 		
 		//Obtener fecha.
-		LocalDateTime fechaPartidaTimestamp = (faker.date().future(60,0,TimeUnit.DAYS)).toLocalDateTime();
+		LocalDateTime fechaPartidaTimestamp = (faker.date().future(diasFechaPartida,0,TimeUnit.DAYS)).toLocalDateTime();
 		LocalDate fechaPartida = fechaPartidaTimestamp.toLocalDate();
 		//Obtener hora.
-		LocalDateTime horaPartidaTimestamp = (faker.date().future(12,0,TimeUnit.HOURS)).toLocalDateTime();
+		LocalDateTime horaPartidaTimestamp = (faker.date().future(horasPartida,0,TimeUnit.HOURS)).toLocalDateTime();
 		LocalTime horaPartida = horaPartidaTimestamp.toLocalTime().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
 		
 		fechaHoraPartida[0] = fechaPartida; //Elemento de tipo LocalDate
