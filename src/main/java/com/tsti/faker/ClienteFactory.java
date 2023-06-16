@@ -3,7 +3,7 @@
  */
 package com.tsti.faker;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -77,6 +77,17 @@ public class ClienteFactory {
 		}
 	}
 	
+	public Clientes getUnPasajeroInternacional(CiudadDAO ciudadDAO, DomicilioDAO domicilioDAO) {
+		faker = new Faker();
+		Clientes nuevoCliente = new Clientes();
+
+		inicializarCliente(nuevoCliente, ciudadDAO, domicilioDAO, false);
+		
+		System.out.println("CREADO 1 PASAJERO INTERNAC: " + nuevoCliente.toString());
+		
+		return nuevoCliente;
+		
+	}
 	 public void crearUnPasajeroInternacional() {
 		faker = new Faker();
 		Clientes nuevoCliente = new Clientes();

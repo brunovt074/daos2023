@@ -123,15 +123,27 @@ public class VueloFactory {
 				
 		if(nroPasajeros <= asientosDisponibles) {
 			
-			for (int i = 0; i < nroPasajeros; i++) {
-				Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
-				vuelo.addPasajero(pasajero);
-				asientosDisponibles--;
-				
-				System.out.println(pasajero.toString());
-				System.out.println(vuelo.getPasajeros().toString());
-				System.out.println(vuelo.toString());		
-			}		
+			if(vuelo.getTipoVuelo().equals(TipoVuelo.NACIONAL)) {
+				for (int i = 0; i < nroPasajeros; i++) {
+					Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
+					vuelo.addPasajero(pasajero);
+					asientosDisponibles--;
+					
+					System.out.println(pasajero.toString());
+					System.out.println(vuelo.getPasajeros().toString());
+					System.out.println(vuelo.toString());		
+				}
+			}else{
+				for (int i = 0; i < nroPasajeros; i++) {
+					Clientes pasajero = clienteFactory.getUnPasajeroInternacional(ciudadDAO, domicilioDAO);
+					vuelo.addPasajero(pasajero);
+					asientosDisponibles--;
+					
+					System.out.println(pasajero.toString());
+					System.out.println(vuelo.getPasajeros().toString());
+					System.out.println(vuelo.toString());	
+				}
+			}
 						
 		}		
 		
