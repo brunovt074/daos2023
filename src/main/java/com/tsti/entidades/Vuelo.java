@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -68,8 +67,7 @@ public class Vuelo {
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "destino_id")	
-	private Ciudad destino;//creada la entidad Ciudad	
-		
+	private Ciudad destino;//creada la entidad Ciudad		
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(

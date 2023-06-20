@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tsti.dao.CiudadDAO;
 import com.tsti.dao.VueloDAO;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
@@ -16,11 +18,11 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
  * */
 @Service
 public class VueloServiceImpl implements IVueloService {
+	@Autowired
+	private final VueloDAO vueloDAO;	
 	
-	private final VueloDAO vueloDAO;
-	
-	public VueloServiceImpl(VueloDAO vueloDAO) {
-		this.vueloDAO = vueloDAO;
+	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO) {
+		this.vueloDAO = vueloDAO;		
 	}	
 	
 	public Optional<Vuelo> findById(Long id){
@@ -31,11 +33,14 @@ public class VueloServiceImpl implements IVueloService {
         return vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
     }
 	
-	public List<Vuelo> findByDestino(String destino) {
-        return vueloDAO.findByDestino(destino);
-    }
+	@Override
+	public List<Vuelo> findByDestino(String nombreDestino) {
+			
+		return vueloDAO.findByDestino(nombreDestino);
+		
+	}
 	public List<Vuelo> findByFechaPartida(LocalDate fecha) {
-        return vueloDAO.findByFechaPartida( fecha);
+        return vueloDAO.findByFechaPartida(fecha);
     }
 	
 	public List<Vuelo> obtenerVuelosPorTipo(TipoVuelo tipoVuelo) {
@@ -44,8 +49,7 @@ public class VueloServiceImpl implements IVueloService {
 
 	public List<Vuelo> getAll() {
 		return (List<Vuelo>) vueloDAO.findAll();
-	}
-	
+	}	
 	
 
 }

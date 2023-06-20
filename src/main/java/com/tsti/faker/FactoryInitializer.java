@@ -38,24 +38,7 @@ public class FactoryInitializer {
     }
     
     private void creadorVuelos() {
-    	//creando ciudades
-    	//ciudadFactory.crearCiudadArgentina();
-    	//ciudadFactory.crearCiudadesArgentina();
-        //ciudadFactory.crearCiudadAleatoria();
-        //ciudadFactory.crearCiudadesAleatoria();
-        
-        //creando clientes
-        //clienteFactory.crearUnPasajeroNacional();
-        //clienteFactory.crearPasajerosNacionales();
-        //clienteFactory.crearUnPasajeroInternacional();
-        //clienteFactory.crearPasajerosInternacionales();
-        
-        //creando domicilios
-        //domicilioFactory.crearUnDomicilioArgentino();
-        //domicilioFactory.crearUnDomicilioAleatorio();
-        //domicilioFactory.crearDomiciliosArgentinos();
-        //domicilioFactory.crearDomiciliosAleatorios();
-        
+    	       
         //creando vuelos 
     	//PARAMETROS:(nroVuelos, nroPasajeros, estado, tipo)
     	
@@ -95,38 +78,7 @@ public class FactoryInitializer {
     	//crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
     	
     	//crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);    	
-    	crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
-//    
-//    	//UN TERCIO DE OCUPACION    	 	    	
-//    	crearVuelos(1, 30, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(1, 30, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
-//    	   	
-//    	//crearVuelos(1, 30, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(1, 30, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
-//    	
-//    	crearVuelos(1, 30, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-//    	//crearVuelos(1, 30, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
-//    
-//    	//MITAD DE OCUPACION
-//    	crearVuelos(2, 45, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(2, 45, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
-//    	    	
-//    	//crearVuelos(1, 45, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(1, 45, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
-//    	
-//    	crearVuelos(1, 45, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-//    	//crearVuelos(1, 45, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
-//    	
-//    	//DOS TERCIOS DE OCUPACION
-//    	crearVuelos(1, 60, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(1, 60, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
-//    	//    	
-//    	//crearVuelos(1, 60, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-//    	crearVuelos(1, 60, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
-//    	
-//    	crearVuelos(1, 60, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-//    	//crearVuelos(1, 60, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
-//    	
+    	crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);   	
     	
     	System.out.println("--Ejecucion de inserciones terminada.--");
     	
@@ -152,6 +104,34 @@ public class FactoryInitializer {
 			vueloFactory.crearVueloOrigenLocal(pasajerosRandom, estado, tipo);
  			
 		}
+    	
+    }
+    
+    private void crearCiudades() {
+    	
+    	//creando ciudades
+    	//ciudadFactory.crearCiudadArgentina();
+    	//ciudadFactory.crearCiudadesArgentina();
+        //ciudadFactory.crearCiudadAleatoria();
+        //ciudadFactory.crearCiudadesAleatoria();
+    }
+    
+    private void crearClientes() {
+    	
+    	//creando clientes
+        //clienteFactory.crearUnPasajeroNacional();
+        //clienteFactory.crearPasajerosNacionales();
+        //clienteFactory.crearUnPasajeroInternacional();
+        //clienteFactory.crearPasajerosInternacionales();
+    }
+    
+    private void crearDomicilios() {
+    	
+    	//creando domicilios
+        //domicilioFactory.crearUnDomicilioArgentino();
+        //domicilioFactory.crearUnDomicilioAleatorio();
+        //domicilioFactory.crearDomiciliosArgentinos();
+        //domicilioFactory.crearDomiciliosAleatorios();
     	
     }
 }
