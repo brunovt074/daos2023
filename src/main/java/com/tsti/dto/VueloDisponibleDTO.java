@@ -23,7 +23,7 @@ public class VueloDisponibleDTO {
 	private LocalTime horaPartida;	
 	
 	
-	public VueloDisponibleDTO (Vuelo pojo, int tipoVuelo){
+	public VueloDisponibleDTO (Vuelo pojo){
 		
 		super();
 		this.nroVuelo = pojo.getNroVuelo();

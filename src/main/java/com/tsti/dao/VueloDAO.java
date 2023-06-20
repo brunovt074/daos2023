@@ -15,6 +15,8 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 @Repository
 public interface VueloDAO extends JpaRepository<Vuelo, Long> {
     
+	List<Vuelo> findByDestino(String destino);
+	List<Vuelo> findByFechaPartida(LocalDate fecha);
 	List<Vuelo> findByDestinoAndFechaPartida(String destino, LocalDate fecha);
     List<Vuelo> findByTipoVuelo(TipoVuelo tipoVuelo);    
     

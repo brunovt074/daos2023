@@ -83,8 +83,8 @@ public class VueloFactory {
 		vuelo.setAvion(faker.aviation().airplane());
 		vuelo.setNroFilas(6);
 		vuelo.setNroColumnas(15);
-		Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
-		vuelo.setPlazas(plazas); 
+		//Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
+		//vuelo.setPlazas(plazas); 
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();

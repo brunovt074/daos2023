@@ -32,8 +32,8 @@ public class FactoryInitializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initialize() {
-    	
-    	creadorVuelos();
+    	    	
+    	//creadorVuelos();
     	
     }
     

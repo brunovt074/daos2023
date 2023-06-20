@@ -2,6 +2,7 @@ package com.tsti.servicios;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,20 @@ public class VueloServiceImpl implements IVueloService {
 	public VueloServiceImpl(VueloDAO vueloDAO) {
 		this.vueloDAO = vueloDAO;
 	}	
-
+	
+	public Optional<Vuelo> findById(Long id){
+		return vueloDAO.findById(id);
+	}
+	
 	public List<Vuelo> findByDestinoAndFechaPartida(String destino, LocalDate fecha) {
         return vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
+    }
+	
+	public List<Vuelo> findByDestino(String destino) {
+        return vueloDAO.findByDestino(destino);
+    }
+	public List<Vuelo> findByFechaPartida(LocalDate fecha) {
+        return vueloDAO.findByFechaPartida( fecha);
     }
 	
 	public List<Vuelo> obtenerVuelosPorTipo(TipoVuelo tipoVuelo) {
@@ -33,5 +45,7 @@ public class VueloServiceImpl implements IVueloService {
 	public List<Vuelo> getAll() {
 		return (List<Vuelo>) vueloDAO.findAll();
 	}
+	
+	
 
 }

@@ -1,6 +1,5 @@
 package com.tsti.entidades;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
@@ -8,6 +7,9 @@ import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,21 +53,24 @@ public class Vuelo {
 	private int nroFilas;
 	@Transient
 	private int nroColumnas;
-	@Transient
-	private Clientes plazas[][];
+	//@Transient
+	//private Clientes plazas[][];
 	@Column(name = "nro_asientos")
 	@NotNull
 	private int nroAsientos;	
 	@Column(name = "tipo_vuelo")
 	@NotNull
 	private TipoVuelo tipoVuelo;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
 	private Ciudad origen;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "destino_id")	
 	private Ciudad destino;//creada la entidad Ciudad	
-	//@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
+		
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 	    name = "vuelos_pasajeros",
@@ -161,9 +166,9 @@ public class Vuelo {
 		this.nroFilas = nroFila;
 	}
 
-	public Clientes[][] getPlazas() {
-		return plazas;
-	}	
+//	public Clientes[][] getPlazas() {
+//		return plazas;
+//	}	
 	
 	public void setNroAsientos(int nroFilas, int nroColumnas) {
 		this.nroAsientos = nroFilas * nroColumnas;
@@ -181,9 +186,9 @@ public class Vuelo {
 		this.nroColumnas = nroColumnas;
 	}
 	
-	public void setPlazas(Clientes[][] plazas) {
-		this.plazas = plazas;
-	}
+//	public void setPlazas(Clientes[][] plazas) {
+//		this.plazas = plazas;
+//	}
 	
 	public TipoVuelo getTipoVuelo() {
 		
