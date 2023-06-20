@@ -17,8 +17,17 @@ public class ClienteForm {
 	private Date fechaNacimiento;
 	private long nroPasaporte;
 	private Date vencimientoPasaporte;
+	private Long idCiudad;
 	
 	
+	public Long getIdCiudad() {
+		return idCiudad;
+	}
+	
+	public void setIdCiudad(Long idCiudad) {
+		this.idCiudad = idCiudad;
+	}
+
 	public long getDni() {
 		return dni;
 	}
@@ -74,6 +83,7 @@ public class ClienteForm {
 		c.setApellido(this.getApellido());
 		c.setNombre(this.getNombre());
 		c.setNroPasaporte(this.getNroPasaporte());
+		
 		
 		return c;
 	}

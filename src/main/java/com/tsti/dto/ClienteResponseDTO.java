@@ -13,9 +13,8 @@ import tsti.entidades.Clientes;
  *
  */
 public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> {
-	private	Long id;
 	private Long dni;
-	
+	private long id;
 	private String apellido;
 	private String nombre;
 	private String email;
@@ -27,12 +26,15 @@ public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> 
 		this.id=pojo.getId();
 		this.apellido=pojo.getApellido();
 		this.nombre=pojo.getNombre();
+
 		this.dni=pojo.getDni();
 		this.email=pojo.getEmail();
-		this.fecha_nac=pojo.getFechaNacimiento();
+		this.fecha_nac=pojo.getFechaNacimiento();	
 		
-		
-		
+
+		this.dni=pojo.getDni();		
+
+
 	}
 	
 	

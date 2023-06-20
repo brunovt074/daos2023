@@ -19,9 +19,13 @@ import jakarta.validation.constraints.NotNull;
  *
  * @author cecilia
  *  Establece/Actualiza/Retorna los datos de cliente
+ *  
+ *  LAS RESTRICCIONES UNIQUE ESTAN DESACTIVADAS PARA FACILITAR LA POBLACION
+ *  DE LA BD CON FAKER.
  */
 @Entity
 public class Clientes {
+
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;		
@@ -37,7 +41,7 @@ public class Clientes {
 		private Domicilio domicilio;		
 		@Column(unique = true)
 		private String tel;		
-		@Column(unique = true)
+		@Column(name = "e_mail")
 		private String email;
 		@Column(name = "fecha_nac", unique = true)
 		private Date fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
@@ -45,6 +49,7 @@ public class Clientes {
 		private Long nroPasaporte;		
 		@Column(name = "exp_pasaporte", unique = true)
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
+		
 		
 		//Un pasajero puede realizar muchos vuelos y un vuelo puede tener 
 		//muchos pasajeros. Se creara una nueva tabla.
@@ -147,5 +152,38 @@ public class Clientes {
 		public String toString() {
 			return dni+" - "+ nombre +" "+ apellido;
 		}
+
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	/*
+	 * public boolean isEsPrimerVuelo() { return esPrimerVuelo; }
+	 * 
+	 * public void setEsPrimerVuelo(boolean esPrimerVuelo) { this.esPrimerVuelo =
+	 * esPrimerVuelo; }
+	 */
+
+	public Set<Vuelo> getVuelos() {
+		return vuelos;
+	}
+
+	public void setVuelos(HashSet<Vuelo> vuelos) {
+		this.vuelos = vuelos;
+	}
+	
+	
+	public void setNroPasaporte(Long nroPasaporte) {
+		this.nroPasaporte = nroPasaporte;
+	}
+	
+	
+	
+	
 		
 }

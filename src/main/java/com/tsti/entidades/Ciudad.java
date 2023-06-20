@@ -23,7 +23,7 @@ public class Ciudad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	//COD de aeropuerto por ej EZE (ezeiza)
-	@Column(name="cod_aeropuerto", unique = true)	
+	@Column(name="cod_aeropuerto")	
 	private String codAeropuerto;	
 	@NotNull
 	@Column(name="nombre_ciudad")
@@ -121,7 +121,7 @@ public class Ciudad {
 
 	@Override
 	public String toString() {
-		return "Ciudad [codCiudad=" + codAeropuerto + ", nombreCiudad=" + nombreCiudad + ", provincia=" + provincia
+		return "ID = "+ id + "Ciudad [codAeropuerto=" + codAeropuerto + ", nombreCiudad=" + nombreCiudad + ", provincia=" + provincia
 				+ ", pais=" + pais + "]";
 	}
 	@Override
