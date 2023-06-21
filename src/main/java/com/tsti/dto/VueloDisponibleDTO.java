@@ -6,6 +6,7 @@ package com.tsti.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
@@ -17,11 +18,16 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 public class VueloDisponibleDTO {
 	private Long nroVuelo;
 	private String aerolinea;
+	@JsonIgnore
 	private Ciudad destino;
 	private TipoVuelo tipoVuelo;
 	private LocalDate fechaPartida;
 	private LocalTime horaPartida;	
 	
+	
+	public VueloDisponibleDTO() {
+        // Constructor sin argumentos
+    }
 	
 	public VueloDisponibleDTO (Vuelo pojo){
 		
@@ -39,16 +45,16 @@ public class VueloDisponibleDTO {
 		return nroVuelo;
 	}
 	
+	public void setNroVuelo(Long nroVuelo) {
+		this.nroVuelo = nroVuelo;
+	}
+	
 	public String getAerolinea() {
 		return aerolinea;
 	}
 
 	public void setAerolinea(String aerolinea) {
 		this.aerolinea = aerolinea;
-	}
-
-	public void setNroVuelo(Long nroVuelo) {
-		this.nroVuelo = nroVuelo;
 	}
 
 	public LocalDate getFechaPartida() {
