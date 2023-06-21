@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tsti.serializer.CiudadSerializer;
 import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
@@ -18,7 +20,7 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 public class VueloDisponibleDTO {
 	private Long nroVuelo;
 	private String aerolinea;
-	@JsonIgnore
+	@JsonSerialize(using = CiudadSerializer.class)
 	private Ciudad destino;
 	private TipoVuelo tipoVuelo;
 	private LocalDate fechaPartida;
