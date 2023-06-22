@@ -31,10 +31,10 @@ public class CiudadFactory {
 
 	}
 	
-	public Ciudad getCiudadSauceViejo() {
+	public static Ciudad getCiudadSauceViejo() {
 		
 		Ciudad nuevaCiudad = new Ciudad();
-		nuevaCiudad.setcodAeropuerto("SAAV");
+		nuevaCiudad.setCodAeropuerto("SAAV");
 		nuevaCiudad.setNombreCiudad("Sauce Viejo");
 		nuevaCiudad.setProvincia("Santa Fe");
 		nuevaCiudad.setCodPostal("S3017");
@@ -114,7 +114,7 @@ public class CiudadFactory {
 		
 		if(esNacional) {
 			
-			nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
+			nuevaCiudad.setCodAeropuerto(faker.aviation().airport());
 			nuevaCiudad.setNombreCiudad(faker.address().cityName());
 			nuevaCiudad.setProvincia(faker.address().state());
 			nuevaCiudad.setCodPostal(faker.address().zipCode());
@@ -125,7 +125,7 @@ public class CiudadFactory {
 		
 		else {
 		
-			nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
+			nuevaCiudad.setCodAeropuerto(faker.aviation().airport());
 			nuevaCiudad.setNombreCiudad(faker.address().cityName());
 			nuevaCiudad.setProvincia(faker.address().state());
 			nuevaCiudad.setPais(faker.address().country());

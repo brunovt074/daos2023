@@ -21,6 +21,16 @@ import com.tsti.entidades.Ciudad;
 @Repository
 public interface CiudadDAO extends JpaRepository<Ciudad, Long> {
 
+	public boolean existsByCodAeropuerto(String codAeropuerto);
+	
+	public boolean existsByCodPostal(String codPostal);
+	
+	public boolean existsByNombreCiudadAndProvinciaAndPais(String nombreCiudad, String provincia, String pais);
+	
+	public boolean existsByNombreCiudadAndProvincia(String nombreCiudad, String provincia);
+	
+	public Ciudad findByCodAeropuertoAndNombreCiudad(String codAeropuerto, String nombreCiudad);
+	
 	
 	
 }

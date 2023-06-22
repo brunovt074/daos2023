@@ -56,17 +56,22 @@ public class VueloFactory {
 		
 	}
 	
+	public void crearVueloPorDTO(){
+		
+	}
+	
+	
 	public void crearVueloOrigenLocal(int nroPasajeros, EstadoVuelo estadoVuelo, TipoVuelo tipoVuelo) {
 		
 		//this.estadoVuelo  = estadoVuelo;  
 		//this.tipoVuelo = tipoVuelo;		
 		
 		if(tipoVuelo.equals(TipoVuelo.NACIONAL)) {
-			origen = ciudadFactory.getCiudadSauceViejo();
+			origen = CiudadFactory.getCiudadSauceViejo();
 			destino = ciudadFactory.getCiudadArgentina();
 		
 		}else {
-			origen = ciudadFactory.getCiudadSauceViejo();
+			origen = CiudadFactory.getCiudadSauceViejo();
 			destino = ciudadFactory.getCiudadAleatoria();
 		}
 		
