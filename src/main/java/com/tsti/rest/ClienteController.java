@@ -19,6 +19,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,7 @@ public class ClienteController {
 	@Autowired
 	private ICiudadService ciudadService;
 
+	//busca cliente por apellido o por apellido y nombre
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public List<ClienteResponseDTO> filtrar(@RequestParam(name = "apellido", required = false) String apellido,
 			@RequestParam(name = "nombre", required = false) @jakarta.validation.constraints.Size(min = 1, max = 20) String nombre)
@@ -64,20 +66,29 @@ public class ClienteController {
 	}
 	
 	
+	//obtiene cliente por id
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getById(@PathVariable Long id) throws Excepcion
 	{
-		Optional<Clientes> rta = service.getById(id);
+			
+			Optional<Clientes> rta = service.getById(id);
+	
 		if(rta.isPresent())
 		{
-			Clientes pojo=rta.get();
+			Clientes pojo = rta.get();
+			
 			return new ResponseEntity<ClienteResponseDTO>(buildResponse(pojo), HttpStatus.OK);
+			
 		}
 		else
+			System.out.print("no se encuentra id");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+					
 		
 	}
 	
+	
+	//Guarda cliente nuevo en la bd
 	@PostMapping("/guardarCliente")
 	public ResponseEntity<Object> guardar( @Valid @RequestBody ClienteForm form, BindingResult result) throws Exception
 	{
@@ -101,6 +112,49 @@ public class ClienteController {
 		
 
 	}
+	
+	/*//edita un cliente que ya esta en la bd por dni
+	@PutMapping("/{dni}")
+	public ResponseEntity<Object>  actualizar(@RequestBody ClienteForm form, @PathVariable long dni) throws Exception
+	{
+		List<Clientes> rta = service.filtrarPorDni(dni);
+		List<ClienteResponseDTO> dtos = new ArrayList<ClienteResponseDTO>();
+		for (Clientes pojo : rta) {
+
+			dtos.add(buildResponse(pojo));
+		}
+		
+		if(rta.isEmpty())
+			return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra la persona ");
+			
+		else
+		{
+			Clientes cliente = form.toPojo();
+			
+			if(cliente.getDni() != dni)//El dni es el identificador, con lo cual es el único dato que no permito modificar
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(getError("03", "Dato no editable", "No puede modificar el dni."));
+			service.update(cliente);
+			return ResponseEntity.ok(buildResponse(cliente));
+		}
+		
+	}
+
+	private String getError(String code, String err, String descr) throws JsonProcessingException
+	{
+		MensajeError e1=new MensajeError();
+		e1.setCodigo(code);
+		ArrayList<Map<String,String>> errores=new ArrayList<>();
+		Map<String, String> error=new HashMap<String, String>();
+		error.put(err, descr);
+		errores.add(error);
+		e1.setMensajes(errores);
+		
+		//ahora usamos la librería Jackson para pasar el objeto a json
+				ObjectMapper maper = new ObjectMapper();
+				String json = maper.writeValueAsString(e1);
+				return json;
+	}
+	*/
 	
 	private String formatearError(BindingResult result) throws JsonProcessingException
 	{

@@ -12,7 +12,8 @@ public interface IClienteService {
 	
 	public List<Clientes> getAll();
 	
-	public Optional<Clientes> getById(Long Id);
+	public Optional<Clientes> getById(Long id);
+	
 	
 	public void update(Clientes c);
 	
@@ -22,5 +23,6 @@ public interface IClienteService {
 	
 	public List<Clientes> filtrar(String apellido, String nombre);
 	
+	public List<Clientes> filtrarPorDni(Long dni);
 	
 }

@@ -31,12 +31,16 @@ public class ClienteServiceImpl implements IClienteService {
 	
 	@Override
 	public List<Clientes> getAll(){
+		
 		return dao.findAll();
 	}
 	
 	public Optional<Clientes> getById(Long id){
-		return dao.findById(id);
+		
+			return dao.findById(id);
 	}
+	
+	
 	
 	@Override
 	public void update(Clientes c) {
@@ -71,6 +75,15 @@ public class ClienteServiceImpl implements IClienteService {
 			return dao.findByApellidoOrNombre(apellido, nombre);
 	}
 
+	
+	@Override
+	public List<Clientes> filtrarPorDni(Long dni){
+		if(dni == null) {
+			return dao.findAll();
+		}else {
+			return dao.findByDni(dni);
+		}
+	};
 	
 
 
