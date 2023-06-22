@@ -53,7 +53,7 @@ public class VueloServiceImpl implements IVueloService {
 			
 			} else{
 				
-				origen = CiudadFactory.getCiudadSauceViejo();
+				origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
 				
 			}
 		}
