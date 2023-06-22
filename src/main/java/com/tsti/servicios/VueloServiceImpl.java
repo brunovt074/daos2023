@@ -15,6 +15,7 @@ import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 import com.tsti.entidades.Ciudad;
 import com.tsti.faker.CiudadFactory;
+import com.tsti.faker.GenerarPrecioNeto;
 /**
  * @author Bruno
  * Sugiero añadir el prefijo "I" Delante de las interfaces para mejorar 
@@ -76,6 +77,14 @@ public class VueloServiceImpl implements IVueloService {
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
+		if(vuelo.getTipoVuelo() == TipoVuelo.NACIONAL) {
+			
+			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
+		
+		}else {
+			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
+		}
+		
 		
 		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
 		

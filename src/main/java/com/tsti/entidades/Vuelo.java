@@ -60,6 +60,7 @@ public class Vuelo {
 	@Column(name = "tipo_vuelo")
 	@NotNull
 	private TipoVuelo tipoVuelo;
+	private double precioNeto;
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
@@ -260,6 +261,14 @@ public class Vuelo {
 		return "Vuelo [nroVuelo=" + nroVuelo + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
 				+ ", nroColumnas=" + nroColumnas + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
+	}
+
+	public double getPrecioNeto() {
+		return precioNeto;
+	}
+
+	public void setPrecioNeto(double precioNeto) {
+		this.precioNeto = precioNeto;
 	}
 
 	

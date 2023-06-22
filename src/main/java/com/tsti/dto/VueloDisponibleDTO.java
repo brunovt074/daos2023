@@ -24,7 +24,8 @@ public class VueloDisponibleDTO {
 	private Ciudad destino;
 	private TipoVuelo tipoVuelo;
 	private LocalDate fechaPartida;
-	private LocalTime horaPartida;	
+	private LocalTime horaPartida;
+	private double precioNeto;
 	
 	
 	public VueloDisponibleDTO() {
@@ -95,6 +96,14 @@ public class VueloDisponibleDTO {
 	public String toString() {
 		return "VueloDisponibleDTO [nroVuelo=" + nroVuelo + ", fechaPartida=" + fechaPartida + ", horaPartida="
 				+ horaPartida + ", destino=" + destino + "]";
+	}
+
+	public double getPrecioNeto() {
+		return precioNeto;
+	}
+
+	public void setPrecioNeto(double precioNeto) {
+		this.precioNeto = precioNeto;
 	}
 	
 	

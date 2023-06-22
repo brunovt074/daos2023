@@ -26,10 +26,12 @@ public class VueloDTO {
 	private LocalTime horaPartida;
 	private int nroFilas;
 	private int nroColumnas;
+	private double precioNeto;
 	
 	public VueloDTO() {
 		// TODO Auto-generated constructor stub
-	}
+	}	
+
 	
 	public VueloDTO(Vuelo pojo) {
 		super();
@@ -39,7 +41,7 @@ public class VueloDTO {
 		this.fechaPartida = pojo.getFechaPartida();
 		this.horaPartida = pojo.getHoraPartida();
 		this.nroFilas = pojo.getNroFilas();
-		this.nroColumnas = pojo.getNroColumnas();
+		this.nroColumnas = pojo.getNroColumnas();		
 	}
 
 	public Long getNroVuelo() {
@@ -96,7 +98,16 @@ public class VueloDTO {
 
 	public void setNroColumnas(int nroColumnas) {
 		this.nroColumnas = nroColumnas;
+	}
+
+	public double getPrecioNeto() {
+		return precioNeto;
+	}
+
+	public void setPrecioNeto(double precioNeto) {
+		this.precioNeto = precioNeto;
 	}	
+	
 	
 	
 	

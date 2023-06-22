@@ -58,27 +58,34 @@ public class VueloFactory {
 	
 	public void crearVueloPorDTO(){
 		
-	}
-	
+	}	
 	
 	public void crearVueloOrigenLocal(int nroPasajeros, EstadoVuelo estadoVuelo, TipoVuelo tipoVuelo) {
-		
+		Vuelo vuelo = new Vuelo();
 		//this.estadoVuelo  = estadoVuelo;  
 		//this.tipoVuelo = tipoVuelo;		
+		if(!ciudadDAO.existsByCodAeropuerto("SAAV")){
+			origen = CiudadFactory.getCiudadSauceViejo();
+		}else {
+			
+			origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
+					
+		}
 		
 		if(tipoVuelo.equals(TipoVuelo.NACIONAL)) {
-			origen = CiudadFactory.getCiudadSauceViejo();
+						
 			destino = ciudadFactory.getCiudadArgentina();
+			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
 		
 		}else {
-			origen = CiudadFactory.getCiudadSauceViejo();
 			destino = ciudadFactory.getCiudadAleatoria();
+			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
 		}
 		
 		ciudadDAO.save(origen);
 		ciudadDAO.save(destino);
 		
-		Vuelo vuelo = new Vuelo();
+		
 		
 		//Metodo mejorado para obtener fecha y hora en un array y evitar repetir codigo.
 		//1er parametro dias de partida hacia adelante, 2do: horas +
@@ -96,6 +103,7 @@ public class VueloFactory {
 		vuelo.setEstadoVuelo(estadoVuelo);
 		vuelo.setFechaPartida((LocalDate) fechaHoraPartida[0]);
 		vuelo.setHoraPartida((LocalTime) fechaHoraPartida[1]);
+		
 		
 		cargarPasajeros(vuelo, clienteDAO, ciudadDAO, domicilioDAO, nroPasajeros);
 		
