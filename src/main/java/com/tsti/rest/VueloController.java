@@ -2,12 +2,12 @@ package com.tsti.rest;
 
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 
 
@@ -18,7 +18,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import org.springframework.http.HttpStatus;
+//import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+//import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +34,9 @@ import org.modelmapper.ModelMapper;
 
 import com.tsti.dto.VueloDisponibleDTO;
 import com.tsti.dto.VueloDTO;
-import com.tsti.entidades.Ciudad;
+//import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Vuelo.EstadoVuelo;
+//import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.servicios.VueloServiceImpl;
 
 @RestController
@@ -72,6 +73,20 @@ public class VueloController {
                     .linkTo(methodOn(VueloController.class)
                             .getVuelosByDestino(destino))
                     .withRel("vuelosPorDestino"));
+         
+            // Enlace a todos los vuelos con la misma fecha
+            vueloEntityModel.add(WebMvcLinkBuilder
+            	    .linkTo(methodOn(VueloController.class)
+            	    .getVuelosByFechaPartida(fechaPartida))
+            	    .withRel("vuelosPorFecha"));
+            
+         // Enlace a todos los vuelos disponibles
+            vueloEntityModel.add(WebMvcLinkBuilder
+                    .linkTo(methodOn(VueloController.class)
+                            .getVuelosAll())
+                    .withRel("todosLosVuelos"));
+            
+            
 
             return ResponseEntity.ok(CollectionModel.of(Collections.singletonList(vueloEntityModel)));
         
@@ -83,27 +98,26 @@ public class VueloController {
                 
             	VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
                 EntityModel<VueloDisponibleDTO> vueloEntityModel = EntityModel.of(vueloDTO);
+                
+                //Enlace a todos los vuelos con el mismo destino
+                vueloEntityModel.add(WebMvcLinkBuilder
+                        .linkTo(methodOn(VueloController.class)
+                                .getVuelosByDestino(destino))
+                        .withRel("vuelosPorDestino"));
+             
+                //Enlace a todos los vuelos con la misma fecha
+                vueloEntityModel.add(WebMvcLinkBuilder
+                	    .linkTo(methodOn(VueloController.class)
+                	    .getVuelosByFechaPartida(fechaPartida))
+                	    .withRel("vuelosPorFecha"));
+                
+                //Enlace a todos los vuelos 
+                vueloEntityModel.add(WebMvcLinkBuilder
+                	    .linkTo(methodOn(VueloController.class)
+                	    .getVuelosAll())
+                	    .withRel("todosLosVuelos"));
+                
                 vuelosDTO.add(vueloEntityModel);
-//                //Enlace a todos los vuelos con el mismo destino
-//                vueloEntityModel.add(WebMvcLinkBuilder
-//                        .linkTo(methodOn(VueloController.class)
-//                                .getVuelosByDestino(destino))
-//                        .withRel("vuelosPorDestino"));
-//             //Enlace a todos los vuelos con la misma fecha
-//                
-//                
-//                vueloEntityModel.add(WebMvcLinkBuilder
-//                	    .linkTo(methodOn(VueloController.class)
-//                	    .getVuelosByFechaPartida(fechaPartida))
-//                	    .withRel("vuelosPorFecha"));
-//                vuelosDTO.add(vueloEntityModel);
-//           
-//            //Enlace a todos los vuelos 
-//                vueloEntityModel.add(WebMvcLinkBuilder
-//                	    .linkTo(methodOn(VueloController.class)
-//                	    .getVuelosAll())
-//                	    .withRel("todosLosVuelos"));
-//                vuelosDTO.add(vueloEntityModel);
                 
             }
 
@@ -121,23 +135,36 @@ public class VueloController {
             VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
             vuelosDTO.add(vueloDTO);
         }
-
+        
         CollectionModel<VueloDisponibleDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+        //Enlace a todos los vuelos 
+        vuelosCollectionModel.add(WebMvcLinkBuilder
+        	    .linkTo(methodOn(VueloController.class)
+        	    .getVuelosAll())
+        	    .withRel("todosLosVuelos"));
+        
 
         return ResponseEntity.ok(vuelosCollectionModel);
     }
     
     @GetMapping("/vuelos/fechaPartida/{fechaPartida}")
-    public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosByFechaPartida(@PathVariable LocalDate fechaPartida) {
+    public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosByFechaPartida(@PathVariable("fechaPartida") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fechaPartida) {
         List<Vuelo> vuelos = vueloService.findByFechaPartida(fechaPartida);
         List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
 
         for (Vuelo vuelo : vuelos) {
-            VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
+            
+        	VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
             vuelosDTO.add(vueloDTO);
+        
         }
 
         CollectionModel<VueloDisponibleDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+        //Enlace a todos los vuelos 
+        vuelosCollectionModel.add(WebMvcLinkBuilder
+        	    .linkTo(methodOn(VueloController.class)
+        	    .getVuelosAll())
+        	    .withRel("todosLosVuelos"));
 
         return ResponseEntity.ok(vuelosCollectionModel);
     }
@@ -157,20 +184,20 @@ public class VueloController {
         return ResponseEntity.ok(vuelosCollectionModel);
     }
 
-
-
-
     
     @PostMapping("/vuelos")    
-    public ResponseEntity<Vuelo> crearVuelo(@RequestBody VueloDTO vueloDTO) {
+    public ResponseEntity<EntityModel<Vuelo>> crearVuelo(@RequestBody VueloDTO vueloDTO) {
         
     	Vuelo vuelo = vueloService.crearVuelo(vueloDTO);
         
-    	return ResponseEntity.ok().body(vuelo);
+    	// Enlace a todos los vuelos
+        Link allVuelosLink = WebMvcLinkBuilder.linkTo(methodOn(VueloController.class).getVuelosAll()).withRel("todosLosVuelos");
+    	
+        return ResponseEntity.ok().body(EntityModel.of(vuelo, allVuelosLink));
     }
     
     @PutMapping("/vuelos/{id}")
-    public ResponseEntity<String> actualizarFechaHoraVuelo(
+    public ResponseEntity<EntityModel<Vuelo>> actualizarFechaHoraVuelo(
             @PathVariable("id") Long vueloId,
             @RequestBody VueloDTO vueloDTO) {
         
@@ -184,11 +211,14 @@ public class VueloController {
                 
                 vueloService.reprogramarVuelo(vuelo, vueloDTO);
                 
-                return ResponseEntity.ok("Fecha y hora del vuelo actualizadas correctamente.");
+             // Enlace a todos los vuelos
+                Link allVuelosLink = WebMvcLinkBuilder.linkTo(methodOn(VueloController.class).getVuelosAll()).withRel("todosLosVuelos");
+
+                return ResponseEntity.ok().body(EntityModel.of(vuelo, allVuelosLink));
             
             } else {
                 
-            	return ResponseEntity.badRequest().body("La fecha y hora de partida no pueden ser nulas.");
+            	return ResponseEntity.badRequest().build();
             
             }
         

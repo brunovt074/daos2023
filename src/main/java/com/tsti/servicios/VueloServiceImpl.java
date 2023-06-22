@@ -37,43 +37,36 @@ public class VueloServiceImpl implements IVueloService {
 		Vuelo vuelo = new Vuelo();
 		Ciudad origen;
 		
-//		if(ciudadDAO.existsByCodAeropuerto(CiudadFactory.getCiudadSauceViejo().getCodAeropuerto())){
-//			
-//			origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad(CiudadFactory.getCiudadSauceViejo().getCodAeropuerto()
-//					, CiudadFactory.getCiudadSauceViejo().getNombreCiudad());
-//		
-//		}
-//		else {
-			origen = CiudadFactory.getCiudadSauceViejo();
-		//}
-		
-		Ciudad destino = new Ciudad();
-		
-		
-		
-		//Lo ideal seria usar nombre ciudad y CP pero a fines practicos se utilizand estos parametros.
-//		if(vueloDTO.getDestino().getId() != null &&  ciudadDAO.existsById(vueloDTO.getDestino().getId()) 
-//			|| ciudadDAO.existsByNombreCiudadAndProvinciaAndPais(vueloDTO.getDestino().getNombreCiudad()
-//					,vueloDTO.getDestino().getProvincia()
-//					,vueloDTO.getDestino().getPais())){
-//			
-//			destino = vueloDTO.getDestino();	
-//			
-//		}
-//		
-//		else {
+		if(vueloDTO.getDestino().getId() == null) {
 			
-			destino.setCodAeropuerto(vueloDTO.getDestino().getCodAeropuerto());
-			destino.setCodPostal(vueloDTO.getDestino().getCodPostal());
-			destino.setNombreCiudad(vueloDTO.getDestino().getNombreCiudad());
-			destino.setProvincia(vueloDTO.getDestino().getProvincia());
-			destino.setPais(vueloDTO.getDestino().getPais());
-		//}
+			origen = CiudadFactory.getCiudadSauceViejo();
+			
+		}
+		else {
+			boolean ciudadExiste = ciudadDAO.existsById(vueloDTO.getDestino().getId());
 		
+			if (ciudadExiste) {
+				
+			Optional<Ciudad>ciudadOptional = ciudadDAO.findById(vueloDTO.getDestino().getId());		
+			
+			origen = ciudadOptional.get();
+			
+			} else{
+				
+				origen = CiudadFactory.getCiudadSauceViejo();
+				
+			}
+		}
+		Ciudad destino = new Ciudad();		
+		
+		destino.setCodAeropuerto(vueloDTO.getDestino().getCodAeropuerto());
+		destino.setCodPostal(vueloDTO.getDestino().getCodPostal());
+		destino.setNombreCiudad(vueloDTO.getDestino().getNombreCiudad());
+		destino.setProvincia(vueloDTO.getDestino().getProvincia());
+		destino.setPais(vueloDTO.getDestino().getPais());
+
 		ciudadDAO.save(origen);	
-		ciudadDAO.save(destino);
-		
-		
+		ciudadDAO.save(destino);	
 				
 		vuelo.setAerolinea(vueloDTO.getAerolinea());
 		vuelo.setFechaPartida(vueloDTO.getFechaPartida());
@@ -132,6 +125,11 @@ public class VueloServiceImpl implements IVueloService {
 	public List<Vuelo> obtenerVuelosPorTipo(TipoVuelo tipoVuelo) {
         return vueloDAO.findByTipoVuelo(tipoVuelo);
     }
+	
+//	public List<Vuelo> findByEstado(EstadoVuelo estadoVuelo){
+//		
+//		return vueloDAO.findByEstado(estadoVuelo);
+//	}
 
 	public List<Vuelo> getAll() {
 		return (List<Vuelo>) vueloDAO.findAll();
