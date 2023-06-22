@@ -5,11 +5,19 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,29 +51,115 @@ public class VueloController {
     }
     
     @GetMapping("/vuelos")
-    public ResponseEntity<List<VueloDisponibleDTO>> getVuelosByDestinoAndFechaPartida(
-        @RequestParam("destino") String destino,
-        @RequestParam("fechaPartida") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaPartida) {
-            
+    public ResponseEntity<CollectionModel<EntityModel<VueloDisponibleDTO>>> getVuelosByDestinoAndFechaPartida(
+            @RequestParam("destino") String destino,
+            @RequestParam("fechaPartida") @DateTimeFormat(/*pattern = "dd-MM-yyyy"*/) LocalDate fechaPartida) {
+
         List<Vuelo> vuelos = vueloService.findByDestinoAndFechaPartida(destino, fechaPartida);
-        
-           //Forma alternativa y mas eficiente de realizar el mapeo implementado 
-        	//Ideal para entornos de alta demanda de procesamiento.
-          		
-			  List<VueloDisponibleDTO> vuelosDTO = vuelos.stream() .map(vuelo ->
-			  modelMapper.map(vuelo, VueloDisponibleDTO.class))
-			  .collect(Collectors.toList());       
-        
+
         if (vuelos.isEmpty()) {
-        	
-            return ResponseEntity.noContent().build();
             
-        } else {        	
+        	return ResponseEntity.noContent().build();
+        
+        } else if (vuelos.size() == 1) {
             
-        	return ResponseEntity.ok(vuelosDTO);
+        	VueloDisponibleDTO vueloDTO = modelMapper.map(vuelos.get(0), VueloDisponibleDTO.class);
             
+        	EntityModel<VueloDisponibleDTO> vueloEntityModel = EntityModel.of(vueloDTO);
+
+            // Enlace a todos los vuelos con el mismo destino
+            vueloEntityModel.add(WebMvcLinkBuilder
+                    .linkTo(methodOn(VueloController.class)
+                            .getVuelosByDestino(destino))
+                    .withRel("vuelosPorDestino"));
+
+            return ResponseEntity.ok(CollectionModel.of(Collections.singletonList(vueloEntityModel)));
+        
+        } else {
+
+        	List<EntityModel<VueloDisponibleDTO>> vuelosDTO = new ArrayList<>();
+
+            for (Vuelo vuelo : vuelos) {
+                
+            	VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
+                EntityModel<VueloDisponibleDTO> vueloEntityModel = EntityModel.of(vueloDTO);
+                vuelosDTO.add(vueloEntityModel);
+//                //Enlace a todos los vuelos con el mismo destino
+//                vueloEntityModel.add(WebMvcLinkBuilder
+//                        .linkTo(methodOn(VueloController.class)
+//                                .getVuelosByDestino(destino))
+//                        .withRel("vuelosPorDestino"));
+//             //Enlace a todos los vuelos con la misma fecha
+//                
+//                
+//                vueloEntityModel.add(WebMvcLinkBuilder
+//                	    .linkTo(methodOn(VueloController.class)
+//                	    .getVuelosByFechaPartida(fechaPartida))
+//                	    .withRel("vuelosPorFecha"));
+//                vuelosDTO.add(vueloEntityModel);
+//           
+//            //Enlace a todos los vuelos 
+//                vueloEntityModel.add(WebMvcLinkBuilder
+//                	    .linkTo(methodOn(VueloController.class)
+//                	    .getVuelosAll())
+//                	    .withRel("todosLosVuelos"));
+//                vuelosDTO.add(vueloEntityModel);
+                
+            }
+
+            return ResponseEntity.ok(CollectionModel.of(vuelosDTO));
         }
     }
+
+    
+    @GetMapping("/vuelos/destinos/{destino}")
+    public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosByDestino(@PathVariable String destino) {
+        List<Vuelo> vuelos = vueloService.findByDestino(destino);
+        List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
+
+        for (Vuelo vuelo : vuelos) {
+            VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
+            vuelosDTO.add(vueloDTO);
+        }
+
+        CollectionModel<VueloDisponibleDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+
+        return ResponseEntity.ok(vuelosCollectionModel);
+    }
+    
+    @GetMapping("/vuelos/fechaPartida/{fechaPartida}")
+    public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosByFechaPartida(@PathVariable LocalDate fechaPartida) {
+        List<Vuelo> vuelos = vueloService.findByFechaPartida(fechaPartida);
+        List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
+
+        for (Vuelo vuelo : vuelos) {
+            VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
+            vuelosDTO.add(vueloDTO);
+        }
+
+        CollectionModel<VueloDisponibleDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+
+        return ResponseEntity.ok(vuelosCollectionModel);
+    }
+    
+    @GetMapping("/vuelos/all")
+    public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosAll() {
+        List<Vuelo> vuelos = vueloService.getAll();
+        List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
+
+        for (Vuelo vuelo : vuelos) {
+            VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
+            vuelosDTO.add(vueloDTO);
+        }
+
+        CollectionModel<VueloDisponibleDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+
+        return ResponseEntity.ok(vuelosCollectionModel);
+    }
+
+
+
+
     
     @PostMapping("/vuelos")    
     public ResponseEntity<Vuelo> crearVuelo(@RequestBody VueloDTO vueloDTO) {
