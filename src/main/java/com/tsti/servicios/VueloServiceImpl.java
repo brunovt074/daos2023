@@ -24,10 +24,15 @@ import com.tsti.faker.GenerarPrecioNeto;
 @Service
 public class VueloServiceImpl implements IVueloService {
 	@Autowired
-	private final VueloDAO vueloDAO;	
+	private VueloDAO vueloDAO;	
 	@Autowired
-	private final CiudadDAO ciudadDAO;
+	private CiudadDAO ciudadDAO;
 	
+		
+	public VueloServiceImpl() {
+		super();
+	}
+
 	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO) {
 		this.vueloDAO = vueloDAO;	
 		this.ciudadDAO = ciudadDAO;

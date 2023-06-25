@@ -3,6 +3,8 @@
  */
 package com.tsti.dto;
 
+import java.math.BigDecimal;
+
 import com.tsti.entidades.Vuelo.TipoVuelo;
 
 /**
@@ -13,15 +15,15 @@ public class PasajeBaseDTO {
 	
 	private Long nroVuelo;
 	private Long dni;
-	private double precioNeto;
-	private double precioFinal;
+	private BigDecimal precioNeto;
+	private BigDecimal precioFinal;
 	private TipoVuelo tipoVuelo;
 	
 	public PasajeBaseDTO() {
 		super();
 	}
 			
-	public PasajeBaseDTO(Long nroVuelo, Long dni, Double precio, TipoVuelo tipoVuelo) {
+	public PasajeBaseDTO(Long nroVuelo, Long dni, BigDecimal precio, TipoVuelo tipoVuelo) {
 		super();
 		this.nroVuelo = nroVuelo;
 		this.dni = dni;
@@ -30,11 +32,11 @@ public class PasajeBaseDTO {
 		this.setPrecioFinal(precioFinal);		
 	}
 	
-	public PasajeBaseDTO(Long nroVuelo, Long dni, Double precio, double precioFinal, TipoVuelo tipoVuelo) {
+	public PasajeBaseDTO(Long nroVuelo, Long dni, BigDecimal precioNeto, BigDecimal precioFinal, TipoVuelo tipoVuelo) {
 		super();
 		this.nroVuelo = nroVuelo;
 		this.dni = dni;
-		this.precioNeto = precio;
+		this.precioNeto = precioNeto;
 		this.tipoVuelo = tipoVuelo;
 		this.precioFinal = precioFinal ;		
 	}
@@ -56,28 +58,20 @@ public class PasajeBaseDTO {
 	public void setDni(Long dni) {
 		this.dni = dni;
 	}
-
-	public Double getPrecio() {
-		return getPrecioNeto();
-	}
-
-	public Double getPrecioNeto() {
+	
+	public BigDecimal getPrecioNeto() {
 		return precioNeto;
 	}
-
-	public void setPrecio(double precio) {
-		setPrecioNeto(precio);
-	}
-
-	public void setPrecioNeto(double precio) {
+	
+	public void setPrecioNeto(BigDecimal precio) {
 		this.precioNeto = precio;
 	}
 
-	public double getPrecioFinal() {
+	public BigDecimal getPrecioFinal() {
 		return precioFinal;
 	}
 
-	public void setPrecioFinal(double precioFinal) {
+	public void setPrecioFinal(BigDecimal precioFinal) {
 		this.precioFinal = precioFinal;
 	}
 
@@ -88,6 +82,4 @@ public class PasajeBaseDTO {
 	public void setTipoVuelo(TipoVuelo tipoVuelo) {
 		this.tipoVuelo = tipoVuelo;
 	}	
-	
-	
 }

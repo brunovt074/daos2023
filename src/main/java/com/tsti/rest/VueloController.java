@@ -51,7 +51,7 @@ public class VueloController {
         this.modelMapper = new ModelMapper();
     }
     
-    @GetMapping("/vuelos")
+    @GetMapping("/vuelos/{destino}/{fecha}")
     public ResponseEntity<CollectionModel<EntityModel<VueloDisponibleDTO>>> getVuelosByDestinoAndFechaPartida(
             @RequestParam("destino") String destino,
             @RequestParam("fechaPartida") @DateTimeFormat(/*pattern = "dd-MM-yyyy"*/) LocalDate fechaPartida) {
@@ -169,7 +169,7 @@ public class VueloController {
         return ResponseEntity.ok(vuelosCollectionModel);
     }
     
-    @GetMapping("/vuelos/all")
+    @GetMapping("/vuelos")
     public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosAll() {
         List<Vuelo> vuelos = vueloService.getAll();
         List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();

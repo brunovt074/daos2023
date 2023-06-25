@@ -1,5 +1,6 @@
 package com.tsti.entidades;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
@@ -60,7 +61,7 @@ public class Vuelo {
 	@Column(name = "tipo_vuelo")
 	@NotNull
 	private TipoVuelo tipoVuelo;
-	private double precioNeto;
+	private BigDecimal precioNeto;
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
@@ -263,12 +264,12 @@ public class Vuelo {
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}
 
-	public double getPrecioNeto() {
+	public BigDecimal getPrecioNeto() {
 		return precioNeto;
 	}
 
-	public void setPrecioNeto(double precioNeto) {
-		this.precioNeto = precioNeto;
+	public void setPrecioNeto(BigDecimal precioNeto) {
+		this.precioNeto = precioNeto.setScale(2);
 	}
 
 	

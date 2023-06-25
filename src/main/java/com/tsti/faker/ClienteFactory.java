@@ -122,7 +122,7 @@ public class ClienteFactory {
 			domicilioDAO.save(domicilio);			
 			//String pasaporte = "[A-Za-z]{3}\\d{6}";
 			
-			nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));
+			nuevoCliente.setDni(faker.number().numberBetween(1000000L, 59999999L));			
 			nuevoCliente.setNombre(faker.name().firstName());
 			nuevoCliente.setApellido(faker.name().lastName());
 			nuevoCliente.setTel(faker.phoneNumber().cellPhone());
@@ -145,7 +145,7 @@ public class ClienteFactory {
 			//Fecha de nacimiento con problemas de casteo (Sugerencia: cambiar a String o Timestamp)
 			//nuevoCliente.setFechaNacimiento(faker.date().birthday(18, 99, "yyyy-MM-dd"));
 			//nuevoCliente.vencimientoPasaporte(faker.date().future(i, null);
-			
+			System.out.println(nuevoCliente);
 		}		
 		
 		return nuevoCliente;

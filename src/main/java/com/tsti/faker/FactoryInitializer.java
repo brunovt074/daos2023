@@ -16,7 +16,7 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 public class FactoryInitializer {
 
 //    private final CiudadFactory ciudadFactory;
-//    private final ClienteFactory clienteFactory;
+    //private final ClienteFactory clienteFactory;
 //    private final DomicilioFactory domicilioFactory;
     private final VueloFactory vueloFactory;
     
@@ -24,7 +24,7 @@ public class FactoryInitializer {
     						DomicilioFactory domicilioFactory, VueloFactory vueloFactory) {
         
 //    	this.ciudadFactory = ciudadFactory;
-//        this.clienteFactory = clienteFactory;
+        //this.clienteFactory = clienteFactory;
 //        this.domicilioFactory = domicilioFactory;
         this.vueloFactory = vueloFactory; 
     }  
@@ -43,42 +43,42 @@ public class FactoryInitializer {
     	//PARAMETROS:(nroVuelos, nroPasajeros, estado, tipo)
     	
     	//VUELO VACIO
-    	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+    	//crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
     	    	    	
 //    	//REGISTRADOS
-    	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+    	//crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(3, 0, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
     	
     	//CANCELADOS
-    	crearVuelos(6, 0, EstadoVuelo.CANCELADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(6, 0, EstadoVuelo.CANCELADO, TipoVuelo.NACIONAL);
+    	//crearVuelos(6, 0, EstadoVuelo.CANCELADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(6, 0, EstadoVuelo.CANCELADO, TipoVuelo.NACIONAL);
 ////    //REPROGRAMADOS
-    	crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+    	//crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(1, 0, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
 ////    //DEMORADOS
-    	crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
+    	//crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(1, 0, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
     	
     	//VUELOS NRO PASAJEROS ALEATORIOS
     	crearVuelosNroPasajerosAleatorios(2, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
     	crearVuelosNroPasajerosAleatorios(2, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
 //    	   	
     	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
+    	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
 //    	
-    	crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);
     	//crearVuelosNroPasajerosAleatorios(1, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);
     	
     	//VUELO LLENO
-    	crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
-    	crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
+    	//crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.INTERNACIONAL);
+    	//crearVuelos(1, 90, EstadoVuelo.REGISTRADO, TipoVuelo.NACIONAL);
     	    	
-    	crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);    	
+    	//crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.INTERNACIONAL);    	
     	//crearVuelos(1, 90, EstadoVuelo.REPROGRAMADO, TipoVuelo.NACIONAL);
     	
     	//crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.INTERNACIONAL);    	
-    	crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);   	
+    	//crearVuelos(1, 90, EstadoVuelo.DEMORADO, TipoVuelo.NACIONAL);   	
     	
     	System.out.println("--Ejecucion de inserciones terminada.--");
     	
