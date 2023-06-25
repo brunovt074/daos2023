@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -39,7 +41,10 @@ public class CostoPasajeController {
 	private Vuelo vuelo;
 	private VueloServiceImpl vueloService;
 	
-	public CostoPasajeController() {		
+	@Autowired
+	public CostoPasajeController(VueloServiceImpl vueloServiceImpl, TasaAeroportuariaServiceImpl tasaService) {
+		this.vueloService = vueloServiceImpl;
+		this.tasaService = tasaService;
 	}
 	
 	@GetMapping("/pasaje")
@@ -47,7 +52,7 @@ public class CostoPasajeController {
 								(@RequestParam("nroVuelo") Long nroVuelo, 
 											@RequestParam("dni") Long dni){
 		
-		vueloService = new VueloServiceImpl();
+		
 		PasajeBaseDTO pasajeDTO = new PasajeBaseDTO();
 		
 		pasajeDTO.setNroVuelo(nroVuelo);
@@ -63,6 +68,7 @@ public class CostoPasajeController {
 			
 			//Se obtiene el precio neto del pasajeDTO y se deduce tasa segun tipo de vuelo.
 			precioNeto = vuelo.getPrecioNeto();
+			pasajeDTO.setPrecioNeto(precioNeto);
 			System.out.println(precioNeto);
 			tasa = tasaService.getTasa(pasajeDTO.getTipoVuelo());
 			System.out.println(tasa);
@@ -76,6 +82,7 @@ public class CostoPasajeController {
 			}
 					
 			System.out.println(precioFinal);
+			pasajeDTO.setTipoVuelo(vuelo.getTipoVuelo());
 			pasajeDTO.setPrecioFinal(precioFinal);
 			
 			//se instancia el entity model de acuerdo a los cambios realizados al pasajeDTO
@@ -85,7 +92,7 @@ public class CostoPasajeController {
 			Link link = WebMvcLinkBuilder
 					.linkTo(methodOn(VueloController.class)
 							.getVuelosByDestinoAndFechaPartida(vuelo.getDestino().getNombreCiudad(), vuelo.getFechaPartida()))
-					.withRel("getvueloPorFechaYDestino");
+					.withRel("getVueloPorFechaYDestino");
 				
 			pasajeEntityModel.add(link);
 			

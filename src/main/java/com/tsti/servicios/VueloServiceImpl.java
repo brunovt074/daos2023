@@ -22,17 +22,13 @@ import com.tsti.faker.GenerarPrecioNeto;
  * la legibilidad en el arbol del proyecto
  * */
 @Service
-public class VueloServiceImpl implements IVueloService {
+public class VueloServiceImpl {
 	@Autowired
-	private VueloDAO vueloDAO;	
+	private final VueloDAO vueloDAO;	
 	@Autowired
-	private CiudadDAO ciudadDAO;
+	private final CiudadDAO ciudadDAO;
 	
 		
-	public VueloServiceImpl() {
-		super();
-	}
-
 	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO) {
 		this.vueloDAO = vueloDAO;	
 		this.ciudadDAO = ciudadDAO;
@@ -126,7 +122,6 @@ public class VueloServiceImpl implements IVueloService {
         return vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
     }
 	
-	@Override
 	public List<Vuelo> findByDestino(String nombreDestino) {
 			
 		return vueloDAO.findByDestino(nombreDestino);

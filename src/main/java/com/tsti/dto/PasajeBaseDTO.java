@@ -16,6 +16,7 @@ public class PasajeBaseDTO {
 	private Long nroVuelo;
 	private Long dni;
 	private BigDecimal precioNeto;
+	private BigDecimal tasa;
 	private BigDecimal precioFinal;
 	private TipoVuelo tipoVuelo;
 	
@@ -81,5 +82,13 @@ public class PasajeBaseDTO {
 
 	public void setTipoVuelo(TipoVuelo tipoVuelo) {
 		this.tipoVuelo = tipoVuelo;
+	}
+
+	public BigDecimal getTasa() {
+		return tasa;
+	}
+
+	public void setTasa(BigDecimal tasa) {
+		this.tasa = tasa;
 	}	
-}
+} 

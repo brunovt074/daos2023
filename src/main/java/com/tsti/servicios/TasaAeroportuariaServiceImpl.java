@@ -5,6 +5,8 @@ package com.tsti.servicios;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Service;
+
 import com.tsti.dto.TasaAeroportuariaDTO;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 
@@ -12,6 +14,7 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
  * @author Bruno
  *
  */
+@Service
 public class TasaAeroportuariaServiceImpl {
 	
 	private BigDecimal tasa;
