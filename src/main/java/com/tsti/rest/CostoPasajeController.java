@@ -91,7 +91,7 @@ public class CostoPasajeController {
 			//creando el link a busqueda de vuelo 
 			Link link = WebMvcLinkBuilder
 					.linkTo(methodOn(VueloController.class)
-							.getVuelosByDestinoAndFechaPartida(vuelo.getDestino().getNombreCiudad(), vuelo.getFechaPartida()))
+							.getVuelosByDestinoAndFecha(vuelo.getDestino().getNombreCiudad(), vuelo.getFechaPartida()))
 					.withRel("getVueloPorFechaYDestino");
 				
 			pasajeEntityModel.add(link);
