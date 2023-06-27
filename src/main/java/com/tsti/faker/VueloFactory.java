@@ -61,9 +61,8 @@ public class VueloFactory {
 	}	
 	
 	public void crearVueloOrigenLocal(int nroPasajeros, EstadoVuelo estadoVuelo, TipoVuelo tipoVuelo) {
-		Vuelo vuelo = new Vuelo();
-		//this.estadoVuelo  = estadoVuelo;  
-		//this.tipoVuelo = tipoVuelo;		
+		Vuelo vuelo = new Vuelo();			
+		
 		if(!ciudadDAO.existsByCodAeropuerto("SAAV")){
 			origen = CiudadFactory.getCiudadSauceViejo();
 		}else {

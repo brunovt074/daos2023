@@ -15,7 +15,6 @@ import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 import com.tsti.entidades.Ciudad;
 import com.tsti.faker.CiudadFactory;
-import com.tsti.faker.GenerarPrecioNeto;
 /**
  * @author Bruno
  * Sugiero añadir el prefijo "I" Delante de las interfaces para mejorar 
@@ -73,17 +72,19 @@ public class VueloServiceImpl {
 		vuelo.setAerolinea(vueloDTO.getAerolinea());
 		vuelo.setFechaPartida(vueloDTO.getFechaPartida());
 		vuelo.setHoraPartida(vueloDTO.getHoraPartida());
-		vuelo.setNroFilas(vueloDTO.getNroFilas());
-		vuelo.setNroColumnas(vueloDTO.getNroColumnas());
+		vuelo.setNroFilas(vueloDTO.getNroFilasAsientos());
+		vuelo.setNroColumnas(vueloDTO.getNroColumnasAsientos());
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
 		if(vuelo.getTipoVuelo() == TipoVuelo.NACIONAL) {
 			
-			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
+			vuelo.setPrecioNeto(vueloDTO.getPrecioNeto());
+			//vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
 		
 		}else {
-			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
+			vuelo.setPrecioNeto(vueloDTO.getPrecioNeto());
+			//vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
 		}
 		
 		

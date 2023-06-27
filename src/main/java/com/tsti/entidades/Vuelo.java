@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -82,17 +83,7 @@ public class Vuelo {
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   			//Creado tipo ENUM para este caso. 
 	
-	
-	/* 
-	 * El estado es autocalculado por el sistema, no puede ser establecido por
-		el usuario.
-		Una vez registrado, solo se permitirá cambiar la fecha y hora 
-		del mismo(lo cual pasa el vuelo al estado reprogramado) 
-		o eliminar el mismo (lo cual pasa el vuelo al estado cancelado).
-		Tanto la reprogramación como la cancelación de un vuelo dispararía la
-		notificación automática del evento a todos los pasajeros aunque por 
-		simplicidad, no se pide implementar el servicio de alertas.*/
-		
+			
 	//CONSTRUCTOR
 	public Vuelo() {
 		super();
@@ -257,13 +248,6 @@ public class Vuelo {
 		
 	}
 
-	@Override
-	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
-				+ ", nroColumnas=" + nroColumnas + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
-				+ destino + ", Estado=" + estadoVuelo + "]";
-	}
-
 	public BigDecimal getPrecioNeto() {
 		return precioNeto;
 	}
@@ -272,6 +256,30 @@ public class Vuelo {
 		this.precioNeto = precioNeto.setScale(2);
 	}
 
+	@Override
+	public String toString() {
+		return "Vuelo [nroVuelo=" + nroVuelo + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
+				+ ", nroColumnas=" + nroColumnas + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
+				+ destino + ", Estado=" + estadoVuelo + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nroVuelo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vuelo other = (Vuelo) obj;
+		return Objects.equals(nroVuelo, other.nroVuelo);
+	}
+	
 	
 
 		

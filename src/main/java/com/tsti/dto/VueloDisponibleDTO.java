@@ -3,10 +3,10 @@
  */
 package com.tsti.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.tsti.serializer.CiudadSerializer;
 import com.tsti.entidades.Ciudad;
@@ -25,7 +25,7 @@ public class VueloDisponibleDTO {
 	private TipoVuelo tipoVuelo;
 	private LocalDate fechaPartida;
 	private LocalTime horaPartida;
-	private double precioNeto;
+	private BigDecimal precioNeto;
 	
 	
 	public VueloDisponibleDTO() {
@@ -98,11 +98,11 @@ public class VueloDisponibleDTO {
 				+ horaPartida + ", destino=" + destino + "]";
 	}
 
-	public double getPrecioNeto() {
+	public BigDecimal getPrecioNeto() {
 		return precioNeto;
 	}
 
-	public void setPrecioNeto(double precioNeto) {
+	public void setPrecioNeto(BigDecimal precioNeto) {
 		this.precioNeto = precioNeto;
 	}
 	

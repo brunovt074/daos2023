@@ -3,13 +3,13 @@
  */
 package com.tsti.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Vuelo.TipoVuelo;
 import com.tsti.serializer.CiudadSerializer;
 
 /**
@@ -24,9 +24,9 @@ public class VueloDTO {
 	private Ciudad destino;
 	private LocalDate fechaPartida;
 	private LocalTime horaPartida;
-	private int nroFilas;
-	private int nroColumnas;
-	private double precioNeto;
+	private int nroFilasAsientos;
+	private int nroColumnasAsientos;
+	private BigDecimal precioNeto;
 	
 	public VueloDTO() {
 		// TODO Auto-generated constructor stub
@@ -40,8 +40,8 @@ public class VueloDTO {
 		this.destino = pojo.getDestino();
 		this.fechaPartida = pojo.getFechaPartida();
 		this.horaPartida = pojo.getHoraPartida();
-		this.nroFilas = pojo.getNroFilas();
-		this.nroColumnas = pojo.getNroColumnas();		
+		this.nroFilasAsientos = pojo.getNroFilas();
+		this.nroColumnasAsientos = pojo.getNroColumnas();		
 	}
 
 	public Long getNroVuelo() {
@@ -85,26 +85,45 @@ public class VueloDTO {
 	}
 
 	public int getNroFilas() {
-		return nroFilas;
+		return getNroFilasAsientos();
+	}
+
+
+	public int getNroFilasAsientos() {
+		return nroFilasAsientos;
 	}
 
 	public void setNroFilas(int nroFilas) {
-		this.nroFilas = nroFilas;
+		setNroFilasAsientos(nroFilas);
+	}
+
+
+	public void setNroFilasAsientos(int nroFilas) {
+		this.nroFilasAsientos = nroFilas;
 	}
 
 	public int getNroColumnas() {
-		return nroColumnas;
+		return getNroColumnasAsientos();
+	}
+
+
+	public int getNroColumnasAsientos() {
+		return nroColumnasAsientos;
 	}
 
 	public void setNroColumnas(int nroColumnas) {
-		this.nroColumnas = nroColumnas;
+		setNroColumnasAsientos(nroColumnas);
 	}
 
-	public double getPrecioNeto() {
+	public void setNroColumnasAsientos(int nroColumnas) {
+		this.nroColumnasAsientos = nroColumnas;
+	}
+
+	public BigDecimal getPrecioNeto() {
 		return precioNeto;
 	}
 
-	public void setPrecioNeto(double precioNeto) {
+	public void setPrecioNeto(BigDecimal precioNeto) {
 		this.precioNeto = precioNeto;
 	}	
 	

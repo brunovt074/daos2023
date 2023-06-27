@@ -15,7 +15,7 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
  *
  */
 @Service
-public class TasaAeroportuariaServiceImpl {
+public class TasaServiceImpl {
 	
 	private BigDecimal tasa;
 	private String moneda;

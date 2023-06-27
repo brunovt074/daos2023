@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.tsti.dto.CotizacionDolarDTO;
-import com.tsti.excepcion.CotizacionDolarException;
+//import com.tsti.excepcion.CotizacionDolarException;
 
 /**
  * @author Bruno
@@ -24,27 +24,34 @@ public class CotizacionServiceImpl {
 	
 	
     public CotizacionServiceImpl() {
-		this.restTemplate = new RestTemplate();
-        
+		this.restTemplate = new RestTemplate();        
     }
 	
 	public BigDecimal getCotizacionDolarOficial(){
-				
+					
 		ResponseEntity<CotizacionDolarDTO[]> response = restTemplate.getForEntity(URL_COTIZACION_DOLAR, CotizacionDolarDTO[].class);
 		
-			if(response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+
+			if(response.getStatusCode().is2xxSuccessful()) {
 				
-				CotizacionDolarDTO[] cotizaciones = response.getBody();
+				CotizacionDolarDTO[] cotizaciones = response.getBody();				
 				
 				for(CotizacionDolarDTO cotizacion : cotizaciones) {
 					
-					if(cotizacion.getNombre().equals("Dolar oficial")) {
+					CotizacionDolarDTO.CasaDTO casaDTO = cotizacion.getCasa();
+					
+					if(casaDTO.getNombre().equalsIgnoreCase("Dolar Oficial")) {
 						
-						return cotizacion.getCompra();
+					//se recibe un string con el formato XXX,XX y se lo formatea antes de convertirlo. 	
+					return BigDecimal.valueOf(
+							Double.parseDouble(casaDTO.getVenta().replace(",",".")));
+						
+						
 				}
-			}				
+			}
+				//throw new CotizacionDolarException("No se pudo obtener la cotizacion del dolar oficial");	
 		}
-		
-		throw new CotizacionDolarException("No se pudo obtener la cotizacion del dolar oficial");
+			
+		return null;
 	}
 }

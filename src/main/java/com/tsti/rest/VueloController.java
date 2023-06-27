@@ -1,12 +1,10 @@
 package com.tsti.rest;
 
 import java.time.LocalDate;
-//import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
-//import java.util.Collections;
 import java.util.Optional;
-//import java.util.stream.Collectors;
+
 
 
 
@@ -15,17 +13,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
-//import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-//import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-//import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,14 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.modelmapper.ModelMapper;
 
 import com.tsti.dto.VueloDisponibleDTO;
-//import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 import com.tsti.dto.VueloDTO;
-//import com.tsti.entidades.Ciudad;
-import com.tsti.entidades.Vuelo;
-//import com.tsti.entidades.Vuelo.EstadoVuelo;
-import com.tsti.servicios.VueloServiceImpl;
 
-//import io.micrometer.common.lang.Nullable;
+import com.tsti.entidades.Vuelo;
+import com.tsti.servicios.VueloServiceImpl;
 
 @RestController
 public class VueloController {
@@ -61,7 +52,8 @@ public class VueloController {
         List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
 
         for (Vuelo vuelo : vuelos) {
-            VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
+            //Se mapea el DTO con la lista de vuelos
+        	VueloDisponibleDTO vueloDTO = modelMapper.map(vuelo, VueloDisponibleDTO.class);
             vuelosDTO.add(vueloDTO);
         }
 
@@ -77,6 +69,7 @@ public class VueloController {
     public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosByDestinoAndFecha(
     		@RequestParam("destino")String destino,
     		@RequestParam("fecha")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha) {
+    	
     	List<Vuelo> vuelos = vueloService.findByDestinoAndFechaPartida(destino, fecha);
     	
     	if (vuelos.isEmpty()) {
@@ -105,7 +98,8 @@ public class VueloController {
     @GetMapping("/vuelos/filtrar-por-destino")
     public ResponseEntity<CollectionModel<VueloDisponibleDTO>> getVuelosByDestino(
     		@RequestParam String destino) {
-        List<Vuelo> vuelos = vueloService.findByDestino(destino);
+        
+    	List<Vuelo> vuelos = vueloService.findByDestino(destino);
         List<VueloDisponibleDTO> vuelosDTO = new ArrayList<>();
 
         for (Vuelo vuelo : vuelos) {
@@ -146,7 +140,7 @@ public class VueloController {
         return ResponseEntity.ok().body(EntityModel.of(vuelo, showVuelosLink()));
     }
     
-    @PutMapping("/vuelos/{id}")
+    @PatchMapping("/vuelos/{id}")
     public ResponseEntity<EntityModel<Vuelo>> actualizarFechaHoraVuelo(
             									@PathVariable("id") Long vueloId,
             									@RequestBody VueloDTO vueloDTO) {

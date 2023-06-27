@@ -29,7 +29,7 @@ public class GenerarPrecioNeto {
 	    max = 500000.0;
 	    randomDouble = ThreadLocalRandom.current().nextDouble(min, max);
 	    	        
-	    return new BigDecimal(randomDouble).setScale(2, RoundingMode.HALF_UP);
+	    return new BigDecimal(randomDouble).setScale(2, RoundingMode.HALF_DOWN);
 	}
 	
 	public static BigDecimal generarPrecioNetoDolares() {
@@ -39,6 +39,6 @@ public class GenerarPrecioNeto {
 	    randomDouble = ThreadLocalRandom.current().nextDouble(min, max);
 	    
 	    //se crea y devuelve un decimal de dos cifras redondeado hacia arriba.
-	    return new BigDecimal(randomDouble).setScale(2,RoundingMode.HALF_UP);
+	    return new BigDecimal(randomDouble).setScale(2,RoundingMode.HALF_DOWN);
 	}
 }
