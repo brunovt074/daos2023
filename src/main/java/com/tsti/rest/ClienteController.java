@@ -83,7 +83,29 @@ public class ClienteController {
 			
 		}
 		else
-			System.out.print("no se encuentra id");
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+					
+		
+	}
+	
+	
+	//busca cliente por dni 
+	@GetMapping(value = "/dni/{dni}", produces = { MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<ClienteResponseDTO> getByDni(@PathVariable("dni") Long dni) throws Excepcion
+	{
+			
+			Optional<Clientes> rta = service.filtrarPorDni(dni);
+	
+		if(rta.isPresent())
+		{
+			Clientes pojo = rta.get();
+			
+			return new ResponseEntity<ClienteResponseDTO>(buildResponse(pojo), HttpStatus.OK);
+			
+		}
+		else
+			System.out.print("no se encuentra el cliente con ese dni");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 					
 		

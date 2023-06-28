@@ -16,7 +16,8 @@ public interface ClienteDAO extends JpaRepository<Clientes, Long> {
 	
 	public List<Clientes> findByApellidoOrNombre(String apellido, String nombre);
 	
-	
 	public Optional<Clientes> findByDni(Long dni);
+	
+	
 	
 }
