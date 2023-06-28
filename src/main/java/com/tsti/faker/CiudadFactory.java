@@ -24,23 +24,34 @@ public class CiudadFactory {
 	private final Faker faker;
 	@Autowired
 	private CiudadDAO ciudadDAO;
+	private Ciudad nuevaCiudad;
 	
+	@Autowired
 	public CiudadFactory() {
 
 		this.faker = new Faker(new Locale("es"));		
-
+		this.nuevaCiudad = new Ciudad();
+		//this.ciudadDAO = ciudadDAO;
 	}
 	
-	public static Ciudad getCiudadSauceViejo() {
+	public Ciudad getCiudadSauceViejo() {
 		
-		Ciudad nuevaCiudad = new Ciudad();
+		if(ciudadDAO.existsByCodAeropuerto("SAAV")){
+			
+			nuevaCiudad = ciudadDAO.findFirstByCodAeropuertoAndNombreCiudad
+														("SAAV", "Sauce Viejo");
+		} else{
+		
 		nuevaCiudad.setCodAeropuerto("SAAV");
 		nuevaCiudad.setNombreCiudad("Sauce Viejo");
 		nuevaCiudad.setProvincia("Santa Fe");
 		nuevaCiudad.setCodPostal("S3017");
 		nuevaCiudad.setPais("Argentina");	
 		
-		return nuevaCiudad;			
+		
+		}
+		
+		return nuevaCiudad;
 	}
 	
 	public Ciudad getCiudadArgentina() {

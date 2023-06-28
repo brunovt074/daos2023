@@ -2,6 +2,7 @@ package com.tsti.rest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class CostoPasajeController {
 	}
 	
 	@GetMapping("/pasaje/costo")
-	public ResponseEntity<EntityModel<PasajeBaseDTO>> obtenerCostoPasaje
+	public ResponseEntity<EntityModel<PasajeBaseDTO>> getCostoPasaje
 								(@RequestParam("nro-vuelo") Long nroVuelo, 
 											@RequestParam("dni") Long dni){
 		
@@ -90,13 +91,27 @@ public class CostoPasajeController {
 			EntityModel<PasajeBaseDTO> pasajeEntityModel = 
 												EntityModel.of(pasajeDTO);
 				
-			//creando el link a busqueda de vuelo 
-			Link link = WebMvcLinkBuilder
-					.linkTo(methodOn(VueloController.class)
-							.getVuelosByDestinoAndFecha(vuelo.getDestino().getNombreCiudad(), vuelo.getFechaPartida()))
-					.withRel("getVueloPorFechaYDestino");
-				
-			pasajeEntityModel.add(link);
+			//creando el link a busqueda de vuelo
+			List <Link> links = AppLinks.getLinksVuelos(2, vuelo.getDestino().getNombreCiudad(),
+														vuelo.getFechaPartida());
+			
+			links.addAll(AppLinks.getLinksCostoPasaje(vuelo.getNroVuelo(), dni));
+//			Link linkSelf = Link.of("/pasaje/costo", "self").withRel("pasaje-costo");
+//			Link linkDolar = Link.of("https://www.dolarsi.com/api/api.php?type=valoresprincipales").withRel("api-dolar");
+//			
+//			links.add(linkSelf);
+//			links.add(linkDolar);
+//			
+			
+			for (Link link : links) {
+			    pasajeEntityModel.add(link);
+			}
+			//			Link link = WebMvcLinkBuilder
+//					.linkTo(methodOn(VueloController.class)
+//							.getVuelosByDestinoAndFecha(vuelo.getDestino().getNombreCiudad(), vuelo.getFechaPartida()))
+//					.withRel("getVueloPorFechaYDestino");
+//				
+			//pasajeEntityModel.add(links);
 			
 //			//creando link a cliente por dni
 //			link = WebMvcLinkBuilder
@@ -105,9 +120,12 @@ public class CostoPasajeController {
 //					.withRel("getClientePorDni");
 //			pasajeEntityModel.add(link);
 			
-			//creando link a api dolar.			
-			link = Link.of("https://www.dolarsi.com/api/api.php?type=valoresprincipales");
-			pasajeEntityModel.add(link);
+			//creando link a api dolar.
+			
+			
+			
+			
+			//pasajeEntityModel.add(linkDolar);
 		
 			return ResponseEntity.ok(pasajeEntityModel);
 		

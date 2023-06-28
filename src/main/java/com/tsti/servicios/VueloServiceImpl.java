@@ -1,6 +1,8 @@
 package com.tsti.servicios;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,117 +17,159 @@ import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 import com.tsti.entidades.Ciudad;
 import com.tsti.faker.CiudadFactory;
+import com.tsti.faker.GenerarPrecioNeto;
+import com.tsti.presentacion.CrearVueloForm;
+import com.tsti.presentacion.EditarVueloForm;
 /**
  * @author Bruno
- * Sugiero añadir el prefijo "I" Delante de las interfaces para mejorar 
- * la legibilidad en el arbol del proyecto
+ * 
  * */
 @Service
 public class VueloServiceImpl {
-	@Autowired
+	//@Autowired
 	private final VueloDAO vueloDAO;	
-	@Autowired
+	//@Autowired
 	private final CiudadDAO ciudadDAO;
+	private final CiudadFactory ciudadFactory;
 	
-		
-	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO) {
+	@Autowired	
+	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO, CiudadFactory ciudadFactory) {
 		this.vueloDAO = vueloDAO;	
 		this.ciudadDAO = ciudadDAO;
+		this.ciudadFactory = ciudadFactory;
 	}
 	
-	public Vuelo crearVuelo(VueloDTO vueloDTO) {
+	public VueloDTO crearVuelo(CrearVueloForm vueloForm) {
 		
 		Vuelo vuelo = new Vuelo();
+		VueloDTO vueloDTO; 
 		Ciudad origen;
+		Ciudad destino = new Ciudad();
 		
-		if(vueloDTO.getDestino().getId() == null) {
+		if(ciudadDAO.existsByCodAeropuerto("SAAV")){
 			
-			origen = CiudadFactory.getCiudadSauceViejo();
+			origen = ciudadDAO.findFirstByCodAeropuertoAndNombreCiudad
+														("SAAV", "Sauce Viejo");
+		} else{
+			
+			origen = ciudadFactory.getCiudadSauceViejo();
+		}
+		
+		if(vueloForm.getIdDestino() != null){
+			
+			Optional<Ciudad>ciudadOptional = ciudadDAO.findById(vueloForm.getIdDestino());
+			
+			if(ciudadOptional.isPresent()) {
+				
+				destino = ciudadOptional.get();
+			}		
+			
+		}else{
+						
+			destino.setCodAeropuerto(vueloForm.getCodAeropuerto());
+			destino.setNombreCiudad(vueloForm.getNombreCiudad());
+			destino.setProvincia(vueloForm.getProvincia());
+			destino.setPais(vueloForm.getPais());
+			destino.setCodPostal(vueloForm.getCodPostal());
 			
 		}
-		else {
-			boolean ciudadExiste = ciudadDAO.existsById(vueloDTO.getDestino().getId());
-		
-			if (ciudadExiste) {
-				
-			Optional<Ciudad>ciudadOptional = ciudadDAO.findById(vueloDTO.getDestino().getId());		
-			
-			origen = ciudadOptional.get();
-			
-			} else{
-				
-				origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
-				
-			}
-		}
-		Ciudad destino = new Ciudad();		
-		
-		destino.setCodAeropuerto(vueloDTO.getDestino().getCodAeropuerto());
-		destino.setCodPostal(vueloDTO.getDestino().getCodPostal());
-		destino.setNombreCiudad(vueloDTO.getDestino().getNombreCiudad());
-		destino.setProvincia(vueloDTO.getDestino().getProvincia());
-		destino.setPais(vueloDTO.getDestino().getPais());
 
 		ciudadDAO.save(origen);	
 		ciudadDAO.save(destino);	
 				
-		vuelo.setAerolinea(vueloDTO.getAerolinea());
-		vuelo.setFechaPartida(vueloDTO.getFechaPartida());
-		vuelo.setHoraPartida(vueloDTO.getHoraPartida());
-		vuelo.setNroFilas(vueloDTO.getNroFilasAsientos());
-		vuelo.setNroColumnas(vueloDTO.getNroColumnasAsientos());
+		vuelo.setAerolinea(vueloForm.getAerolinea());
+		vuelo.setAvion(vueloForm.getAvion());
+		vuelo.setFechaPartida(vueloForm.getFechaPartida());
+		vuelo.setHoraPartida(vueloForm.getHoraPartida());
+		vuelo.setNroFilasAsientos(vueloForm.getNroFilasAsientos());
+		vuelo.setNroColumnasAsientos(vueloForm.getNroColumnasAsientos());
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
-		if(vuelo.getTipoVuelo() == TipoVuelo.NACIONAL) {
-			
-			vuelo.setPrecioNeto(vueloDTO.getPrecioNeto());
-			//vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
+		vuelo.setPrecioNeto(vueloForm.getPrecioNeto()); 
 		
-		}else {
-			vuelo.setPrecioNeto(vueloDTO.getPrecioNeto());
-			//vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
+		if(vueloForm.getPrecioNeto() == null) {
+			
+			if(vuelo.getTipoVuelo() == TipoVuelo.NACIONAL) {
+				
+			
+				vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
+			
+			}else {			
+				
+				vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
+			
+			}
+			
+		}		
+				
+		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
+				
+		vuelo = vueloDAO.save(vuelo);
+		System.out.println(vuelo.toString());
+		
+		vueloDTO = new VueloDTO(vuelo);
+		
+		vueloDTO.setNroVuelo(vuelo.getNroVuelo());
+		
+		return vueloDTO;
+				
+	}
+	
+	public VueloDTO cancelarVuelo(Long id){		
+		
+		Vuelo vuelo = new Vuelo();
+		
+		Optional<Vuelo> vueloOptional = vueloDAO.findById(id);
+		
+		if (vueloOptional.isPresent()) {
+            
+			vuelo = vueloOptional.get();
+			
+			vuelo.setEstadoVuelo(EstadoVuelo.CANCELADO);
+			vuelo.setPrecioNeto(BigDecimal.valueOf(0.00));
+			
+			vueloDAO.save(vuelo);
 		}
 		
-		
-		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
-		
-		vueloDAO.save(vuelo);
-		
-		System.out.println(vuelo);
-		return vuelo;
+		return new VueloDTO(vuelo);
 	}
 	
-	public void cancelarVuelo(Vuelo vuelo){		
-				
-		vuelo.setEstadoVuelo(EstadoVuelo.CANCELADO);
-		vueloDAO.save(vuelo);
+	public VueloDTO reprogramarVuelo(Long id, EditarVueloForm vueloForm){
 		
-	}
-	
-	public void reprogramarVuelo(Vuelo vuelo, VueloDTO vueloDTO){
-		// Actualizar fecha y hora del vuelo
-        vuelo.setFechaPartida(vueloDTO.getFechaPartida());
-        vuelo.setHoraPartida(vueloDTO.getHoraPartida());
+		Vuelo vuelo = new Vuelo();		
+		
+		Optional<Vuelo> vueloOptional = vueloDAO.findById(id);
+        
+        if (vueloOptional.isPresent()) {
+            
+        	vuelo = vueloOptional.get();
+                       		
+	        vuelo.setFechaPartida(vueloForm.getFechaPartida());
+	        vuelo.setHoraPartida(vueloForm.getHoraPartida());
         
         // Cambiar estado a reprogramado
         vuelo.setEstadoVuelo(EstadoVuelo.REPROGRAMADO);
-        vueloDAO.save(vuelo);
+        vueloDAO.save(vuelo);        
         
-	}
+        }       
+        
+        return new VueloDTO(vuelo);        
+    }
 	
 	public Optional<Vuelo> findById(Long id){
+		
 		return vueloDAO.findById(id);
-	}
 	
+	}	
 	
 	public List<Vuelo> findByDestinoAndFechaPartida(String destino, LocalDate fecha) {
         return vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
     }
 	
-	public List<Vuelo> findByDestino(String nombreDestino) {
+	public List<Vuelo> findByDestino(String destino) {
 			
-		return vueloDAO.findByDestino(nombreDestino);
+		return vueloDAO.findByDestino(destino);
 		
 	}
 	public List<Vuelo> findByFechaPartida(LocalDate fecha) {
@@ -136,13 +180,48 @@ public class VueloServiceImpl {
         return vueloDAO.findByTipoVuelo(tipoVuelo);
     }
 	
-//	public List<Vuelo> findByEstado(EstadoVuelo estadoVuelo){
-//		
-//		return vueloDAO.findByEstado(estadoVuelo);
-//	}
-
-	public List<Vuelo> getAll() {
-		return (List<Vuelo>) vueloDAO.findAll();
-	}	
+	public List<VueloDTO> getAll() {
+		
+		List<VueloDTO> vuelosDTO = new ArrayList<>();
+		List<Vuelo> vuelos = vueloDAO.findAll();
+		
+		if(vuelos.isEmpty()){
+			
+			return null;
+			
+		}else{
+			
+			for(Vuelo  vuelo : vuelos ){			
+				
+				vuelosDTO.add(new VueloDTO(vuelo));
+				
+			}
+			
+			return vuelosDTO;
+			
+		}
+	}
+	
+	public List<VueloDTO> findAllByEstadoVuelo(EstadoVuelo estadoVuelo){
+		
+		List<VueloDTO> vuelosPorEstadoDTO = new ArrayList<>();
+		List<Vuelo> vuelosPorEstado = vueloDAO.findAllByEstadoVuelo(estadoVuelo);
+		
+		if(vuelosPorEstado.isEmpty()){
+			
+			return null;
+			
+		}else{
+			
+			for(Vuelo  vuelo : vuelosPorEstado ){			
+				
+				vuelosPorEstadoDTO.add(new VueloDTO(vuelo));
+				
+			}
+			
+			return vuelosPorEstadoDTO;
+			
+		}		
+	}
 
 }

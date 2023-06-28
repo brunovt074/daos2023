@@ -6,10 +6,13 @@ package com.tsti.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.serializer.CiudadSerializer;
 
 /**
@@ -27,6 +30,8 @@ public class VueloDTO {
 	private int nroFilasAsientos;
 	private int nroColumnasAsientos;
 	private BigDecimal precioNeto;
+	private TipoVuelo tipoVuelo;
+	private EstadoVuelo estadoVuelo;
 	
 	public VueloDTO() {
 		// TODO Auto-generated constructor stub
@@ -41,7 +46,10 @@ public class VueloDTO {
 		this.fechaPartida = pojo.getFechaPartida();
 		this.horaPartida = pojo.getHoraPartida();
 		this.nroFilasAsientos = pojo.getNroFilas();
-		this.nroColumnasAsientos = pojo.getNroColumnas();		
+		this.nroColumnasAsientos = pojo.getNroColumnas();
+		this.tipoVuelo = pojo.getTipoVuelo();
+		this.estadoVuelo = pojo.getEstadoVuelo();
+		this.precioNeto = pojo.getPrecioNeto(); 
 	}
 
 	public Long getNroVuelo() {
@@ -125,9 +133,48 @@ public class VueloDTO {
 
 	public void setPrecioNeto(BigDecimal precioNeto) {
 		this.precioNeto = precioNeto;
-	}	
-	
-	
+	}
+
+
+	public TipoVuelo getTipoVuelo() {
+		return tipoVuelo;
+	}
+
+
+	public void setTipoVuelo(TipoVuelo tipoVuelo) {
+		this.tipoVuelo = tipoVuelo;
+	}
+
+
+	public EstadoVuelo getEstadoVuelo() {
+		return estadoVuelo;
+	}
+
+
+	public void setEstadoVuelo(EstadoVuelo estadoVuelo) {
+		this.estadoVuelo = estadoVuelo;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(aerolinea, destino, fechaPartida, horaPartida, nroVuelo);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		VueloDTO other = (VueloDTO) obj;
+		return Objects.equals(aerolinea, other.aerolinea) && Objects.equals(destino, other.destino)
+				&& Objects.equals(fechaPartida, other.fechaPartida) && Objects.equals(horaPartida, other.horaPartida)
+				&& Objects.equals(nroVuelo, other.nroVuelo);
+	}
 	
 	
 	

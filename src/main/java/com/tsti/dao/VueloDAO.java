@@ -1,6 +1,7 @@
 package com.tsti.dao;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,8 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 @Repository
 public interface VueloDAO extends JpaRepository<Vuelo, Long> {
     
+	public Optional<Vuelo> findById(Long id);
+	
 	//ESTE ES EL METODO UTILIZADO EN LA APP
 	@Query(value = "SELECT v.* FROM vuelos v JOIN ciudades c "
     		+ "ON V.destino_id = c.id WHERE c.nombre_ciudad =:destino AND v.fecha_partida=:fecha_partida", nativeQuery = true )
@@ -33,9 +36,9 @@ public interface VueloDAO extends JpaRepository<Vuelo, Long> {
     		+ "ON V.destino_id = c.id WHERE v.fecha_partida=:fecha_partida", nativeQuery = true )
     public List<Vuelo> findByFechaPartida(@Param("fecha_partida") LocalDate fechaPartida);
 	    
-	public List<Vuelo> findByTipoVuelo(TipoVuelo tipoVuelo);
+	public List<Vuelo>findByTipoVuelo(TipoVuelo tipoVuelo);
 	
-	//public List<Vuelo> findByEstado(EstadoVuelo estadoVuelo);
+	public List<Vuelo> findAllByEstadoVuelo(EstadoVuelo estadoVuelo);
     
 }
 

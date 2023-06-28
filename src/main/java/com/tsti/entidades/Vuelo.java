@@ -92,9 +92,9 @@ public class Vuelo {
 	//ENUM para estado de los vuelos. Se puede acceder por getEstadoVuelo(int estadoVuelo)
 	public enum EstadoVuelo {
 		REGISTRADO(0),
-	    DEMORADO(1),
-	    CANCELADO(2),
-	    REPROGRAMADO(3);
+		REPROGRAMADO(1),
+		DEMORADO(2),
+	    CANCELADO(3);
 
 		EstadoVuelo(int i) {
 			
@@ -154,6 +154,10 @@ public class Vuelo {
 
 
 	public void setNroFilas(int nroFila) {
+		setNroFilasAsientos(nroFila);
+	}
+
+	public void setNroFilasAsientos(int nroFila) {
 		this.nroFilas = nroFila;
 	}
 
@@ -174,6 +178,10 @@ public class Vuelo {
 	}
 
 	public void setNroColumnas(int nroColumnas) {
+		setNroColumnasAsientos(nroColumnas);
+	}
+
+	public void setNroColumnasAsientos(int nroColumnas) {
 		this.nroColumnas = nroColumnas;
 	}
 	

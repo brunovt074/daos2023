@@ -48,7 +48,7 @@ public class VueloFactory {
 	//private EstadoVuelo estadoVuelo;
 	//private TipoVuelo tipoVuelo;
 	
-	
+	@Autowired
 	public VueloFactory() {
 		this.faker = new Faker(new Locale("es") );
 		this.ciudadFactory = new CiudadFactory();
@@ -64,7 +64,8 @@ public class VueloFactory {
 		Vuelo vuelo = new Vuelo();			
 		
 		if(!ciudadDAO.existsByCodAeropuerto("SAAV")){
-			origen = CiudadFactory.getCiudadSauceViejo();
+			origen = ciudadFactory.getCiudadSauceViejo();
+		
 		}else {
 			
 			origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
@@ -92,8 +93,8 @@ public class VueloFactory {
 				
 		vuelo.setAerolinea(faker.aviation().airline());
 		vuelo.setAvion(faker.aviation().airplane());
-		vuelo.setNroFilas(6);
-		vuelo.setNroColumnas(15);
+		vuelo.setNroFilasAsientos(6);
+		vuelo.setNroColumnasAsientos(15);
 		//Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
 		//vuelo.setPlazas(plazas); 
 		vuelo.setOrigen(origen);
