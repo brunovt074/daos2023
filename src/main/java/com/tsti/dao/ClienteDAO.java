@@ -16,7 +16,7 @@ public interface ClienteDAO extends JpaRepository<Clientes, Long> {
 	
 	public List<Clientes> findByApellidoOrNombre(String apellido, String nombre);
 	
-	@Query("SELECT dni FROM Clientes c WHERE c.dni=?1")
+	
 	public Optional<Clientes> findByDni(Long dni);
 	
 }

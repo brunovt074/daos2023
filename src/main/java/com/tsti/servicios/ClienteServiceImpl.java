@@ -85,15 +85,7 @@ public class ClienteServiceImpl implements IClienteService {
 		
 	};
 	
-	public void actualizarDatosClientes(Clientes cliente, ClienteResponseDTO clienteDto) {
-		cliente.setApellido(clienteDto.getApellido());
-		cliente.setNombre(clienteDto.getNombre());
-		System.out.print(cliente);
-		
-		dao.save(cliente);
-		
-		
-}
+	
 
 
 	

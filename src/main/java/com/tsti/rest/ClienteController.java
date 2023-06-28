@@ -118,7 +118,7 @@ public class ClienteController {
 	@PutMapping("/{dni}")
 	public ResponseEntity<Object>  actualizar(@RequestBody ClienteForm form, @PathVariable long dni) throws Exception
 	{
-		Optional<Clientes> rta = service.getById(dni);
+		Optional<Clientes> rta = service.filtrarPorDni(dni);
 		System.out.print("persona a acrualizar: "+ rta);
 		if(!rta.isPresent())
 			
@@ -132,11 +132,8 @@ public class ClienteController {
 			cliente.setNombre(clienteActualizado.getNombre());
 			cliente.setEmail(clienteActualizado.getEmail());
 			cliente.setFechaNacimiento(clienteActualizado.getFechaNacimiento());
-			
-			
-			
-			
-			if(cliente.getDni() == dni)
+			 
+			if(cliente.getDni() != dni)
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(getError("03", "Dato no editable", "No puede modificar el dni."));
 			service.update(cliente);
 			

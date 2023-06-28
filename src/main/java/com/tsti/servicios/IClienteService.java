@@ -27,6 +27,5 @@ public interface IClienteService {
 	
 	public Optional<Clientes> filtrarPorDni(Long dni);
 	
-	public void actualizarDatosClientes(Clientes cliente, ClienteResponseDTO clienteDTO); 
 	
 }
