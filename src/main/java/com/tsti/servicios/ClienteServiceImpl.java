@@ -70,6 +70,11 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 	
 	@Override
+	public void deleteByDni(Long dni) {
+		dao.deleteByDni(dni);
+	}
+	
+	@Override
 	public List<Clientes> filtrar(String apellido, String nombre) {
 		if(apellido==null && nombre==null)
 			return dao.findAll();

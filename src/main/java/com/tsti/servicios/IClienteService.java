@@ -23,6 +23,8 @@ public interface IClienteService {
 	
 	public void delete(Long id);
 	
+	public void deleteByDni(Long dni);
+	
 	public List<Clientes> filtrar(String apellido, String nombre);
 	
 	public Optional<Clientes> filtrarPorDni(Long dni);

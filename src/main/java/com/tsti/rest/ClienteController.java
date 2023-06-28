@@ -219,25 +219,26 @@ public class ClienteController {
 		}
 	}
 	
+	
+	//Elimina clientes 
 	@DeleteMapping("/{dni}")
-	public ResponseEntity<String> eliminar(@PathVariable Long dni)
+	public ResponseEntity<String> eliminar(@PathVariable("dni") Long dni)
 	{
-		Optional<Clientes> clienteAeliminar = service.getById(dni);
-		Long clienteIdAEliminar = service.getById(dni).get().getId();
+		Optional<Clientes> clienteAeliminar = service.filtrarPorDni(dni);
+		
 		
 		if(!clienteAeliminar.isPresent())
 			return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe una persona con ese dni");
 		else {
-			if(dni.equals(clienteIdAEliminar)) {
-				System.out.print("id "+clienteIdAEliminar);
-				service.delete(dni);
+			
+				System.out.print("id "+ clienteAeliminar);
+				service.deleteByDni(dni);
 				
-			}
+			
 		
 		
 		}
 		return ResponseEntity.ok().build();
-		
 		
 	}
 }
