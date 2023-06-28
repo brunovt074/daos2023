@@ -5,6 +5,8 @@ import java.util.Date;
 import org.hibernate.annotations.FetchProfile.FetchOverride;
 import org.springframework.hateoas.RepresentationModel;
 
+
+
 import tsti.entidades.Clientes;
 
 /**
@@ -12,29 +14,34 @@ import tsti.entidades.Clientes;
  * @author cecilia
  *
  */
+
 public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> {
 	private Long dni;
-	private long id;
+	private Long id;
 	private String apellido;
 	private String nombre;
 	private String email;
 	private Date fecha_nac;
 	
+	
+	public ClienteResponseDTO() {
+		super();
+	}
+
+
+
+
+
 	public ClienteResponseDTO(Clientes pojo) {
 		
 		super();
 		this.id=pojo.getId();
 		this.apellido=pojo.getApellido();
 		this.nombre=pojo.getNombre();
-
 		this.dni=pojo.getDni();
 		this.email=pojo.getEmail();
 		this.fecha_nac=pojo.getFechaNacimiento();	
 		
-
-		this.dni=pojo.getDni();		
-
-
 	}
 	
 	

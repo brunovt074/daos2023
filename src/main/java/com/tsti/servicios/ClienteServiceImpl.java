@@ -7,6 +7,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tsti.dto.ClienteResponseDTO;
+
 import tsti.dao.ClienteDAO;
 import tsti.entidades.Clientes;
 import tsti.excepcion.Excepcion;
@@ -77,14 +79,21 @@ public class ClienteServiceImpl implements IClienteService {
 
 	
 	@Override
-	public List<Clientes> filtrarPorDni(Long dni){
-		if(dni == null) {
-			return dao.findAll();
-		}else {
+	public Optional<Clientes> filtrarPorDni(Long dni){
+		
 			return dao.findByDni(dni);
-		}
+		
 	};
 	
+	public void actualizarDatosClientes(Clientes cliente, ClienteResponseDTO clienteDto) {
+		cliente.setApellido(clienteDto.getApellido());
+		cliente.setNombre(clienteDto.getNombre());
+		System.out.print(cliente);
+		
+		dao.save(cliente);
+		
+		
+}
 
 
 	

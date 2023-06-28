@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
+import tsti.dao.ClienteDAO;
 import tsti.dto.ClienteResponseDTO;
 import tsti.entidades.Ciudad;
 import tsti.entidades.Clientes;
@@ -113,32 +115,39 @@ public class ClienteController {
 
 	}
 	
-	/*//edita un cliente que ya esta en la bd por dni
 	@PutMapping("/{dni}")
 	public ResponseEntity<Object>  actualizar(@RequestBody ClienteForm form, @PathVariable long dni) throws Exception
 	{
-		List<Clientes> rta = service.filtrarPorDni(dni);
-		List<ClienteResponseDTO> dtos = new ArrayList<ClienteResponseDTO>();
-		for (Clientes pojo : rta) {
-
-			dtos.add(buildResponse(pojo));
-		}
-		
-		if(rta.isEmpty())
-			return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra la persona ");
+		Optional<Clientes> rta = service.getById(dni);
+		System.out.print("persona a acrualizar: "+ rta);
+		if(!rta.isPresent())
+			
+			return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra la persona que desea modificar.");
 			
 		else
-		{
-			Clientes cliente = form.toPojo();
+		{	Clientes clienteActualizado = form.toPojo();
+			Clientes cliente = rta.get();
 			
-			if(cliente.getDni() != dni)//El dni es el identificador, con lo cual es el único dato que no permito modificar
+			cliente.setApellido(clienteActualizado.getApellido());
+			cliente.setNombre(clienteActualizado.getNombre());
+			cliente.setEmail(clienteActualizado.getEmail());
+			cliente.setFechaNacimiento(clienteActualizado.getFechaNacimiento());
+			
+			
+			
+			
+			if(cliente.getDni() == dni)
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(getError("03", "Dato no editable", "No puede modificar el dni."));
 			service.update(cliente);
+			
 			return ResponseEntity.ok(buildResponse(cliente));
 		}
 		
 	}
+	
 
+	
+	
 	private String getError(String code, String err, String descr) throws JsonProcessingException
 	{
 		MensajeError e1=new MensajeError();
@@ -154,7 +163,7 @@ public class ClienteController {
 				String json = maper.writeValueAsString(e1);
 				return json;
 	}
-	*/
+	
 	
 	private String formatearError(BindingResult result) throws JsonProcessingException
 	{
@@ -189,5 +198,27 @@ public class ClienteController {
 		} catch (Exception e) {
 			throw new Excepcion(e.getMessage(), 500);
 		}
+	}
+	
+	@DeleteMapping("/{dni}")
+	public ResponseEntity<String> eliminar(@PathVariable Long dni)
+	{
+		Optional<Clientes> clienteAeliminar = service.getById(dni);
+		Long clienteIdAEliminar = service.getById(dni).get().getId();
+		
+		if(!clienteAeliminar.isPresent())
+			return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe una persona con ese dni");
+		else {
+			if(dni.equals(clienteIdAEliminar)) {
+				System.out.print("id "+clienteIdAEliminar);
+				service.delete(dni);
+				
+			}
+		
+		
+		}
+		return ResponseEntity.ok().build();
+		
+		
 	}
 }

@@ -1,6 +1,9 @@
 package tsti.entidades; 
 import java.util.Date;
 import java.util.Set;
+
+
+
 import java.util.HashSet;
 
 import jakarta.persistence.CascadeType;
@@ -23,30 +26,40 @@ import jakarta.validation.constraints.NotNull;
  *  LAS RESTRICCIONES UNIQUE ESTAN DESACTIVADAS PARA FACILITAR LA POBLACION
  *  DE LA BD CON FAKER.
  */
+
 @Entity
 public class Clientes {
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Long id;		
+		private Long id;	
+		
 		@NotNull
-		private Long dni;		
+		private Long dni;
+		
 		@NotNull
-		private String nombre;		
+		private String nombre;	
+		
 		@NotNull
-		private String apellido;		
+		private String apellido;
+		
 		//Relacion 1:1 con domicilio, si se borra un cliente se borra el domicilio
 		@OneToOne(cascade = CascadeType.REMOVE)
 		@JoinColumn(name = "domicilio_id")
-		private Domicilio domicilio;		
+		private Domicilio domicilio
+		;		
 		@Column(unique = true)
-		private String tel;		
+		private String tel;	
+		
 		@Column(name = "e_mail")
 		private String email;
+		
 		@Column(name = "fecha_nac", unique = true)
 		private Date fechaNacimiento;// ver lo de fecha en esta pagina https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx
+		
 		@Column(name = "nro_pasaporte", unique = true)
 		private Long nroPasaporte;		
+		
 		@Column(name = "exp_pasaporte", unique = true)
 		private Date vencimientoPasaporte; // lo mismo que fechaNacimiento
 		
@@ -57,6 +70,7 @@ public class Clientes {
 		@JoinTable(name = "vuelos_pasajeros", 
 				   joinColumns = @JoinColumn(name="pasajero_id"),
 				   inverseJoinColumns = @JoinColumn(name="vuelo_id"))
+	
 		//atributo vuelos tipo HashSet.
 		private Set<Vuelo> vuelos = new HashSet<>();
 		
@@ -176,12 +190,6 @@ public class Clientes {
 	public void setVuelos(HashSet<Vuelo> vuelos) {
 		this.vuelos = vuelos;
 	}
-	
-	
-	public void setNroPasaporte(Long nroPasaporte) {
-		this.nroPasaporte = nroPasaporte;
-	}
-	
 	
 	
 	
