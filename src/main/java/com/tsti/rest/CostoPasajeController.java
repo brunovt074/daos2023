@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsti.dto.PasajeBaseDTO;
+import com.tsti.dto.PasajeDTO;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 import com.tsti.servicios.TasaServiceImpl;
@@ -45,12 +45,12 @@ public class CostoPasajeController {
 	}
 	
 	@GetMapping("/pasaje/costo")
-	public ResponseEntity<EntityModel<PasajeBaseDTO>> getCostoPasaje
+	public ResponseEntity<EntityModel<PasajeDTO>> getCostoPasaje
 								(@RequestParam("nro-vuelo") Long nroVuelo, 
 											@RequestParam("dni") Long dni){
 		
 		//Creamos el DTO en base al numero que nos pasaron
-		PasajeBaseDTO pasajeDTO = new PasajeBaseDTO();
+		PasajeDTO pasajeDTO = new PasajeDTO();
 		
 		pasajeDTO.setNroVuelo(nroVuelo);
 		pasajeDTO.setDni(dni);
@@ -88,7 +88,7 @@ public class CostoPasajeController {
 			
 			
 			//Se crea el objeto entidad y se aniade el DTO
-			EntityModel<PasajeBaseDTO> pasajeEntityModel = 
+			EntityModel<PasajeDTO> pasajeEntityModel = 
 												EntityModel.of(pasajeDTO);
 				
 			//creando el link a busqueda de vuelo

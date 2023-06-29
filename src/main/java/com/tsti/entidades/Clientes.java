@@ -2,6 +2,7 @@ package com.tsti.entidades;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
@@ -48,9 +50,10 @@ public class Clientes {
 	@Column(name = "exp_pasaporte"/*, unique = true*/)
 	private LocalDate vencimientoPasaporte; // lo mismo que fechaNacimiento	
 	//atributo vuelos tipo HashSet.
-	@ManyToMany(mappedBy = "pasajeros")
-	private Set<Vuelo> vuelos = new HashSet<>();
-	
+
+    @OneToMany(mappedBy = "pasajero")
+    private List<Pasaje> pasajes;
+
 	//CONSTRUCTOR
 	public Clientes() {
 		super();
@@ -113,12 +116,12 @@ public class Clientes {
 	 * esPrimerVuelo; }
 	 */
 
-	public Set<Vuelo> getVuelos() {
-		return vuelos;
+	public List<Pasaje> getVuelos() {
+		return pasajes;
 	}
 
-	public void setVuelos(HashSet<Vuelo> vuelos) {
-		this.vuelos = vuelos;
+	public void setVuelos(List<Pasaje> pasajes) {
+		this.pasajes =pasajes;
 	}
 	
 	public String getEmail() {
@@ -153,14 +156,14 @@ public class Clientes {
 		this.vencimientoPasaporte = vencimientoPasaporte;
 	}
 	
-	public void addVuelo(Vuelo vuelo) {
-        vuelos.add(vuelo);
-        vuelo.getPasajeros().add(this);
+	public void addVuelo(Pasaje vuelo) {
+        pasajes.add(vuelo);
+//        vuelo.getPasajeros().add(this);
     }
     
-    public void removeVuelo(Vuelo vuelo) {
-        vuelos.remove(vuelo);
-        vuelo.getPasajeros().remove(this);
+    public void removeVuelo(Pasaje vuelo) {
+        pasajes.remove(vuelo);
+//        pasajes.getPasajeros().remove(this);
     }
 	
 	@Override

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tsti.dao.ClienteDAO;
 import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Pasaje;
 import com.tsti.excepcion.Excepcion;
 
 import jakarta.validation.ConstraintViolation;
@@ -69,6 +70,11 @@ public class ClienteServiceImpl implements IClienteService {
 			return dao.findAll();
 		else
 			return dao.findByApellidoOrNombre(apellido, nombre);
+	}
+
+	public List<Pasaje> getPasajes(Long dniCliente) {
+		
+		return null;
 	}
 
 
