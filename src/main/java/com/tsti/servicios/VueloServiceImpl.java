@@ -25,20 +25,28 @@ import com.tsti.presentacion.EditarVueloForm;
  * 
  * */
 @Service
-public class VueloServiceImpl {
-	//@Autowired
-	private final VueloDAO vueloDAO;	
-	//@Autowired
-	private final CiudadDAO ciudadDAO;
-	private final CiudadFactory ciudadFactory;
+public class VueloServiceImpl implements IVueloService{
 	
-	@Autowired	
+	private VueloDAO vueloDAO;	
+	//@Autowired
+	private CiudadDAO ciudadDAO;
+	//@Autowired
+	private CiudadFactory ciudadFactory;
+	
+	
+//	@Autowired
+//	public VueloServiceImpl() {
+//		super();
+//		
+//	}
+
+	@Autowired
 	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO, CiudadFactory ciudadFactory) {
 		this.vueloDAO = vueloDAO;	
 		this.ciudadDAO = ciudadDAO;
 		this.ciudadFactory = ciudadFactory;
 	}
-	
+	@Override
 	public VueloDTO crearVuelo(CrearVueloForm vueloForm) {
 		
 		Vuelo vuelo = new Vuelo();
@@ -115,12 +123,12 @@ public class VueloServiceImpl {
 		return vueloDTO;
 				
 	}
-	
-	public VueloDTO cancelarVuelo(Long id){		
+	@Override
+	public VueloDTO cancelarVuelo(Long nroVuelo){		
 		
 		Vuelo vuelo = new Vuelo();
 		
-		Optional<Vuelo> vueloOptional = vueloDAO.findById(id);
+		Optional<Vuelo> vueloOptional = vueloDAO.findById(nroVuelo);
 		
 		if (vueloOptional.isPresent()) {
             
@@ -135,11 +143,12 @@ public class VueloServiceImpl {
 		return new VueloDTO(vuelo);
 	}
 	
-	public VueloDTO reprogramarVuelo(Long id, EditarVueloForm vueloForm){
+	@Override
+	public VueloDTO reprogramarVuelo(Long nroVuelo, EditarVueloForm vueloForm){
 		
 		Vuelo vuelo = new Vuelo();		
 		
-		Optional<Vuelo> vueloOptional = vueloDAO.findById(id);
+		Optional<Vuelo> vueloOptional = vueloDAO.findById(nroVuelo);
         
         if (vueloOptional.isPresent()) {
             
@@ -157,71 +166,93 @@ public class VueloServiceImpl {
         return new VueloDTO(vuelo);        
     }
 	
-	public Optional<Vuelo> findById(Long id){
+	@Override
+	public Optional<Vuelo> findById(Long nroVuelo){
 		
-		return vueloDAO.findById(id);
+		return vueloDAO.findById(nroVuelo);
 	
 	}	
-	
-	public List<Vuelo> findByDestinoAndFechaPartida(String destino, LocalDate fecha) {
-        return vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
-    }
-	
-	public List<Vuelo> findByDestino(String destino) {
-			
-		return vueloDAO.findByDestino(destino);
+	@Override
+	public List<VueloDTO> findByDestinoAndFechaPartida(String destino, LocalDate fecha) {
+        
+		List<Vuelo> vuelos = vueloDAO.findByDestinoAndFechaPartida(destino, fecha);
+		List<VueloDTO> vuelosDTO = new ArrayList<>();
 		
-	}
-	public List<Vuelo> findByFechaPartida(LocalDate fecha) {
-        return vueloDAO.findByFechaPartida(fecha);
+		for(Vuelo vuelo : vuelos ){			
+			
+			vuelosDTO.add(new VueloDTO(vuelo));
+			
+		}
+		
+		return vuelosDTO;
     }
 	
+	@Override
+	public List<VueloDTO> findByDestino(String destino) {
+		
+		List<Vuelo> vuelos = vueloDAO.findByDestino(destino);
+		List<VueloDTO> vuelosDTO = new ArrayList<>();
+		
+		for(Vuelo vuelo : vuelos ){			
+			
+			vuelosDTO.add(new VueloDTO(vuelo));
+			
+		}
+		
+		return vuelosDTO;		
+				
+	}
+	
+	@Override
+	public List<VueloDTO> findByFechaPartida(LocalDate fecha) {
+		
+		List<Vuelo> vuelos = vueloDAO.findByFechaPartida(fecha);
+		List<VueloDTO> vuelosDTO = new ArrayList<>();	
+			
+		for(Vuelo vuelo : vuelos ){			
+			
+			vuelosDTO.add(new VueloDTO(vuelo));
+			
+		}
+		
+		return vuelosDTO;			
+		
+    }
+	@Override
 	public List<Vuelo> obtenerVuelosPorTipo(TipoVuelo tipoVuelo) {
         return vueloDAO.findByTipoVuelo(tipoVuelo);
     }
-	
+	@Override
 	public List<VueloDTO> getAll() {
 		
-		List<VueloDTO> vuelosDTO = new ArrayList<>();
-		List<Vuelo> vuelos = vueloDAO.findAll();
 		
-		if(vuelos.isEmpty()){
-			
-			return null;
-			
-		}else{
-			
-			for(Vuelo  vuelo : vuelos ){			
+		List<Vuelo> vuelos = vueloDAO.findAll();
+		List<VueloDTO> vuelosDTO = new ArrayList<>();
+		
+		for(Vuelo  vuelo : vuelos ){			
 				
-				vuelosDTO.add(new VueloDTO(vuelo));
-				
-			}
-			
-			return vuelosDTO;
+			vuelosDTO.add(new VueloDTO(vuelo));
 			
 		}
+		
+		return vuelosDTO;			
+		
 	}
-	
+	@Override
 	public List<VueloDTO> findAllByEstadoVuelo(EstadoVuelo estadoVuelo){
 		
-		List<VueloDTO> vuelosPorEstadoDTO = new ArrayList<>();
-		List<Vuelo> vuelosPorEstado = vueloDAO.findAllByEstadoVuelo(estadoVuelo);
 		
-		if(vuelosPorEstado.isEmpty()){
+		List<Vuelo> vuelosPorEstado = vueloDAO.findAllByEstadoVuelo(estadoVuelo);
+		List<VueloDTO> vuelosPorEstadoDTO = new ArrayList<>();	
 			
-			return null;
+		for(Vuelo  vuelo : vuelosPorEstado ){			
 			
-		}else{
+			vuelosPorEstadoDTO.add(new VueloDTO(vuelo));
 			
-			for(Vuelo  vuelo : vuelosPorEstado ){			
-				
-				vuelosPorEstadoDTO.add(new VueloDTO(vuelo));
-				
-			}
-			
-			return vuelosPorEstadoDTO;
-			
-		}		
+		}
+		
+		return vuelosPorEstadoDTO;
+		
 	}
 
 }

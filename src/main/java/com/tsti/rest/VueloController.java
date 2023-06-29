@@ -4,7 +4,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.modelmapper.ModelMapper;
 
 import com.tsti.dto.VueloDTO;
 
@@ -43,15 +40,12 @@ import com.tsti.servicios.VueloServiceImpl;
 public class VueloController {
 
     private final VueloServiceImpl vueloService;
-    //Utilizado en algunas clases para mapear entidad Vuelo con Vuelo DTO. 
-    private final ModelMapper modelMapper;
     //Coleccion de entidades Response Entity
     private CollectionModel<VueloDTO> vuelosCollectionModel;
 
     @Autowired
     public VueloController(VueloServiceImpl vueloService) {
-        this.vueloService = vueloService;
-        this.modelMapper = new ModelMapper();
+        this.vueloService = vueloService;        
     }
     
     /**
@@ -183,27 +177,18 @@ public class VueloController {
     		@RequestParam("destino")String destino,
     		@RequestParam("fecha")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha) {
     	
-    	List<Vuelo> vuelos = vueloService.findByDestinoAndFechaPartida(destino, fecha);
+    	List<VueloDTO> vuelosDTO = vueloService.findByDestinoAndFechaPartida(destino, fecha);
     	
-    	if (vuelos.isEmpty()) {
+    	if (vuelosDTO.isEmpty()) {
         
-    	return ResponseEntity.notFound().build();
+    		return ResponseEntity.notFound().build();
     	
-    	} else {
-    	
-	        List<VueloDTO> vuelosDTO = new ArrayList<>();
+    	} else {	        
 	        
-	        for (Vuelo vuelo : vuelos) {
-	            
-	        	VueloDTO vueloDTO = modelMapper.map(vuelo, VueloDTO.class);
-	            vuelosDTO.add(vueloDTO);
-	        
-	        } 
 	        vuelosCollectionModel = CollectionModel.of(vuelosDTO)
 	        						.add(AppLinks.getLinksVuelos(2, destino, fecha));
 	                    
-	        	return ResponseEntity.ok(vuelosCollectionModel);
-        	
+	        return ResponseEntity.ok(vuelosCollectionModel);        	
         }
     }
     
@@ -218,20 +203,15 @@ public class VueloController {
     @GetMapping("/vuelos/filtrar-por-destino")
     public ResponseEntity<CollectionModel<VueloDTO>> getVuelosByDestino(
     												@RequestParam String destino) {
+    	
+    	List<VueloDTO> vuelosDTO = vueloService.findByDestino(destino);
         
-    	List<Vuelo> vuelos = vueloService.findByDestino(destino);
-        List<VueloDTO> vuelosDTO = new ArrayList<>();
-        
-        if(vuelos.isEmpty()){
+        if(vuelosDTO.isEmpty()){
         	
         	return ResponseEntity.notFound().build();
         	
         } else {
-	        for (Vuelo vuelo : vuelos) {
-	            VueloDTO vueloDTO = modelMapper.map(vuelo, VueloDTO.class);
-	            vuelosDTO.add(vueloDTO);
-	        }
-	        
+	        	        
 	        vuelosCollectionModel = CollectionModel.of(vuelosDTO)
 	        						.add(AppLinks.getLinksVuelos(3, destino, null));
 	
@@ -250,28 +230,22 @@ public class VueloController {
     public ResponseEntity<CollectionModel<VueloDTO>> getVuelosByFecha(
     		@RequestParam("fecha") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fecha){
         
-		List<Vuelo> vuelos = vueloService.findByFechaPartida(fecha);
-        List<VueloDTO> vuelosDTO = new ArrayList<>();
+		
+        List<VueloDTO> vuelosDTO = vueloService.findByFechaPartida(fecha);
     	
-        if(vuelos.isEmpty()){
+        if(vuelosDTO.isEmpty()){
         	
         	return ResponseEntity.notFound().build();
         	
         } else {
-	        
-        	for (Vuelo vuelo : vuelos) {
-	            
-	        	VueloDTO vueloDTO = modelMapper.map(vuelo, VueloDTO.class);
-	            vuelosDTO.add(vueloDTO);
-	        
-	        }
-	        
+	                
 	        vuelosCollectionModel = CollectionModel.of(vuelosDTO)
 	        							.add(AppLinks.getLinksVuelos(4, null, fecha));
 	        
 	        return ResponseEntity.ok(vuelosCollectionModel);
         }
     }
+	
     /**
      *Crear un vuelo. 
      *Recibe un formulario con todos los datos necesarios. 

@@ -1,138 +1,68 @@
 package com.tsti.rest;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsti.dto.PasajeBaseDTO;
-import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Vuelo.TipoVuelo;
-import com.tsti.servicios.TasaServiceImpl;
+import com.tsti.dto.PasajeDTO;
 import com.tsti.servicios.VueloServiceImpl;
-import com.tsti.servicios.CotizacionServiceImpl;
-
+import com.tsti.servicios.PasajeServiceImpl;
 /**
  * @author Bruno
+ *
+ *Clase encargada de comunicarse con la api-dolar y cotizacion para 
+ *calcular el precio final del pasaje.
  *
  */
 @RestController
 public class CostoPasajeController {
 	
-	private BigDecimal precioNeto;
-	private BigDecimal tasa;
-	private BigDecimal precioFinal;
-	private TasaServiceImpl tasaService;
-	private CotizacionServiceImpl cotizacionService;
-	private Vuelo vuelo;
-	private VueloServiceImpl vueloService;
+	private final PasajeServiceImpl pasajeService;
 	
 	@Autowired
-	public CostoPasajeController(VueloServiceImpl vueloServiceImpl, TasaServiceImpl tasaService, CotizacionServiceImpl cotizacionService) {
-		this.vueloService = vueloServiceImpl;
-		this.tasaService = tasaService;
-		this.cotizacionService = cotizacionService;
+	public CostoPasajeController(PasajeServiceImpl pasajeService, VueloServiceImpl vueloService) {
+		this.pasajeService = pasajeService;
+		//this.vueloService = vueloService;
+		
 	}
 	
+	
 	@GetMapping("/pasaje/costo")
-	public ResponseEntity<EntityModel<PasajeBaseDTO>> getCostoPasaje
+	public ResponseEntity<EntityModel<PasajeDTO>> getCostoPasaje
 								(@RequestParam("nro-vuelo") Long nroVuelo, 
-											@RequestParam("dni") Long dni){
+									@RequestParam("dni") Long dni){
+		if(nroVuelo == null || dni == null ){
+			
+			return ResponseEntity.badRequest().build();
+			
+		}
 		
-		//Creamos el DTO en base al numero que nos pasaron
-		PasajeBaseDTO pasajeDTO = new PasajeBaseDTO();
+		//PasajeServiceImpl pasajeService = new PasajeServiceImpl();
+		PasajeDTO pasajeDTO = pasajeService.getCostoPasaje(nroVuelo,dni);
 		
-		pasajeDTO.setNroVuelo(nroVuelo);
-		pasajeDTO.setDni(dni);
-		
-		//chequeamos que exista en la BD
-		Optional<Vuelo> vueloOptional = vueloService.findById(
-														pasajeDTO.getNroVuelo());
-		
-		if(vueloOptional.isPresent()){
-			
-			vuelo = vueloOptional.get();			
-			
-			//Se obtiene el precio neto del pasajeDTO y se deduce tasa segun tipo de vuelo.
-			precioNeto = vuelo.getPrecioNeto();			
-			tasa = tasaService.getTasa(vuelo.getTipoVuelo());			
-			precioFinal = precioNeto.add(tasa);
-			
-			if(vuelo.getTipoVuelo() == TipoVuelo.INTERNACIONAL){
-			
-				//multiplicamos y redondeamos a un numero de dos cifras despues de la coma
-				precioFinal =  precioFinal.multiply(
-						cotizacionService.getCotizacionDolarOficial())
-									.setScale(2, RoundingMode.HALF_DOWN);			
-				
-			}
-			
-			//setting del DTO
-			pasajeDTO.setPrecioNeto(precioNeto);
-			System.out.println("Precio Inicial: " + precioNeto);
-			pasajeDTO.setTasa(tasa);
-			System.out.println("tasa: " + tasa);
-			pasajeDTO.setTipoVuelo(vuelo.getTipoVuelo());
-			pasajeDTO.setPrecioFinal(precioFinal);
-			System.out.println("Precio Final: " + precioFinal);		
-			
-			
+		if(pasajeDTO.getNroVuelo() != null) {
 			//Se crea el objeto entidad y se aniade el DTO
-			EntityModel<PasajeBaseDTO> pasajeEntityModel = 
-												EntityModel.of(pasajeDTO);
-				
-			//creando el link a busqueda de vuelo
-			List <Link> links = AppLinks.getLinksVuelos(2, vuelo.getDestino().getNombreCiudad(),
-														vuelo.getFechaPartida());
-			
-			links.addAll(AppLinks.getLinksCostoPasaje(vuelo.getNroVuelo(), dni));
-//			Link linkSelf = Link.of("/pasaje/costo", "self").withRel("pasaje-costo");
-//			Link linkDolar = Link.of("https://www.dolarsi.com/api/api.php?type=valoresprincipales").withRel("api-dolar");
-//			
-//			links.add(linkSelf);
-//			links.add(linkDolar);
-//			
-			
-			for (Link link : links) {
-			    pasajeEntityModel.add(link);
-			}
-			//			Link link = WebMvcLinkBuilder
-//					.linkTo(methodOn(VueloController.class)
-//							.getVuelosByDestinoAndFecha(vuelo.getDestino().getNombreCiudad(), vuelo.getFechaPartida()))
-//					.withRel("getVueloPorFechaYDestino");
-//				
-			//pasajeEntityModel.add(links);
-			
-//			//creando link a cliente por dni
-//			link = WebMvcLinkBuilder
-//					.linkTo(methodOn(ClienteController.class)
-//							.getClientePorDni(long dni))
-//					.withRel("getClientePorDni");
-//			pasajeEntityModel.add(link);
-			
-			//creando link a api dolar.
-			
-			
-			
-			
-			//pasajeEntityModel.add(linkDolar);
+			EntityModel<PasajeDTO> pasajeEntityModel =  EntityModel.of(pasajeDTO)
+													.add(AppLinks.getLinksCostoPasaje(nroVuelo, dni))
+													.add(AppLinks.getVueloPorId(nroVuelo))
+													.add(AppLinks.showVuelosLink());														
+					
 		
-			return ResponseEntity.ok(pasajeEntityModel);
+			return ResponseEntity.ok(pasajeEntityModel);			
 		
 		} else {
 			
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.notFound().build();
 			
-		}			
+		}
+		
+			
+			
+			
+		
 	}
 }
+

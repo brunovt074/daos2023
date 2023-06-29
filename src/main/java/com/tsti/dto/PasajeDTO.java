@@ -11,7 +11,7 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
  * @author Bruno
  *
  */
-public class PasajeBaseDTO {
+public class PasajeDTO {
 	
 	private Long nroVuelo;
 	private Long dni;
@@ -20,28 +20,28 @@ public class PasajeBaseDTO {
 	private BigDecimal precioFinal;
 	private TipoVuelo tipoVuelo;
 	
-	public PasajeBaseDTO() {
+	public PasajeDTO() {
 		super();
 	}
 			
-	public PasajeBaseDTO(Long nroVuelo, Long dni, BigDecimal precio, TipoVuelo tipoVuelo) {
+	public PasajeDTO(Long nroVuelo, Long dni, BigDecimal precio, TipoVuelo tipoVuelo) {
 		super();
 		this.nroVuelo = nroVuelo;
 		this.dni = dni;
 		this.precioNeto = precio;
-		this.tipoVuelo = tipoVuelo;
-		this.setPrecioFinal(precioFinal);		
+		this.tipoVuelo = tipoVuelo;				
 	}
 	
-	public PasajeBaseDTO(Long nroVuelo, Long dni, BigDecimal precioNeto, BigDecimal precioFinal, TipoVuelo tipoVuelo) {
+	public PasajeDTO(Long nroVuelo, Long dni, BigDecimal precioNeto, BigDecimal tasa, 
+									BigDecimal precioFinal, TipoVuelo tipoVuelo) {
 		super();
 		this.nroVuelo = nroVuelo;
 		this.dni = dni;
 		this.precioNeto = precioNeto;
+		this.tasa = tasa;
 		this.tipoVuelo = tipoVuelo;
 		this.precioFinal = precioFinal ;		
 	}
-
 
 
 	public Long getNroVuelo() {

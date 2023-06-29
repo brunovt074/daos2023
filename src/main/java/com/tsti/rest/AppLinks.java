@@ -31,7 +31,8 @@ public class AppLinks {
 		Link linkCostoPasaje= WebMvcLinkBuilder.linkTo(
 				methodOn(CostoPasajeController.class)
 				.getCostoPasaje(nro_vuelo, dni))
-				.withRel("pasaje-costo");
+				.withSelfRel();
+		
 		links.add(linkCostoPasaje);
 		links.add(getLinkDolar());
 		
@@ -133,6 +134,13 @@ public class AppLinks {
     	links.add(showVuelosLink());   	    	
     	
     	return links;
+    }
+    
+    public static Link getVueloPorId(Long nroVuelo){
+    	Link link = WebMvcLinkBuilder.linkTo(methodOn(VueloController.class)
+									.getVueloById(nroVuelo))
+    								.withRel("nro-vuelo");
+    	return link ; 
     }
     
     /*
