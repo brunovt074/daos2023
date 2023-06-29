@@ -28,7 +28,7 @@ public class PasajeServiceImpl {
 		
 		//Creamos el DTO en base al numero que nos pasaron
 		PasajeDTO pasajeDTO = new PasajeDTO();
-		//VueloServiceImpl vueloService = new VueloServiceImpl();
+		
 		
 		//chequeamos que el vuelo exista en la BD		
 		Optional<Vuelo> vueloOptional = vueloService.findById(nroVuelo);

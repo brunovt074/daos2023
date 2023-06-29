@@ -13,6 +13,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,9 @@ import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.presentacion.CrearVueloForm;
 import com.tsti.presentacion.EditarVueloForm;
 import com.tsti.servicios.VueloServiceImpl;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 /**
  *
  *Controlador del Servicio de Gestion de Vuelos
@@ -36,6 +40,7 @@ import com.tsti.servicios.VueloServiceImpl;
  *crear nuevos vuelos, actualizar vuelos existentes y cancelar vuelos. *
  *   
  **/
+@Validated
 @RestController
 public class VueloController {
 
@@ -134,7 +139,7 @@ public class VueloController {
      * @return ResponseEntity con EntityModel<VueloDTO> que contiene el vuelo buscado.
      **/
     @GetMapping("/vuelos/{id}")
-    public ResponseEntity<EntityModel<VueloDTO>> getVueloById(@PathVariable Long id){
+    public ResponseEntity<EntityModel<VueloDTO>> getVueloById(@PathVariable @Min(1)Long id){
 		
     	if(id == null){
     		
@@ -257,8 +262,7 @@ public class VueloController {
      * @return ResponseEntity<EntityModel<VueloDTO>> con la informacion del nuevo vuelo creado
      **/
     @PostMapping("/vuelos")    
-    public ResponseEntity<EntityModel<VueloDTO>> crearVuelo(
-    											@RequestBody CrearVueloForm vueloForm) {
+    public ResponseEntity<EntityModel<VueloDTO>> crearVuelo(@Valid @RequestBody CrearVueloForm vueloForm) {
         //retornar id para el DTO
     	VueloDTO vueloDTO = vueloService.crearVuelo(vueloForm);
     	   	

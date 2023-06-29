@@ -82,8 +82,8 @@ public class VueloServiceImpl implements IVueloService{
 		vuelo.setAvion(vueloForm.getAvion());
 		vuelo.setFechaPartida(vueloForm.getFechaPartida());
 		vuelo.setHoraPartida(vueloForm.getHoraPartida());
-		vuelo.setNroFilasAsientos(vueloForm.getNroFilasAsientos());
-		vuelo.setNroColumnasAsientos(vueloForm.getNroColumnasAsientos());
+		vuelo.setNroFilas(vueloForm.getNroFilasAsientos());
+		vuelo.setNroColumnas(vueloForm.getNroColumnasAsientos());
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();

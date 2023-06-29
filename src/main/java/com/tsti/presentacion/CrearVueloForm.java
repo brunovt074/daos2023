@@ -8,9 +8,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.tsti.entidades.Vuelo;
 
-
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -20,23 +24,30 @@ import jakarta.validation.constraints.NotNull;
  */
 public class CrearVueloForm {
 	
-	// Atributos de vuelo	
+	// Atributos de vuelo
+	//nroVuelo es nulo porque lo asigna la BD de forma autoincremental
 	private Long nroVuelo;
 	@NotNull
 	private String aerolinea;
 	private String avion;
 	@NotNull
+	@FutureOrPresent(message = "Inserte una fecha a partir de hoy hacia delante en el futuro")
+	@DateTimeFormat//(pattern = "yyyy-MM-dd"/*||dd-MM-yyyy||yyyy/MM/dd||dd/MM/yyyy"*/)
 	private LocalDate fechaPartida;
 	@NotNull
+	@DateTimeFormat
 	private LocalTime horaPartida;
 	@NotNull
 	private int nroFilasAsientos;
 	@NotNull
 	private int nroColumnasAsientos;
-	@NotNull	
+	@NotNull //validamos que el minimo y 2 digitos en la parte decimal
+	@DecimalMin(value = "0.00", inclusive = true, message = "El precio debe ser mayor a 0.00")
+	@Digits(integer = Integer.MAX_VALUE, fraction=2)
 	private BigDecimal precioNeto;
 	
 	//Atributos de ciudad
+	//se buscara idDestino si es nulo se creara la ciudad
 	private Long idDestino; 
 	private String codAeropuerto;
     private String nombreCiudad;
