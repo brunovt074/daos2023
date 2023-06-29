@@ -1,4 +1,4 @@
-package tsti.rest;
+package com.tsti.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,15 +31,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
-import tsti.dao.ClienteDAO;
-import tsti.dto.ClienteResponseDTO;
-import tsti.entidades.Ciudad;
-import tsti.entidades.Clientes;
-import tsti.excepcion.Excepcion;
-import tsti.excepcion.MensajeError;
-import tsti.presentacion.ClienteForm;
-import tsti.servicios.ICiudadService;
-import tsti.servicios.IClienteService;
+import com.tsti.dao.ClienteDAO;
+import com.tsti.dto.ClienteResponseDTO;
+import com.tsti.entidades.Ciudad;
+import com.tsti.entidades.Clientes;
+import com.tsti.excepcion.Excepcion;
+import com.tsti.excepcion.MensajeError;
+import com.tsti.presentacion.ClienteForm;
+import com.tsti.servicios.ICiudadService;
+import com.tsti.servicios.IClienteService;
 
 @RestController
 @RequestMapping("/clientes")

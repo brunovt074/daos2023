@@ -1,4 +1,4 @@
-package tsti.entidades; 
+package com.tsti.entidades; 
 import java.util.Date;
 import java.util.Set;
 

@@ -2,14 +2,14 @@
  * ESTA CLASE ESTA CREADA PARA INICIALIZAR EL CIUDAD FACTORY AL PRINCIPIO DE
  * LA APP Y ASI PODER POBLAR LA BD PARA ENTORNO DE DESARROLLO.
  * */
-package tsti.faker;
+package com.tsti.faker;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import tsti.entidades.Vuelo.EstadoVuelo;
-import tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
 
 @Component
 public class FactoryInitializer {
