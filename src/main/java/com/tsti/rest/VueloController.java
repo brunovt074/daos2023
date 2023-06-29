@@ -79,7 +79,7 @@ public class VueloController {
     /**
      * Obtener vuelos por estado del vuelo
      * 
-     * @param estado de tipo {@link String}: "registrado" - "reprogramado" - "demorado" - "cancelado". Las cadenas pueden ser en mayuscula o minuscula.     *  
+     * @param estado: "registrado" - "reprogramado" - "demorado" - "cancelado". Las cadenas pueden ser en mayuscula o minuscula.  
      * 
      * @return Response Entity con CollectionModel<VueloDTO> de todos los vuelos y links relacionados. 
     **/

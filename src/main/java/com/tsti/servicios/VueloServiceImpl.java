@@ -32,13 +32,6 @@ public class VueloServiceImpl implements IVueloService{
 	private CiudadDAO ciudadDAO;
 	//@Autowired
 	private CiudadFactory ciudadFactory;
-	
-	
-//	@Autowired
-//	public VueloServiceImpl() {
-//		super();
-//		
-//	}
 
 	@Autowired
 	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO, CiudadFactory ciudadFactory) {

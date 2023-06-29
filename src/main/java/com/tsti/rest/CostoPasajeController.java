@@ -17,30 +17,48 @@ import com.tsti.servicios.PasajeServiceImpl;
  *calcular el precio final del pasaje.
  *
  */
+
+
 @RestController
 public class CostoPasajeController {
 	
 	private final PasajeServiceImpl pasajeService;
+
 	
 	@Autowired
 	public CostoPasajeController(PasajeServiceImpl pasajeService, VueloServiceImpl vueloService) {
-		this.pasajeService = pasajeService;
-		//this.vueloService = vueloService;
+		
+		this.pasajeService = pasajeService;		
 		
 	}
 	
-	
+	/* *
+	 * 
+	 * 
+	 * 
+	 * */
+	/**
+	 * Obtiene el costo neto del pasaje, le suma la tasa y añade la cotizacion
+	 * del dolar si es un vuelo internacional.
+	 *
+	 *	@param nroVuelo tipo {@link Long}  
+	 *	@param dni de tipo {@link Long}
+	 *
+	 * @return ResponseEntity<EntityModel<PasajeDTO>> con los datos del pasaje actualizado
+	 * agregando la tasa, cotizacion si es internacional y links relacionados. 
+	 * Se asume el resultado siempre en pesos.
+	 **/
 	@GetMapping("/pasaje/costo")
 	public ResponseEntity<EntityModel<PasajeDTO>> getCostoPasaje
 								(@RequestParam("nro-vuelo") Long nroVuelo, 
 									@RequestParam("dni") Long dni){
+		
 		if(nroVuelo == null || dni == null ){
 			
 			return ResponseEntity.badRequest().build();
 			
 		}
 		
-		//PasajeServiceImpl pasajeService = new PasajeServiceImpl();
 		PasajeDTO pasajeDTO = pasajeService.getCostoPasaje(nroVuelo,dni);
 		
 		if(pasajeDTO.getNroVuelo() != null) {
