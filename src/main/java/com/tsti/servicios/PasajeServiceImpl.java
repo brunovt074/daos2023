@@ -1,9 +1,10 @@
 package com.tsti.servicios;
 
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
 import com.tsti.dao.ClienteDAO;
 import com.tsti.dao.PasajeDAO;
 import com.tsti.dao.VueloDAO;
@@ -49,10 +50,16 @@ public class PasajeServiceImpl implements IPasajeService {
                 .orElseThrow(() -> new RuntimeException("Pasaje no encontrado"));
 	}
 	
+	@Override
+	public List<Pasaje> obtenerPasajesPorPasajero(Optional<Clientes> pasajero) {
+	    return pasajeDAO.findByPasajero(pasajero);
+	}
+	
     public Boolean existeCliente(Clientes cliente) {
     	return clienteDAO.findById(cliente.getId()).isPresent();
     }
     public Boolean existeVuelo(Vuelo vuelo) {
     	return vueloDAO.findById(vuelo.getNroVuelo()).isPresent();
     }
+    
 }

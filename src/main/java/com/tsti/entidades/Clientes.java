@@ -2,7 +2,6 @@ package com.tsti.entidades;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -52,7 +51,7 @@ public class Clientes {
 	//atributo vuelos tipo HashSet.
 
     @OneToMany(mappedBy = "pasajero")
-    private List<Pasaje> pasajes;
+    private Set<Pasaje> pasajes;
 
 	//CONSTRUCTOR
 	public Clientes() {
@@ -116,11 +115,11 @@ public class Clientes {
 	 * esPrimerVuelo; }
 	 */
 
-	public List<Pasaje> getVuelos() {
+	public Set<Pasaje> getVuelos() {
 		return pasajes;
 	}
 
-	public void setVuelos(List<Pasaje> pasajes) {
+	public void setVuelos(HashSet<Pasaje> pasajes) {
 		this.pasajes =pasajes;
 	}
 	

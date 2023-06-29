@@ -71,12 +71,4 @@ public class ClienteServiceImpl implements IClienteService {
 		else
 			return dao.findByApellidoOrNombre(apellido, nombre);
 	}
-
-	public List<Pasaje> getPasajes(Long dniCliente) {
-		
-		return null;
-	}
-
-
-	
 }

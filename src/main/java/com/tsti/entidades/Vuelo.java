@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,7 @@ public class Vuelo {
 	private Ciudad destino;//creada la entidad Ciudad		
 	@JsonIgnore
 	 @OneToMany(mappedBy = "vuelo")
-    private List<Pasaje> pasajes;
+    private Set<Pasaje> pasajes;
 
 	@NotNull
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
@@ -229,13 +228,13 @@ public class Vuelo {
 		this.estadoVuelo = estado;
 	}
 	
-	public List<Pasaje> getPasajeros(){
+	public Set<Pasaje> getPasajeros(){
 		
 		return pasajes;
 		
 	}
 	
-	public void setPasajeros(List<Pasaje> pasajes){
+	public void setPasajeros(HashSet<Pasaje> pasajes){
 		this.pasajes = pasajes;	
 		
 	}

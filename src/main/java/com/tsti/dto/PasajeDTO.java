@@ -2,9 +2,13 @@ package com.tsti.dto;
 
 import java.math.BigDecimal;
 
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+
 import com.tsti.entidades.Clientes;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.rest.VueloController;
 
 /**
  * @author JOA
@@ -67,7 +71,12 @@ public class PasajeDTO {
 	public BigDecimal getTasa() {
 		return tasa;
 	}
-	
+	public Clientes getPasajero() {
+		return pasajero;
+	}
+	public Vuelo getVuelo() {
+		return vuelo;
+	}
 	
 	//SETTERS
 	public void setNroVuelo(Long nroVuelo) {
@@ -87,5 +96,22 @@ public class PasajeDTO {
 	}
 	public void setTasa(BigDecimal tasa) {
 		this.tasa = tasa;
-	}	
+	}
+	public void setPasajero(Clientes pasajero) {
+		this.pasajero = pasajero;
+	}
+	public void setVuelo(Vuelo vuelo) {
+		this.vuelo = vuelo;
+	}
+	
+	
+//	public Link getClienteLink() {
+//        return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ClienteController.class).consultarCliente(dni))
+//                .withRel("cliente");
+//    }
+
+    public Link getVueloLink() {
+        return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(VueloController.class).getVueloById(nroVuelo))
+                .withRel("vuelo");
+    }
 } 

@@ -1,8 +1,13 @@
 package com.tsti.dao;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.tsti.entidades.Clientes;
 import com.tsti.entidades.Pasaje;
 
 /**
@@ -10,9 +15,6 @@ import com.tsti.entidades.Pasaje;
  *
  */
 public interface PasajeDAO extends JpaRepository<Pasaje, Long> {
-//	@Query("SELECT pasaje FROM Pasaje pasaje WHERE pasaje.vuelo_id = :vuelo")
-//    List<Pasaje> findByNumeroVuelo(String vuelo_id);
-//	
-//	@Query("SELECT pasaje FROM Pasaje pasaje WHERE pasaje.pasajero_id = :pasajero")
-//	List<Pasaje> findByCliente(String pasajero_id);
+    @Query("SELECT p FROM Pasaje p WHERE p.pasajero = :pasajero")
+    List<Pasaje> findByPasajero(@Param("pasajero") Optional<Clientes> pasajero);
 }
