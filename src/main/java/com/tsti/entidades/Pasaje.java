@@ -3,60 +3,59 @@ package com.tsti.entidades;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Entity;
 /**
- * @author Joa
+ * @author JOA
  *
  */
-public class Pasaje {
 
-	/*
-	 *SI, NECESITAMOS.
-	 * */
-	
-	//ATRIBUTOS
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;		
-	@NotNull
-	private Long dni;		
-	@NotNull
-	private Long nroVuelo;
-	@NotNull
-	private Integer nroAsiento;
-	
-	//CONSTRUCTOR
-	public Pasaje() {
-		super();
-	}
-	public Pasaje(Long dni, Long nroVuelo, Integer nroAsiento) {
-		super();
-	}
-	//METODOS
-	public void setDni(Long dni) {
-		this.dni = dni;
-	}
-	public void setNroVuelo(Long nroVuelo) {
-		this.nroVuelo = nroVuelo;
-	}
-	public void setNroAsiento(Integer nroAsiento) {
-		this.nroAsiento = nroAsiento;
-	}
-	
-	public Long getDni() {
-		return this.dni;
-	}
-	public Long getNroVuelo() {
-		return this.nroVuelo;
-	}
-	public Integer getNroAsiento() {
-		return this.nroAsiento;
-	}
-	
-	//VALIDAR EXISTENCIA DE CLIENTE EN LA BASE DE DATOS, MEDIANTE EL DNI.
-	
-	//VALIDAR EXISTENCIA DEL VUELO EN LA BASE DE DATOS, MEDIANTE EL NUMERO DE VUELO.
-	
-	
+@Entity
+public class Pasaje {
+    //ATRIBUTOS
+	 @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	 
+    
+    @ManyToOne
+    @JoinColumn(name = "vuelo_id")
+    private Vuelo vuelo;
+
+    @ManyToOne
+    @JoinColumn(name = "pasajero_id")
+    private Clientes pasajero;
+
+	 
+    private Integer numeroAsiento;
+
+    //CONSTRUCTORES
+    public Pasaje() {
+    }
+    public Pasaje(Vuelo vuelo, Clientes pasajero) {
+        this.vuelo = vuelo;
+        this.pasajero = pasajero;
+        this.numeroAsiento = 0;//TODO CAMBIAR POR RANDOM.
+    }    
+
+    //GETTERS
+    public Long getId() {
+        return id;
+    }
+    public Long getDniCliente() {
+        return this.pasajero.getDni();
+    }
+    public Long getNumeroVuelo() {
+        return this.vuelo.getNroVuelo();
+    }
+    public Integer getNumeroAsiento() {
+        return numeroAsiento;
+    }
+    
+
+    //SETTERS
+    public void setNumeroAsiento(Integer numeroAsiento) {
+        this.numeroAsiento = numeroAsiento;
+    }
 }

@@ -1,93 +1,90 @@
-/**
- * 
- */
 package com.tsti.dto;
 
 import java.math.BigDecimal;
 
+import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 
 /**
- * @author Bruno
+ * @author JOA
  *
  */
-public class PasajeBaseDTO {
-	
+public class PasajeDTO {
+	private Clientes pasajero;
+	private Vuelo vuelo;
 	private Long nroVuelo;
 	private Long dni;
+    private Integer numeroAsiento;
 	private BigDecimal precioNeto;
 	private BigDecimal tasa;
 	private BigDecimal precioFinal;
 	private TipoVuelo tipoVuelo;
 	
-	public PasajeBaseDTO() {
+	
+	//CONSTRUCTORES
+	public PasajeDTO() {
 		super();
 	}
-			
-	public PasajeBaseDTO(Long nroVuelo, Long dni, BigDecimal precio, TipoVuelo tipoVuelo) {
+	public PasajeDTO(Vuelo vuelo, Clientes pasajero, BigDecimal precio, TipoVuelo tipoVuelo) {
 		super();
-		this.nroVuelo = nroVuelo;
-		this.dni = dni;
+		this.vuelo = vuelo;
+		this.pasajero = pasajero;
+		this.nroVuelo = this.vuelo.getNroVuelo();
+		this.dni = this.pasajero.getDni();
 		this.precioNeto = precio;
 		this.tipoVuelo = tipoVuelo;
 		this.setPrecioFinal(precioFinal);		
 	}
-	
-	public PasajeBaseDTO(Long nroVuelo, Long dni, BigDecimal precioNeto, BigDecimal precioFinal, TipoVuelo tipoVuelo) {
+	public PasajeDTO(Vuelo vuelo, Clientes pasajero, BigDecimal precioNeto, BigDecimal precioFinal, TipoVuelo tipoVuelo) {
 		super();
-		this.nroVuelo = nroVuelo;
-		this.dni = dni;
+		this.vuelo = vuelo;
+		this.pasajero = pasajero;
+		this.nroVuelo = this.vuelo.getNroVuelo();
+		this.dni = this.pasajero.getDni();
 		this.precioNeto = precioNeto;
 		this.tipoVuelo = tipoVuelo;
 		this.precioFinal = precioFinal ;		
 	}
 
 
-
+	//GETTERS
 	public Long getNroVuelo() {
 		return nroVuelo;
 	}
-
-	public void setNroVuelo(Long nroVuelo) {
-		this.nroVuelo = nroVuelo;
-	}
-
 	public Long getDni() {
 		return dni;
 	}
-
-	public void setDni(Long dni) {
-		this.dni = dni;
-	}
-	
 	public BigDecimal getPrecioNeto() {
 		return precioNeto;
 	}
-	
-	public void setPrecioNeto(BigDecimal precio) {
-		this.precioNeto = precio;
-	}
-
 	public BigDecimal getPrecioFinal() {
 		return precioFinal;
 	}
-
-	public void setPrecioFinal(BigDecimal precioFinal) {
-		this.precioFinal = precioFinal;
-	}
-
 	public TipoVuelo getTipoVuelo() {
 		return tipoVuelo;
 	}
-
-	public void setTipoVuelo(TipoVuelo tipoVuelo) {
-		this.tipoVuelo = tipoVuelo;
-	}
-
 	public BigDecimal getTasa() {
 		return tasa;
 	}
-
+	
+	
+	//SETTERS
+	public void setNroVuelo(Long nroVuelo) {
+		this.nroVuelo = nroVuelo;
+	}
+	public void setDni(Long dni) {
+		this.dni = dni;
+	}
+	public void setPrecioNeto(BigDecimal precio) {
+		this.precioNeto = precio;
+	}
+	public void setPrecioFinal(BigDecimal precioFinal) {
+		this.precioFinal = precioFinal;
+	}
+	public void setTipoVuelo(TipoVuelo tipoVuelo) {
+		this.tipoVuelo = tipoVuelo;
+	}
 	public void setTasa(BigDecimal tasa) {
 		this.tasa = tasa;
 	}	
