@@ -42,4 +42,9 @@ public class VueloErrorInfo {
 	   public String getUriRequested() {
 	       return uriRequested;
 	   }
+
+	public void setErrorCode(int value) {
+		// TODO Auto-generated method stub
+		
+	}
 }

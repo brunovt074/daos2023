@@ -140,7 +140,7 @@ public class AppLinks {
     
     public static Link getVueloPorId(Long nroVuelo){
     	Link link = WebMvcLinkBuilder.linkTo(methodOn(VueloController.class)
-									.getVueloById(nroVuelo))
+									.getVueloById(nroVuelo, null))
     								.withRel("nro-vuelo");
     	return link ; 
     }
