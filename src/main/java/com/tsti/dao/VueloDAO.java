@@ -1,12 +1,12 @@
-package com.tsti.dao;
+package tsti.dao;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Vuelo.TipoVuelo;
+import tsti.entidades.Vuelo;
+import tsti.entidades.Vuelo.TipoVuelo;
 
 /**
  * @author Bruno

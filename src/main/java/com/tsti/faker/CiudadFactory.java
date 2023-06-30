@@ -1,15 +1,15 @@
 /**
  * CLASE CREADA PARA POBLAR LA BD EN EL ENTORNO DE DESARROLLO
  * */
-package com.tsti.faker;
+package tsti.faker;
 
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tsti.dao.CiudadDAO;
-import com.tsti.entidades.Ciudad;
+import tsti.dao.CiudadDAO;
+import tsti.entidades.Ciudad;
 
 import net.datafaker.Faker;
 

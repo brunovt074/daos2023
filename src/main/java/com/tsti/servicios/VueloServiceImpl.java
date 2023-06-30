@@ -1,13 +1,13 @@
-package com.tsti.servicios;
+package tsti.servicios;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.tsti.dao.VueloDAO;
-import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Vuelo.TipoVuelo;
+import tsti.dao.VueloDAO;
+import tsti.entidades.Vuelo;
+import tsti.entidades.Vuelo.TipoVuelo;
 /**
  * @author Bruno
  * Sugiero añadir el prefijo "I" Delante de las interfaces para mejorar 

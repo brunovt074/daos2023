@@ -1,11 +1,11 @@
-package com.tsti.servicios;
+package tsti.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import com.tsti.dto.ClienteResponseDTO;
+import tsti.dto.ClienteResponseDTO;
 
-import com.tsti.dao.ClienteDAO;
-import com.tsti.entidades.Clientes;
+import tsti.dao.ClienteDAO;
+import tsti.entidades.Clientes;
 /**
  * 
  * @author cecilia

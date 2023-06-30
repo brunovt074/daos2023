@@ -1,4 +1,4 @@
-package com.tsti.rest;
+package tsti.rest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsti.dto.VueloDisponibleDTO;
-import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Ciudad;
-import com.tsti.servicios.VueloServiceImpl;
+import tsti.dto.VueloDisponibleDTO;
+import tsti.entidades.Vuelo;
+import tsti.entidades.Ciudad;
+import tsti.servicios.VueloServiceImpl;
 
 @RestController
 @RequestMapping("/vuelos")

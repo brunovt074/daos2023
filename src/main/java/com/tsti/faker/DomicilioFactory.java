@@ -1,17 +1,17 @@
 /*
 * CLASE CREADA PARA POBLACION DE TABLA DOMICILIOS 
  */
-package com.tsti.faker;
+package tsti.faker;
 
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tsti.dao.CiudadDAO;
-import com.tsti.dao.DomicilioDAO;
-import com.tsti.entidades.Domicilio;
-import com.tsti.entidades.Ciudad;
+import tsti.dao.CiudadDAO;
+import tsti.dao.DomicilioDAO;
+import tsti.entidades.Domicilio;
+import tsti.entidades.Ciudad;
 
 import net.datafaker.Faker;
 

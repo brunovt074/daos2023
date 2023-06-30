@@ -1,4 +1,4 @@
-package com.tsti.dto;
+package tsti.dto;
 
 import java.util.Date;
 

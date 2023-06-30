@@ -1,18 +1,18 @@
 /*
  *CLASE CREADA PARA POBLAR LA TABLA DE CLIENTES EN ENTORNO DE DESARROLLO.  
  */
-package com.tsti.faker;
+package tsti.faker;
 
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tsti.dao.CiudadDAO;
-import com.tsti.dao.ClienteDAO;
-import com.tsti.dao.DomicilioDAO;
-import com.tsti.entidades.Clientes;
-import com.tsti.entidades.Domicilio;
+import tsti.dao.CiudadDAO;
+import tsti.dao.ClienteDAO;
+import tsti.dao.DomicilioDAO;
+import tsti.entidades.Clientes;
+import tsti.entidades.Domicilio;
 
 import net.datafaker.Faker;
 

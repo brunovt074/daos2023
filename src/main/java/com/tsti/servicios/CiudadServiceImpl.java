@@ -1,12 +1,12 @@
-package com.tsti.servicios;
+package tsti.servicios;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tsti.dao.CiudadDAO;
-import com.tsti.entidades.Ciudad;
+import tsti.dao.CiudadDAO;
+import tsti.entidades.Ciudad;
 
 @Service
 public class CiudadServiceImpl implements ICiudadService {

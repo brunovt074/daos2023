@@ -1,4 +1,4 @@
-package com.tsti.servicios;
+package tsti.servicios;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,11 +7,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tsti.dto.ClienteResponseDTO;
+import tsti.dto.ClienteResponseDTO;
 
-import com.tsti.dao.ClienteDAO;
-import com.tsti.entidades.Clientes;
-import com.tsti.excepcion.Excepcion;
+import tsti.dao.ClienteDAO;
+import tsti.entidades.Clientes;
+import tsti.excepcion.Excepcion;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;

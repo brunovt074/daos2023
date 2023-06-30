@@ -1,10 +1,10 @@
-package com.tsti.servicios;
+package tsti.servicios;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import com.tsti.entidades.Vuelo;
-import com.tsti.entidades.Vuelo.TipoVuelo;
+import tsti.entidades.Vuelo;
+import tsti.entidades.Vuelo.TipoVuelo;
 
 public interface IVueloService {
 
