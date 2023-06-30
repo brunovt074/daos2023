@@ -1,16 +1,16 @@
 
-package tsti.dto;
+package com.tsti.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import tsti.entidades.Ciudad;
-import tsti.entidades.Vuelo;
-import tsti.entidades.Vuelo.TipoVuelo;
-import tsti.entidades.Vuelo.EstadoVuelo;
-import tsti.serializer.CiudadSerializer;
+import com.tsti.entidades.Ciudad;
+import com.tsti.entidades.Vuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.tsti.serializer.CiudadSerializer;
 
 /**
  * @author Bruno

@@ -1,4 +1,4 @@
-package tsti.excepcion;
+package com.tsti.excepcion;
 import java.util.List;
 import java.util.Map;
 

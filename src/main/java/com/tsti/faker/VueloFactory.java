@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.faker;
+package com.tsti.faker;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,15 +12,15 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import tsti.dao.CiudadDAO;
-import tsti.dao.ClienteDAO;
-import tsti.dao.DomicilioDAO;
-import tsti.dao.VueloDAO;
-import tsti.entidades.Vuelo;
-import tsti.entidades.Clientes;
-import tsti.entidades.Vuelo.EstadoVuelo;
-import tsti.entidades.Vuelo.TipoVuelo;
-import tsti.entidades.Ciudad;
+import com.tsti.dao.CiudadDAO;
+import com.tsti.dao.ClienteDAO;
+import com.tsti.dao.DomicilioDAO;
+import com.tsti.dao.VueloDAO;
+import com.tsti.entidades.Vuelo;
+import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.entidades.Ciudad;
 
 import net.datafaker.Faker;
 

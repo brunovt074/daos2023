@@ -1,4 +1,4 @@
-package tsti.servicios;
+package com.com.tsti.servicios;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tsti.dto.PasajeDTO;
-import tsti.entidades.Vuelo;
-import tsti.entidades.Vuelo.EstadoVuelo;
-import tsti.entidades.Vuelo.TipoVuelo;
+import com.com.tsti.dto.PasajeDTO;
+import com.com.tsti.entidades.Vuelo;
+import com.com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.com.tsti.entidades.Vuelo.TipoVuelo;
 
 @Service
 public class PasajeServiceImpl {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.dto;
+package com.tsti.dto;
 
 import java.math.BigDecimal;
 

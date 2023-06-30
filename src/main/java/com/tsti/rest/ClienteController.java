@@ -1,4 +1,4 @@
-package tsti.rest;
+package com.tsti.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,12 +31,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
-import tsti.dto.ClienteResponseDTO;
-import tsti.entidades.Clientes;
-import tsti.excepcion.Excepcion;
-import tsti.excepcion.MensajeError;
-import tsti.presentacion.ClienteForm;
-import tsti.servicios.IClienteService;
+import com.tsti.dto.ClienteResponseDTO;
+import com.tsti.entidades.Clientes;
+import com.tsti.excepcion.Excepcion;
+import com.tsti.excepcion.MensajeError;
+import com.tsti.presentacion.ClienteForm;
+import com.tsti.servicios.IClienteService;
 /**
  * 
  * @author cecilia

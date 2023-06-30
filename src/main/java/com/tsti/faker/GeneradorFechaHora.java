@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.faker;
+package com.tsti.faker;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

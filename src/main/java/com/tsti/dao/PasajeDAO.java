@@ -1,4 +1,4 @@
-package tsti.dao;
+package com.tsti.dao;
 
 /**
  * @author Bruno

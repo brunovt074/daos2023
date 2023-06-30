@@ -1,4 +1,4 @@
-package tsti.dto;
+package com.tsti.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**

@@ -1,12 +1,12 @@
 
-package tsti.dto;
+package com.tsti.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import tsti.entidades.Ciudad;
-import tsti.entidades.Vuelo;
-import tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.entidades.Ciudad;
+import com.tsti.entidades.Vuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
 
 /**
  * @author Bruno
