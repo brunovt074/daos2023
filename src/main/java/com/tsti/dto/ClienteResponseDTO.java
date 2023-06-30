@@ -1,5 +1,6 @@
 package tsti.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.hibernate.annotations.FetchProfile.FetchOverride;
@@ -18,7 +19,7 @@ public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> 
 	private String apellido;
 	private String nombre;
 	private String email;
-	private Date fecha_nac;
+	private LocalDate fecha_nac;
 	
 	public ClienteResponseDTO(Clientes pojo) {
 		
@@ -57,7 +58,7 @@ public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> 
 
 
 
-	public Date getFecha_nac() {
+	public LocalDate getFecha_nac() {
 		return fecha_nac;
 	}
 
@@ -65,7 +66,7 @@ public class ClienteResponseDTO extends RepresentationModel<ClienteResponseDTO> 
 
 
 
-	public void setFecha_nac(Date fecha_nac) {
+	public void setFecha_nac(LocalDate fecha_nac) {
 		this.fecha_nac = fecha_nac;
 	}
 
