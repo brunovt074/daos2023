@@ -38,10 +38,10 @@ public class Pasaje {
     //CONSTRUCTORES
     public Pasaje() {
     }
-    public Pasaje(Vuelo vuelo, Clientes pasajero) {
+    public Pasaje(Vuelo vuelo, Clientes pasajero, Integer nroAsiento) {
         this.vuelo = vuelo;
         this.pasajero = pasajero;
-        this.numeroAsiento = 0;//TODO CAMBIAR POR RANDOM.
+        this.numeroAsiento = nroAsiento;//TODO CAMBIAR POR RANDOM.
     }    
 
     //GETTERS

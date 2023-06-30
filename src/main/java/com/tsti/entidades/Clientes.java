@@ -171,6 +171,20 @@ public class Clientes {
 	@Override
 	public String toString() {
 		return dni+" - "+ nombre +" "+ apellido;
+	}
+
+	public boolean tieneDatosBasicos() {
+		return(
+				this.apellido != null &&
+				this.fechaNacimiento != null &&
+				this.dni != null &&
+				this.domicilio != null &&
+				this.nombre != null &&
+				this.tel != null
+			);
+	}
+
+	public boolean tienePasaporte() {
+		return this.nroPasaporte != null;
 	}	
-		
 }

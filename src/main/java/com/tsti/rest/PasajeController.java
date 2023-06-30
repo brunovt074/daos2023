@@ -42,20 +42,20 @@ public class PasajeController {
     }
      
     @PostMapping("/pasajes")
-    public ResponseEntity<Pasaje> crearPasaje(@Valid @RequestBody PasajeForm pasajeForm) {
+    public ResponseEntity<?> crearPasaje(@Valid @RequestBody PasajeForm pasajeForm) {
         try {
             Vuelo vuelo = vueloDAO.findById(pasajeForm.getVueloId())
                     .orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
             Clientes cliente = clienteDAO.findById(pasajeForm.getClienteId())
                     .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
-            Pasaje pasaje = pasajeServiceImpl.crearPasaje(vuelo, cliente);
+            Pasaje pasaje = pasajeServiceImpl.crearPasaje(vuelo, cliente, pasajeForm.getNumeroAsiento());
             return ResponseEntity.status(HttpStatus.CREATED).body(pasaje);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
-
+    
     @GetMapping("/pasajes/{id}")
     public ResponseEntity<EntityModel<PasajeResDTO>> getPasajeById(@PathVariable Long id) {
         try {
@@ -66,8 +66,8 @@ public class PasajeController {
 
                 ClienteResponseDTO clienteDTO = new ClienteResponseDTO(pasaje.getPasajero());
                 VueloDTO vueloDTO = new VueloDTO(pasaje.getVuelo());
-                PasajeResDTO pasajeResDTO = new PasajeResDTO(pasaje.getId(), clienteDTO, vueloDTO);
-
+                PasajeResDTO pasajeResDTO = new PasajeResDTO(pasaje.getId(), clienteDTO, vueloDTO, pasaje.getNumeroAsiento());
+                
                 EntityModel<PasajeResDTO> entityModel = EntityModel.of(pasajeResDTO);
 
                 Link selfLink = WebMvcLinkBuilder.linkTo(
@@ -94,6 +94,4 @@ public class PasajeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
-
 }

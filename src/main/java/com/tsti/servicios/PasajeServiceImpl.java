@@ -1,9 +1,6 @@
 package com.tsti.servicios;
 
-
-import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tsti.dao.ClienteDAO;
@@ -31,9 +28,11 @@ public class PasajeServiceImpl implements IPasajeService {
         this.pasajeDAO = pasajeDAO;
     }
 	@Override
-	public Pasaje crearPasaje(Vuelo vuelo, Clientes pasajero) {
-		
-		//METODO DISEÑADO PARA SER CONTENIDO EN UN BLOQUE TRY-CATCH A LA HORA DE LLAMARLO, ESTO PARA MANEJO DE ERRORES. :D
+	public Pasaje crearPasaje(Vuelo vuelo, Clientes pasajero, Integer nroAsiento) {
+		/*
+		 * METODO DISEÑADO PARA SER CONTENIDO EN UN BLOQUE TRY-CATCH A LA HORA 
+		 * DE LLAMARLO, ESTO PARA MANEJO DE ERRORES DE UNA FORMA MAS SENCILLA. :D
+		*/
 		
 		//VALIDAMOS QUE EXISTAN EL CLIENTE Y EL VUELO, VIENDO SI ESTAN ALMACENADOS EN LA BASE DE DATOS
 		if (!this.existeCliente(pasajero)) {
@@ -42,14 +41,38 @@ public class PasajeServiceImpl implements IPasajeService {
 	    if (!this.existeVuelo(vuelo)) {
 	        throw new ValidacionFallidaEnPasajeException("El vuelo con número " + vuelo.getNroVuelo() + " no existe.");
 	    }
-	    System.out.println(this.existeCliente(pasajero));
-	    System.out.println(this.existeVuelo(vuelo));
 	    
+	    //VALIDACIONES DEL TP
+	    	//SOBRE PASAJERO
+	    if(vuelo.getTipoVuelo()== Vuelo.TipoVuelo.NACIONAL) {
+	    	if(!pasajero.tieneDatosBasicos())
+	    		throw new ValidacionFallidaEnPasajeException("El cliente no cuenta con los datos basicos!");
+	    }else if(vuelo.getTipoVuelo()== Vuelo.TipoVuelo.INTERNACIONAL) {
+	    	if(!pasajero.tieneDatosBasicos())
+	    		throw new ValidacionFallidaEnPasajeException("El cliente no cuenta con los datos basicos!");
+	    	if(!pasajero.tienePasaporte())
+	    		throw new ValidacionFallidaEnPasajeException("El cliente no cuenta con pasaporte!");	
+	    }
+	    
+	    	//SOBRE VUELO
+	    		//EL VUELO ES UN VUELO FUTURO
+	    if(vuelo.getEstadoVuelo() == Vuelo.EstadoVuelo.CANCELADO) {
+	    	throw new ValidacionFallidaEnPasajeException("El vuelo ingresado no es un vuelo futuro, fue cancelado!");
+	    }else if(vuelo.getEstadoVuelo() == Vuelo.EstadoVuelo.TERMINADO) {
+	    	throw new ValidacionFallidaEnPasajeException("El vuelo ingresado no es un vuelo futuro, fue finalizado!");
+	    }
+	    
+	    		//EL ASIENTO ELEJIDO ESTÁ DISPONIBLE
+	    if(vuelo.getNroAsientos() < nroAsiento) {
+	    	throw new ValidacionFallidaEnPasajeException("Ese asiento no existe para ese vuelo!");
+	    }
+	    if(vuelo.asientoOcupado(nroAsiento)) {
+	    	throw new ValidacionFallidaEnPasajeException("Ese asiento esta ocupado!");
+	    }
+
 	    //POSTING
-	    Pasaje pasaje = new Pasaje(vuelo, pasajero);
-	    System.out.println(pasaje.toString());
-	    System.out.println(pasaje.getVuelo().toString());
-		System.out.println(pasaje.getPasajero().toString());
+	    Pasaje pasaje = new Pasaje(vuelo, pasajero, nroAsiento);
+	    
 	    return pasajeDAO.save(pasaje);
 	}
 	

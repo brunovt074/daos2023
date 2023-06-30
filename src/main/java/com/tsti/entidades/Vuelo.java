@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +93,9 @@ public class Vuelo {
 		REGISTRADO(0),
 	    DEMORADO(1),
 	    CANCELADO(2),
-	    REPROGRAMADO(3);
-
+	    REPROGRAMADO(3),
+	    TERMINADO(4);
+		
 		EstadoVuelo(int i) {
 			
 		}
@@ -164,7 +166,7 @@ public class Vuelo {
 	}
 	
 	public int getNroAsientos() {
-		return nroFilas * nroColumnas;
+		return nroAsientos;
 	}
 
 	public int getNroColumnas() {
@@ -280,9 +282,14 @@ public class Vuelo {
 	public Long getId() {
 		return this.id;
 	}
-	
-	
 
-		
-	
+	public boolean asientoOcupado(Integer nroAsiento) {
+		boolean r = false;
+		Iterator<Pasaje> it = pasajes.iterator();
+		while (it.hasNext() && r==false) {
+			Pasaje i = it.next();
+		    if(i.getNumeroAsiento() == nroAsiento) r = true;
+		}
+		return r;
+	}
 }
