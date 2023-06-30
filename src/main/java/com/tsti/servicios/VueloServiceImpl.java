@@ -28,42 +28,54 @@ import com.tsti.presentacion.EditarVueloForm;
 public class VueloServiceImpl implements IVueloService{
 	
 	private VueloDAO vueloDAO;	
-	//@Autowired
 	private CiudadDAO ciudadDAO;
-	//@Autowired
 	private CiudadFactory ciudadFactory;
-
+	private Optional <Vuelo> vueloOptional;
 	@Autowired
-	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO, CiudadFactory ciudadFactory) {
+	public VueloServiceImpl(VueloDAO vueloDAO, CiudadDAO ciudadDAO, CiudadFactory ciudadFactory, Optional <Vuelo> vueloOptional) {
 		this.vueloDAO = vueloDAO;	
 		this.ciudadDAO = ciudadDAO;
 		this.ciudadFactory = ciudadFactory;
+		this.vueloOptional= vueloOptional;
 	}
 	@Override
 	public VueloDTO crearVuelo(CrearVueloForm vueloForm) {
 		
 		Vuelo vuelo = new Vuelo();
 		VueloDTO vueloDTO; 
-		Ciudad origen;
+		Ciudad origen = new Ciudad();
 		Ciudad destino = new Ciudad();
 		
-		if(ciudadDAO.existsByCodAeropuerto("SAAV")){
+		try {
 			
-			origen = ciudadDAO.findFirstByCodAeropuertoAndNombreCiudad
+			if(ciudadDAO.existsByCodAeropuerto("SAAV")){
+				
+				origen = ciudadDAO.findFirstByCodAeropuertoAndNombreCiudad
 														("SAAV", "Sauce Viejo");
-		} else{
+			} else{
+				
+				origen = ciudadFactory.getCiudadSauceViejo();
+			}
 			
-			origen = ciudadFactory.getCiudadSauceViejo();
+		}catch(Exception e){
+			
 		}
+		
 		
 		if(vueloForm.getIdDestino() != null){
 			
-			Optional<Ciudad>ciudadOptional = ciudadDAO.findById(vueloForm.getIdDestino());
-			
-			if(ciudadOptional.isPresent()) {
+			try {
+				Optional<Ciudad>ciudadOptional = ciudadDAO.findById(vueloForm.getIdDestino());
 				
-				destino = ciudadOptional.get();
-			}		
+				if(ciudadOptional.isPresent()) {
+					
+					destino = ciudadOptional.get();
+				}
+				
+			}catch(Exception e){
+				
+			}
+					
 			
 		}else{
 						
@@ -74,9 +86,16 @@ public class VueloServiceImpl implements IVueloService{
 			destino.setCodPostal(vueloForm.getCodPostal());
 			
 		}
-
-		ciudadDAO.save(origen);	
-		ciudadDAO.save(destino);	
+		
+		try {
+			
+			ciudadDAO.save(origen);	
+			ciudadDAO.save(destino);
+		
+		}catch(Exception e){
+			
+		
+		}			
 				
 		vuelo.setAerolinea(vueloForm.getAerolinea());
 		vuelo.setAvion(vueloForm.getAvion());
@@ -105,10 +124,16 @@ public class VueloServiceImpl implements IVueloService{
 		}		
 				
 		vuelo.setEstadoVuelo(EstadoVuelo.REGISTRADO);
-				
-		vuelo = vueloDAO.save(vuelo);
-		System.out.println(vuelo.toString());
 		
+		try {
+			
+		vuelo = vueloDAO.save(vuelo);
+		
+		}catch(Exception e){
+			
+		
+		}
+				
 		vueloDTO = new VueloDTO(vuelo);
 		
 		vueloDTO.setNroVuelo(vuelo.getNroVuelo());
@@ -116,52 +141,75 @@ public class VueloServiceImpl implements IVueloService{
 		return vueloDTO;
 				
 	}
+	
 	@Override
 	public VueloDTO cancelarVuelo(Long nroVuelo){		
 		
 		Vuelo vuelo = new Vuelo();
 		
-		Optional<Vuelo> vueloOptional = vueloDAO.findById(nroVuelo);
-		
-		if (vueloOptional.isPresent()) {
-            
-			vuelo = vueloOptional.get();
+		try{
 			
-			vuelo.setEstadoVuelo(EstadoVuelo.CANCELADO);
-			vuelo.setPrecioNeto(BigDecimal.valueOf(0.00));
+			Optional<Vuelo> vueloOptional = vueloDAO.findById(nroVuelo);
 			
-			vueloDAO.save(vuelo);
+			if (vueloOptional.isPresent()) {
+	            
+				vuelo = vueloOptional.get();
+				
+				vuelo.setEstadoVuelo(EstadoVuelo.CANCELADO);
+				vuelo.setPrecioNeto(BigDecimal.valueOf(0.00));
+				
+				vueloDAO.save(vuelo);
+			}
+			
+		}catch(Exception e){
+			
 		}
-		
+				
 		return new VueloDTO(vuelo);
 	}
-	
+
+
 	@Override
 	public VueloDTO reprogramarVuelo(Long nroVuelo, EditarVueloForm vueloForm){
 		
 		Vuelo vuelo = new Vuelo();		
 		
-		Optional<Vuelo> vueloOptional = vueloDAO.findById(nroVuelo);
-        
-        if (vueloOptional.isPresent()) {
-            
-        	vuelo = vueloOptional.get();
-                       		
-	        vuelo.setFechaPartida(vueloForm.getFechaPartida());
-	        vuelo.setHoraPartida(vueloForm.getHoraPartida());
-        
-        // Cambiar estado a reprogramado
-        vuelo.setEstadoVuelo(EstadoVuelo.REPROGRAMADO);
-        vueloDAO.save(vuelo);        
-        
-        }       
-        
+		try{
+			Optional<Vuelo> vueloOptional = vueloDAO.findById(nroVuelo);
+	        
+	        if (vueloOptional.isPresent()) {
+	            
+	        	vuelo = vueloOptional.get();
+	                       		
+		        vuelo.setFechaPartida(vueloForm.getFechaPartida());
+		        vuelo.setHoraPartida(vueloForm.getHoraPartida());
+	        
+	        // Cambiar estado a reprogramado
+	        vuelo.setEstadoVuelo(EstadoVuelo.REPROGRAMADO);
+	        vueloDAO.save(vuelo);        
+	        
+	        }
+	        
+		}catch(Exception e){
+			
+			
+		}
+		           
         return new VueloDTO(vuelo);        
     }
-	
+	// 
 	@Override
 	public Optional<Vuelo> findById(Long nroVuelo){
 		
+		
+		
+		try
+		{
+			return vueloDAO.findById(nroVuelo);
+		
+		}catch(Exception e){
+			
+		}
 		return vueloDAO.findById(nroVuelo);
 	
 	}	
