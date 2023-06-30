@@ -40,18 +40,26 @@ import tsti.excepcion.MensajeError;
 import tsti.presentacion.ClienteForm;
 import tsti.servicios.ICiudadService;
 import tsti.servicios.IClienteService;
-
+/**
+ * 
+ * @author cecilia
+ * Maneja datos de los clientes Elimina, agrega, y busca clientes en la bd
+ */
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
 	@Autowired
 	private IClienteService service;
-	
-	@Autowired
-	private ICiudadService ciudadService;
 
-	//busca cliente por apellido o por apellido y nombre
+
+	/**
+	 * 
+	 * @param apellido
+	 * @param nombre
+	 * @return Lista de clietes que conincidan con el apellido o nombre buscado por parametro
+	 * @throws Excepcion
+	 */
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public List<ClienteResponseDTO> filtrar(@RequestParam(name = "apellido", required = false) String apellido,
 			@RequestParam(name = "nombre", required = false) @jakarta.validation.constraints.Size(min = 1, max = 20) String nombre)
@@ -67,8 +75,12 @@ public class ClienteController {
 
 	}
 	
-	
-	//obtiene cliente por id
+	/**
+	 * 
+	 * @param id
+	 * @return Devuelve un solo cliente que coicida con el id buscado
+	 * @throws Excepcion
+	 */
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getById(@PathVariable Long id) throws Excepcion
 	{
@@ -90,7 +102,12 @@ public class ClienteController {
 	}
 	
 	
-	//busca cliente por dni 
+	/**
+	 * Busca el cliente por dni. el path para buscar es http://localhost:8081/clientes/dni/nroDNIaBuscar
+	 * @param dni
+	 * @return Busca cliente por numero de dni  
+	 * @throws Excepcion
+	 */
 	@GetMapping(value = "/dni/{dni}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getByDni(@PathVariable("dni") Long dni) throws Excepcion
 	{
@@ -112,31 +129,39 @@ public class ClienteController {
 	}
 	
 	
-	//Guarda cliente nuevo en la bd
+	/**
+	 * Guarda cliente nuevo en la bd
+	 * @param form
+	 * @param result
+	 * @return Cliente nuevo en la bd de datos. Lo agrega al final
+	 * @throws Exception
+	 */
 	@PostMapping("/guardarCliente")
 	public ResponseEntity<Object> guardar( @Valid @RequestBody ClienteForm form, BindingResult result) throws Exception
 	{
 		
 		if(result.hasErrors())
 		{
-			//Dos alternativas:
-			//throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatearError(result));
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( this.formatearError(result));
 		}
 		
 		Clientes c = form.toPojo();
 		
-		
-		//ahora inserto el cliente
 		service.insert(c);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dni}")
-				.buildAndExpand(c.getDni()).toUri(); //Por convención en REST, se devuelve la  url del recurso recién creado
-
-		return ResponseEntity.created(location).build();//201 (Recurso creado correctamente)
+				.buildAndExpand(c.getDni()).toUri(); 
+		return ResponseEntity.created(location).build();
 		
 
 	}
 	
+	/**
+	 * Actualiza cliente
+	 * @param form
+	 * @param dni
+	 * @return Un cliente con los datos actualizados 
+	 * @throws Exception
+	 */
 	@PutMapping("/{dni}")
 	public ResponseEntity<Object>  actualizar(@RequestBody ClienteForm form, @PathVariable long dni) throws Exception
 	{
@@ -164,63 +189,12 @@ public class ClienteController {
 		
 	}
 	
-
 	
-	
-	private String getError(String code, String err, String descr) throws JsonProcessingException
-	{
-		MensajeError e1=new MensajeError();
-		e1.setCodigo(code);
-		ArrayList<Map<String,String>> errores=new ArrayList<>();
-		Map<String, String> error=new HashMap<String, String>();
-		error.put(err, descr);
-		errores.add(error);
-		e1.setMensajes(errores);
-		
-		//ahora usamos la librería Jackson para pasar el objeto a json
-				ObjectMapper maper = new ObjectMapper();
-				String json = maper.writeValueAsString(e1);
-				return json;
-	}
-	
-	
-	private String formatearError(BindingResult result) throws JsonProcessingException
-	{
-//		primero transformamos la lista de errores devuelta por Java Bean Validation
-		List<Map<String, String>> errores= result.getFieldErrors().stream().map(err -> {
-															Map<String, String> error= new HashMap<>();
-															error.put(err.getField(),err.getDefaultMessage() );
-															return error;
-														}).collect(Collectors.toList());
-		MensajeError e1=new MensajeError();
-		e1.setCodigo("01");
-		e1.setMensajes(errores);
-		
-		//ahora usamos la librería Jackson para pasar el objeto a json
-		ObjectMapper maper = new ObjectMapper();
-		String json = maper.writeValueAsString(e1);
-		return json;
-	}
-
-
-	private ClienteResponseDTO buildResponse(Clientes pojo) throws Excepcion {
-		try {
-			ClienteResponseDTO dto = new ClienteResponseDTO(pojo);
-			// Self link
-			Link selfLink = WebMvcLinkBuilder.linkTo(ClienteController.class).slash(pojo.getDni()).withSelfRel();
-			// Method link: Link al servicio que permitirá navegar hacia la ciudad
-			// relacionada a la persona
-		
-			dto.add(selfLink);
-			
-			return dto;
-		} catch (Exception e) {
-			throw new Excepcion(e.getMessage(), 500);
-		}
-	}
-	
-	
-	//Elimina clientes 
+	/**
+	 * Elimina el cliente que se le pasa por parametro como dni
+	 * @param dni
+	 * @return 
+	 */
 	@DeleteMapping("/{dni}")
 	public ResponseEntity<String> eliminar(@PathVariable("dni") Long dni)
 	{
@@ -241,4 +215,57 @@ public class ClienteController {
 		return ResponseEntity.ok().build();
 		
 	}
+	
+	
+	private String getError(String code, String err, String descr) throws JsonProcessingException
+	{
+		MensajeError e1=new MensajeError();
+		e1.setCodigo(code);
+		ArrayList<Map<String,String>> errores=new ArrayList<>();
+		Map<String, String> error=new HashMap<String, String>();
+		error.put(err, descr);
+		errores.add(error);
+		e1.setMensajes(errores);
+		
+		
+				ObjectMapper maper = new ObjectMapper();
+				String json = maper.writeValueAsString(e1);
+				return json;
+	}
+	
+	
+	private String formatearError(BindingResult result) throws JsonProcessingException
+	{
+
+		List<Map<String, String>> errores= result.getFieldErrors().stream().map(err -> {
+															Map<String, String> error= new HashMap<>();
+															error.put(err.getField(),err.getDefaultMessage() );
+															return error;
+														}).collect(Collectors.toList());
+		MensajeError e1=new MensajeError();
+		e1.setCodigo("01");
+		e1.setMensajes(errores);
+	
+		ObjectMapper maper = new ObjectMapper();
+		String json = maper.writeValueAsString(e1);
+		return json;
+	}
+
+
+	private ClienteResponseDTO buildResponse(Clientes pojo) throws Excepcion {
+		try {
+			ClienteResponseDTO dto = new ClienteResponseDTO(pojo);
+			
+			Link selfLink = WebMvcLinkBuilder.linkTo(ClienteController.class).slash(pojo.getDni()).withSelfRel();
+			
+			dto.add(selfLink);
+			
+			return dto;
+		} catch (Exception e) {
+			throw new Excepcion(e.getMessage(), 500);
+		}
+	}
+	
+	
+
 }
