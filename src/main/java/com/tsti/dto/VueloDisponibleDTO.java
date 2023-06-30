@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package tsti.dto;
 
 import java.time.LocalDate;

@@ -68,9 +68,9 @@
 			<artifactId>datafaker</artifactId>
 			<version>2.0.0</version>
 		</dependency>
-		
+
 		<!--Versiones mas nuevas de FAKER dan error al arranque-->
-		<!--<dependency>
+		<dependency>
 		    <groupId>com.github.javafaker</groupId>
 		    <artifactId>javafaker</artifactId>
 		    <version>0.17</version>
@@ -80,7 +80,15 @@
 		            <artifactId>mysql-connector-java</artifactId>
 		        </exclusion>
 		    </exclusions>
-		</dependency>-->
+		</dependency>
+
+
+		 <!--https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+		    <groupId>org.modelmapper</groupId>
+		    <artifactId>modelmapper</artifactId>
+		    <version>3.1.1</version>
+		</dependency>		
 
 	</dependencies>
 
