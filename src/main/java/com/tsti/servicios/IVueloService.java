@@ -10,6 +10,7 @@ import com.tsti.dto.VueloDTO;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.EstadoVuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.excepcion.VueloException;
 import com.tsti.presentacion.CrearVueloForm;
 import com.tsti.presentacion.EditarVueloForm;
 
@@ -26,8 +27,9 @@ public interface IVueloService{
 	 * 
 	 *@param vueloForm
 	 *@return VueloDTO con informacion sobre el nuevo vuelo 
+	 * @throws VueloException 
 	 **/
-	public VueloDTO crearVuelo(CrearVueloForm vueloForm);
+	public VueloDTO crearVuelo(CrearVueloForm vueloForm) throws VueloException;
 	
 	/**
 	 * Selecciona un vuelo por su nroVuelo y realiza un soft delete 
@@ -36,8 +38,9 @@ public interface IVueloService{
 	 * @param nroVuelo
 	 * 
 	 * @return VueloDTO con estado de vuelo actualizado
+	 * @throws VueloException 
 	 * */
-	public VueloDTO cancelarVuelo(Long nroVuelo);
+	public VueloDTO cancelarVuelo(Long nroVuelo) throws VueloException;
 	
 	/**
 	 *Recibe un formulario con todos los datos necesarios para actualizar
@@ -46,8 +49,9 @@ public interface IVueloService{
 	 *@param vueloForm 
 	 *
 	 *@return VueloDTO con informacion actualizada del nuevo vuelo 
+	 * @throws VueloException 
 	 **/
-	public VueloDTO reprogramarVuelo(Long nroVuelo, EditarVueloForm vueloForm);
+	public VueloDTO reprogramarVuelo(Long nroVuelo, EditarVueloForm vueloForm) throws VueloException;
 	
 	/**
 	 *Busca al vuelo por nroVuelo 

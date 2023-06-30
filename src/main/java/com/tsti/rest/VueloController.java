@@ -12,6 +12,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,10 +28,13 @@ import com.tsti.dto.VueloDTO;
 
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.tsti.excepcion.VueloException;
 import com.tsti.presentacion.CrearVueloForm;
 import com.tsti.presentacion.EditarVueloForm;
 import com.tsti.servicios.VueloServiceImpl;
+import com.tsti.rest.error.VueloErrorInfo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 /**
@@ -260,22 +264,46 @@ public class VueloController {
      *
      * @param vueloForm formulario de tipo {@link CrearVueloForm}
      * @return ResponseEntity<EntityModel<VueloDTO>> con la informacion del nuevo vuelo creado
+     * @throws VueloException 
      **/
-    @PostMapping("/vuelos")    
-    public ResponseEntity<EntityModel<VueloDTO>> crearVuelo(@Valid @RequestBody CrearVueloForm vueloForm) {
-        //retornar id para el DTO
-    	VueloDTO vueloDTO = vueloService.crearVuelo(vueloForm);
-    	   	
-    	EntityModel<VueloDTO> nuevoVueloEntity = EntityModel.of(vueloDTO)
-												.add(WebMvcLinkBuilder.linkTo(
-								    					methodOn(VueloController.class)
-								    					.getVueloById(vueloDTO.getNroVuelo()))
-														.withSelfRel())
-												.add(AppLinks.showVuelosLink());
-        
-     	
-        return ResponseEntity.ok().body(nuevoVueloEntity);
-    }
+	@PostMapping("/vuelos")    
+	public ResponseEntity</*EntityModel<VueloDTO>*/?> crearVuelo(@Valid @RequestBody CrearVueloForm vueloForm, HttpServletRequest request) {
+	    try {
+	        VueloDTO vueloDTO = vueloService.crearVuelo(vueloForm);
+
+	        EntityModel<VueloDTO> nuevoVueloEntity = EntityModel.of(vueloDTO)
+	                .add(WebMvcLinkBuilder.linkTo(methodOn(VueloController.class).getVueloById(vueloDTO.getNroVuelo()))
+	                        .withSelfRel())
+	                .add(AppLinks.showVuelosLink());
+
+	        return ResponseEntity.ok().body(nuevoVueloEntity);
+	    } catch (VueloException ex) {
+	        
+	    	VueloErrorInfo errorInfo = new VueloErrorInfo(ex.getStatusCode(), ex.getMessage(), request.getRequestURI());
+	        
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInfo);
+	    }
+	}
+
+	
+
+	
+//    @PostMapping("/vuelos")    
+//    public ResponseEntity<EntityModel<VueloDTO>> crearVuelo(@Valid @RequestBody CrearVueloForm vueloForm) throws VueloException {
+//        //retornar id para el DTO
+//    	
+//    	VueloDTO vueloDTO = vueloService.crearVuelo(vueloForm);
+//    	   	
+//    	EntityModel<VueloDTO> nuevoVueloEntity = EntityModel.of(vueloDTO)
+//												.add(WebMvcLinkBuilder.linkTo(
+//								    					methodOn(VueloController.class)
+//								    					.getVueloById(vueloDTO.getNroVuelo()))
+//														.withSelfRel())
+//												.add(AppLinks.showVuelosLink());
+//        
+//     	
+//        return ResponseEntity.ok().body(nuevoVueloEntity);
+//    }
     
     /**
      * Actualizar fecha y hora de vuelo.
@@ -285,17 +313,20 @@ public class VueloController {
      * @param vueloForm del tipo {@link EditarVueloForm} con los datos necesarios para la actualizacion 
      * 
      * @return ResponseEntity<EntityModel<VueloDTO>> con los datos del vuelo actualizados. 
+     * @throws VueloException 
      ***/
     @PatchMapping("/vuelos/{id}")
     public ResponseEntity<EntityModel<VueloDTO>> actualizarFechaHoraVuelo(
             									@PathVariable("id") Long vueloId,
-            									@RequestBody EditarVueloForm vueloForm) {
+            									@RequestBody EditarVueloForm vueloForm) 
+            											throws VueloException {
     	
     	VueloDTO vueloDTO;
     	
     	if (vueloForm.getFechaPartida() == null && vueloForm.getHoraPartida() == null) {
     		
-    		return ResponseEntity.badRequest().build();
+    		throw new VueloException ("Debe ingresar al menos un campo para actualizar ", HttpStatus.BAD_REQUEST.value());
+    		//return ResponseEntity.badRequest().build();
     		
     	} else {
     		
@@ -303,8 +334,10 @@ public class VueloController {
     		
     		if (vueloDTO.getNroVuelo() == null) {
     	    	
-        		return ResponseEntity.notFound().build();
-        	}else {
+    			throw new VueloException("El vuelo con numero: "+ vueloId +" no encontrado", HttpStatus.NOT_FOUND.value());
+        	
+    		}else {
+    			
     			EntityModel<VueloDTO> vueloReprogramadoEntity = EntityModel.of(vueloDTO)
 											    					.add(WebMvcLinkBuilder.linkTo(
 													    					methodOn(VueloController.class)
@@ -326,17 +359,18 @@ public class VueloController {
      *@param id en PathVariable correspondiente al nro_vuelo
      *
      *@return ResponseEntity<EntityModel<VueloDTO>> con los datos del vuelo actualizado y links relacionados. 
+     * @throws VueloException 
      **/
     @DeleteMapping("/vuelos/{id}")
     public ResponseEntity<EntityModel<VueloDTO>> cancelarVuelo(
-            							@PathVariable("id") Long vueloId) {
+            							@PathVariable("id") Long vueloId) throws VueloException {
         
         // Realizar soft delete (cambiar estado a CANCELADO)            
         VueloDTO vueloCanceladoDTO = vueloService.cancelarVuelo(vueloId);
         
         if(vueloCanceladoDTO.getNroVuelo() == null){
         	
-        	return ResponseEntity.notFound().build();
+        	throw new VueloException("El vuelo con numero: "+ vueloId +" no encontrado", HttpStatus.NOT_FOUND.value());
         	
         }else {
         	EntityModel<VueloDTO> vueloCanceladoEntity = EntityModel.of(vueloCanceladoDTO)
