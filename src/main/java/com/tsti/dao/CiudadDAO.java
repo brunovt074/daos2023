@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package tsti.dao;
 
 import java.util.List;

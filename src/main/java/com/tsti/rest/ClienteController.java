@@ -31,14 +31,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
-import tsti.dao.ClienteDAO;
 import tsti.dto.ClienteResponseDTO;
-import tsti.entidades.Ciudad;
 import tsti.entidades.Clientes;
 import tsti.excepcion.Excepcion;
 import tsti.excepcion.MensajeError;
 import tsti.presentacion.ClienteForm;
-import tsti.servicios.ICiudadService;
 import tsti.servicios.IClienteService;
 /**
  * 

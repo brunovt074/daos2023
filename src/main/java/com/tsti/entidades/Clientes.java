@@ -163,8 +163,8 @@ public class Clientes {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFechaNacimiento(LocalDate date) {
+		this.fechaNacimiento = date;
 	}
 
 	public Long getNroPasaporte() {

@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package tsti.dto;
 
 import java.math.BigDecimal;
@@ -8,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import fasterxml.jackson.databind.annotation.JsonSerialize;
 import tsti.entidades.Ciudad;
 import tsti.entidades.Vuelo;
 import tsti.entidades.Vuelo.TipoVuelo;
@@ -23,7 +20,7 @@ public class VueloDTO {
 
 	private Long nroVuelo;
 	private String aerolinea;
-	@JsonSerialize(using = CiudadSerializer.class)
+	
 	private Ciudad destino;
 	private LocalDate fechaPartida;
 	private LocalTime horaPartida;
