@@ -46,7 +46,7 @@ public class ClienteController {
 
 
 	/**
-	 * 
+	 * http://localhost:8081/clientes?=Lopez
 	 * @param apellido
 	 * @param nombre
 	 * @return Lista de clietes que conincidan con el apellido o nombre buscado por parametro
@@ -68,7 +68,7 @@ public class ClienteController {
 	}
 	
 	/**
-	 * 
+	 * http://localhost:8081/clientes/4
 	 * @param id
 	 * @return Devuelve un solo cliente que coicida con el id buscado
 	 * @throws Excepcion
@@ -122,6 +122,7 @@ public class ClienteController {
 	
 	
 	/**
+	 * http://localhost:8081/clientes
 	 * Guarda cliente nuevo en la bd
 	 * @param form
 	 * @param result
@@ -183,6 +184,7 @@ public class ClienteController {
 	
 	
 	/**
+	 * http://localhost:8081/clientes/4567483
 	 * Elimina el cliente que se le pasa por parametro como dni
 	 * @param dni
 	 * @return 
