@@ -82,9 +82,9 @@ public class ClienteForm {
 		c.setDni(this.getDni());
 		c.setApellido(this.getApellido());
 		c.setNombre(this.getNombre());
+		c.setEmail(this.getEmail());
+		c.setFechaNacimiento(this.getFechaNacimiento());
 		c.setNroPasaporte(this.getNroPasaporte());
-		
-		
 		return c;
 	}
 }
