@@ -18,6 +18,10 @@ public interface ClienteDAO extends JpaRepository<Clientes, Long> {
 	Collection<Clientes> findClientesLike(String parte);
 	
 	public List<Clientes> findByApellidoOrNombre(String apellido, String nombre);
+
+	public Optional<Clientes> findByDni(Long dni);
 	
+	@Transactional
+	public void deleteByDni(Long dni);
 	
 }
