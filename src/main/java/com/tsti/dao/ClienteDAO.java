@@ -1,10 +1,10 @@
-package com.tsti.dao;
+package tsti.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
 import jakarta.transaction.Transactional;
-import com.tsti.entidades.Clientes;
+import tsti.entidades.Clientes;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.tsti.dao;
+package tsti.dao;
 
 /**
  * @author Bruno

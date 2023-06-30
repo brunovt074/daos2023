@@ -1,4 +1,4 @@
-package com.tsti.entidades;
+package tsti.entidades;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;

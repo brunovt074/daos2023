@@ -2,7 +2,7 @@ package tsti.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tsti.entidades.Domicilio;
+import tsti.entidades.Domicilio;
 
 /**
  * @author Bruno

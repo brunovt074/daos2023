@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.tsti.dao;
+package tsti.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tsti.entidades.Ciudad;
+import tsti.entidades.Ciudad;
 
 
 /**
