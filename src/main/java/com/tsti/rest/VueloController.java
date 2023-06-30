@@ -1,4 +1,4 @@
-package tsti.rest;
+package com.tsti.rest;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import tsti.dto.VueloDisponibleDTO;
-import tsti.entidades.Vuelo;
-import tsti.entidades.Ciudad;
-import tsti.servicios.VueloServiceImpl;
+import com.tsti.dto.VueloDisponibleDTO;
+import com.tsti.entidades.Vuelo;
+import com.tsti.entidades.Ciudad;
+import com.tsti.servicios.VueloServiceImpl;
 
 
-import tsti.dto.VueloDTO;
+import com.tsti.dto.VueloDTO;
 
-import tsti.entidades.Vuelo.EstadoVuelo;
-import tsti.presentacion.CrearVueloForm;
-import tsti.presentacion.EditarVueloForm;
+import com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.tsti.presentacion.CrearVueloForm;
+import com.tsti.presentacion.EditarVueloForm;
 /**
  *
  *Controlador del Servicio de Gestion de Vuelos

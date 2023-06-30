@@ -1,11 +1,11 @@
 
-package tsti.servicios;
+package com.tsti.servicios;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import tsti.entidades.Ciudad;
+import com.tsti.entidades.Ciudad;
 
 @Service
 public interface ICiudadService {

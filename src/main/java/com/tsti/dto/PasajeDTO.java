@@ -1,11 +1,11 @@
 /**
  * 
  */
-package tsti.dto;
+package com.tsti.dto;
 
 import java.math.BigDecimal;
 
-import tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
 
 /**
  * @author Bruno

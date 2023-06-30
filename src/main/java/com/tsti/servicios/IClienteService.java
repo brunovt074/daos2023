@@ -1,8 +1,8 @@
-package tsti.servicios;
+package com.tsti.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import tsti.entidades.Clientes;
+import com.tsti.entidades.Clientes;
 /**
  * 
  * @author cecilia

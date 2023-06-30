@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.rest;
+package com.tsti.rest;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 

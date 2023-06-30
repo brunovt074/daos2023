@@ -1,4 +1,4 @@
-package tsti.entidades;
+package com.tsti.entidades;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

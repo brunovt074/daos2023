@@ -1,5 +1,5 @@
 
-package tsti.entidades;
+package com.tsti.entidades;
 
 import java.util.Date;
 

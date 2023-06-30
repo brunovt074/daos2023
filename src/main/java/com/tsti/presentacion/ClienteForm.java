@@ -1,8 +1,8 @@
-package tsti.presentacion;
+package com.tsti.presentacion;
 
 import java.util.Date;
 
-import tsti.entidades.Clientes;
+import com.tsti.entidades.Clientes;
 
 import jakarta.validation.constraints.NotNull;
 

@@ -1,14 +1,14 @@
 /**
  * 
  */
-package tsti.servicios;
+package com.tsti.servicios;
 
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 
-import tsti.dto.TasaAeroportuariaDTO;
-import tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.dto.TasaAeroportuariaDTO;
+import com.tsti.entidades.Vuelo.TipoVuelo;
 
 /**
  * @author Bruno

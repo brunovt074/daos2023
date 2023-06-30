@@ -1,12 +1,12 @@
 /**
  * 
  */
-package tsti.serializer;
+package com.tsti.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import tsti.entidades.Ciudad;
+import com.tsti.entidades.Ciudad;
 
 import java.io.IOException;
 

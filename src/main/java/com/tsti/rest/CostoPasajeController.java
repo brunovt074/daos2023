@@ -1,4 +1,4 @@
-package tsti.rest;
+package com.tsti.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import tsti.dto.PasajeDTO;
-import tsti.servicios.VueloServiceImpl;
-import tsti.servicios.PasajeServiceImpl;
+import com.tsti.dto.PasajeDTO;
+import com.tsti.servicios.VueloServiceImpl;
+import com.tsti.servicios.PasajeServiceImpl;
 /**
  * @author Bruno
  *

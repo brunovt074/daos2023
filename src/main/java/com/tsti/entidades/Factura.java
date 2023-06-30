@@ -1,4 +1,4 @@
-package tsti.entidades;
+package com.tsti.entidades;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

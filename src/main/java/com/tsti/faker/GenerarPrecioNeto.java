@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.faker;
+package com.tsti.faker;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

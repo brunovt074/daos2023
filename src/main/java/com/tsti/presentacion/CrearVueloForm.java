@@ -1,14 +1,14 @@
 /**
  * 
  */
-package tsti.presentacion;
+package com.tsti.presentacion;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import tsti.entidades.Vuelo;
+import com.tsti.entidades.Vuelo;
 
 
 import jakarta.validation.constraints.NotNull;

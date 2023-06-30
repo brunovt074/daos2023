@@ -1,4 +1,4 @@
-package tsti.entidades;
+package com.tsti.entidades;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

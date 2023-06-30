@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.excepcion;
+package com.tsti.excepcion;
 
 /**
  * @author Bruno

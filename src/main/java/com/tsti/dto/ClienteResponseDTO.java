@@ -1,4 +1,4 @@
-package tsti.dto;
+package com.tsti.dto;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 import org.hibernate.annotations.FetchProfile.FetchOverride;
 import org.springframework.hateoas.RepresentationModel;
 
-import tsti.entidades.Clientes;
+import com.tsti.entidades.Clientes;
 
 /**
  * 

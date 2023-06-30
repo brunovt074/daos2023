@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tsti.servicios;
+package com.tsti.servicios;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import tsti.dto.CotizacionDolarDTO;
+import com.tsti.dto.CotizacionDolarDTO;
 //import com.tsti.excepcion.CotizacionDolarException;
 
 /**
