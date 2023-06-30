@@ -5,12 +5,14 @@ package com.tsti.servicios;
 
 import java.math.BigDecimal;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.tsti.dto.CotizacionDolarDTO;
-//import com.tsti.excepcion.CotizacionDolarException;
+import com.tsti.excepcion.CostoPasajeException;
 
 /**
  * @author Bruno
@@ -20,17 +22,18 @@ import com.tsti.dto.CotizacionDolarDTO;
 public class CotizacionServiceImpl {
 
 	private static final String URL_COTIZACION_DOLAR = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
-	private final RestTemplate restTemplate;
-	
+	private final RestTemplate restTemplate;	
 	
     public CotizacionServiceImpl() {
 		this.restTemplate = new RestTemplate();        
-    }
-	
+    }	
+    
 	public BigDecimal getCotizacionDolarOficial(){
-					
-		ResponseEntity<CotizacionDolarDTO[]> response = restTemplate.getForEntity(URL_COTIZACION_DOLAR, CotizacionDolarDTO[].class);
 		
+		try {
+			
+			ResponseEntity<CotizacionDolarDTO[]> response = restTemplate.getForEntity(URL_COTIZACION_DOLAR, CotizacionDolarDTO[].class);
+			
 
 			if(response.getStatusCode().is2xxSuccessful()) {
 				
@@ -47,11 +50,16 @@ public class CotizacionServiceImpl {
 							Double.parseDouble(casaDTO.getVenta().replace(",",".")));
 						
 						
+					}
 				}
+					//throw new CostoPasajeException("No se pudo obtener la cotizacion del dolar oficial");	
 			}
-				//throw new CotizacionDolarException("No se pudo obtener la cotizacion del dolar oficial");	
-		}
-			
-		return null;
+		} catch (RestClientException e) {
+            // Error de conexión con la API de cotización
+            throw new CostoPasajeException("Error al obtener la cotización del dólar oficial");
+        }
+		// No se pudo obtener la cotización del dólar oficial
+        throw new CostoPasajeException("No se pudo obtener la cotización del dólar oficial");
 	}
+	
 }

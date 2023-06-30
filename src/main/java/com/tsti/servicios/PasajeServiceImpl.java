@@ -1,7 +1,11 @@
 package com.tsti.servicios;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.tsti.dao.ClienteDAO;
 import com.tsti.dao.PasajeDAO;
@@ -10,7 +14,13 @@ import com.tsti.dto.PasajeDTO;
 import com.tsti.entidades.Clientes;
 import com.tsti.entidades.Pasaje;
 import com.tsti.entidades.Vuelo;
+
 import com.tsti.excepcion.ValidacionFallidaEnPasajeException;
+
+import com.tsti.entidades.Vuelo.EstadoVuelo;
+import com.tsti.entidades.Vuelo.TipoVuelo;
+import com.tsti.excepcion.VueloException;
+
 
 /**
  * @author JOA
@@ -24,9 +34,13 @@ public class PasajeServiceImpl implements IPasajeService {
 
 	@Autowired
 	private VueloDAO vueloDAO;
+	@Autowired
+	private VueloServiceImpl vueloService;
 
-    public PasajeServiceImpl(PasajeDAO pasajeDAO) {
+    public PasajeServiceImpl(PasajeDAO pasajeDAO, VueloDAO vueloDAO, VueloServiceImpl vueloService) {
         this.pasajeDAO = pasajeDAO;
+        this.vueloService= vueloService;
+        this.vueloDAO = vueloDAO;
     }
 	@Override
 	public Pasaje crearPasaje(Vuelo vuelo, Clientes pasajero, Integer nroAsiento) {
@@ -35,6 +49,7 @@ public class PasajeServiceImpl implements IPasajeService {
 		 * DE LLAMARLO, ESTO PARA MANEJO DE ERRORES DE UNA FORMA MAS SENCILLA. :D
 		*/
 		
+
 		//VALIDAMOS QUE EXISTAN EL CLIENTE Y EL VUELO, VIENDO SI ESTAN ALMACENADOS EN LA BASE DE DATOS
 		if (!this.existeCliente(pasajero)) {
 	        throw new ValidacionFallidaEnPasajeException("El cliente con DNI " + pasajero.getDni() + " no existe.");
@@ -75,6 +90,57 @@ public class PasajeServiceImpl implements IPasajeService {
 	    Pasaje pasaje = new Pasaje(vuelo, pasajero, nroAsiento);
 	    
 	    return pasajeDAO.save(pasaje);
+
+	} 
+	
+	public PasajeDTO getCostoPasaje(Long nroVuelo, Long dni) throws VueloException{
+		
+		//Creamos el DTO en base al numero que nos pasaron
+		PasajeDTO pasajeDTO = new PasajeDTO();
+		
+		
+		//chequeamos que el vuelo exista en la BD		
+		Optional<Vuelo> vueloOptional = vueloService.findById(nroVuelo);
+		if(vueloOptional.isPresent()){
+			
+			Vuelo vuelo = vueloOptional.get();
+			
+			if (vuelo.getEstadoVuelo() == EstadoVuelo.CANCELADO) {
+	            
+				throw new VueloException("El vuelo está cancelado, no se puede obtener el costo del pasaje", HttpStatus.BAD_REQUEST.value());
+				
+	        }		
+			TasaServiceImpl tasaService = new TasaServiceImpl();
+			
+			pasajeDTO.setNroVuelo(nroVuelo);
+			pasajeDTO.setDni(dni);
+			//Se obtiene el precio neto del pasajeDTO y se deduce tasa segun tipo de vuelo.
+			BigDecimal precioNeto = vuelo.getPrecioNeto();			
+			BigDecimal tasa = tasaService.getTasa(vuelo.getTipoVuelo());			
+			BigDecimal precioFinal = precioNeto.add(tasa);
+			
+			//Chequeamos tipo de vuelo para realizar cotizacion dado el caso
+			if(vuelo.getTipoVuelo() == TipoVuelo.INTERNACIONAL){
+				
+				CotizacionServiceImpl cotizacionService = new CotizacionServiceImpl();
+				
+				//multiplicamos y redondeamos a un numero de dos cifras despues de la coma
+				precioFinal =  precioFinal.multiply(cotizacionService.getCotizacionDolarOficial())
+														.setScale(2, RoundingMode.HALF_DOWN);			
+				
+			}
+			
+			pasajeDTO = new PasajeDTO(vuelo.getNroVuelo(), dni, precioNeto, tasa, 
+										precioFinal, vuelo.getTipoVuelo());				
+			
+		} else {
+			
+			throw new VueloException("El vuelo con numero: "+ nroVuelo +" no encontrado", HttpStatus.NOT_FOUND.value());        
+
+		}
+		
+		return pasajeDTO;
+
 	}
 	
     public Boolean existeCliente(Clientes cliente) {
@@ -86,9 +152,5 @@ public class PasajeServiceImpl implements IPasajeService {
 	@Override
 	public Optional<Pasaje> findById(Long id){
 		return pasajeDAO.findById(id);
-	}
-	public PasajeDTO getCostoPasaje(Long nroVuelo, Long dni) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 }

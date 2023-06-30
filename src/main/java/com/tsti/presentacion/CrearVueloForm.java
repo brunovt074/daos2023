@@ -8,35 +8,54 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
+
+import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Vuelo;
 
-
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * @author Bruno
  *
  *Clase que representa un formulario de entrada para crear y editar vuelos
  */
+@Validated
 public class CrearVueloForm {
 	
-	// Atributos de vuelo	
+	// Atributos de vuelo
+	//nroVuelo es nulo porque lo asigna la BD de forma autoincremental
 	private Long nroVuelo;
-	@NotNull
+	@NotBlank(message = "El campo aerolinea no puede estar vacio")
 	private String aerolinea;
 	private String avion;
-	@NotNull
+	@NotNull(message = "El campo fecha no puede estar vacio")
+	@FutureOrPresent(message = "Inserte una fecha a partir de hoy en adelante")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate fechaPartida;
-	@NotNull
+	@NotNull(message = "El campo hora no puede estar vacio")
+	@DateTimeFormat
 	private LocalTime horaPartida;
-	@NotNull
-	private int nroFilasAsientos;
-	@NotNull
-	private int nroColumnasAsientos;
-	@NotNull	
+	@NotNull(message = "El número de filas de asientos no puede estar vacío")
+	@Min(value = 1, message = "El número de filas de asientos debe ser mayor a cero")
+	private Integer nroFilasAsientos;
+	@NotNull(message = "El número de columnas de asientos no puede estar vacío")
+	@Min(value = 1, message = "El número de columnas de asientos debe ser mayor a cero")
+	private Integer nroColumnasAsientos;
+	@NotNull (message = "El campo precio no puede estar vacio")
+	@DecimalMin(value = "0.00", inclusive = true, message = "El precio debe ser mayor a 0.00")
+	@Digits(integer = Integer.MAX_VALUE, fraction=2)
 	private BigDecimal precioNeto;
 	
 	//Atributos de ciudad
+	//se buscara idDestino si es nulo se creara la ciudad
 	private Long idDestino; 
 	private String codAeropuerto;
     private String nombreCiudad;
@@ -48,22 +67,49 @@ public class CrearVueloForm {
     public CrearVueloForm() {
 		// TODO Auto-generated constructor stub
 	}
+
+    public Vuelo toPojoNroVuelo(){
+		
+    	Vuelo vuelo = new Vuelo();
+		
+		vuelo.setNroVuelo(this.nroVuelo);
+		
+		return vuelo;
+	}
+    
+    public Vuelo toPojo(){
+		Vuelo vuelo = new Vuelo();
+		
+		vuelo.setNroVuelo(this.nroVuelo);
+		vuelo.setAerolinea(this.getAerolinea());
+		vuelo.setAvion(this.getAvion());
+		vuelo.setFechaPartida(this.getFechaPartida());
+		vuelo.setHoraPartida(this.getHoraPartida());
+		vuelo.setNroFilas(this.getNroFilasAsientos());
+		vuelo.setNroColumnas(this.getNroColumnasAsientos());		
+		vuelo.setTipoVuelo();
+		vuelo.setPrecioNeto(this.getPrecioNeto());
+		
+		return vuelo;
+	}
 	
-	public CrearVueloForm(Vuelo pojo) {
-		super();
-		this.nroVuelo = pojo.getNroVuelo();
-		this.aerolinea = pojo.getAerolinea();
-		this.avion = pojo.getAvion();
-		this.fechaPartida = pojo.getFechaPartida();
-		this.horaPartida = pojo.getHoraPartida();
-		this.nroFilasAsientos = pojo.getNroFilas();
-		this.nroColumnasAsientos = pojo.getNroColumnas();
-		this.idDestino = pojo.getDestino().getId();
-		this.codAeropuerto = pojo.getDestino().getcodAeropuerto();
-		this.nombreCiudad = pojo.getDestino().getNombreCiudad();
-		this.provincia = pojo.getDestino().getProvincia();
-		this.pais = pojo.getDestino().getPais();
-		this.codPostal = pojo.getDestino().getCodPostal();
+	public Vuelo toPojoConCiudad(Ciudad origen, Ciudad destino){
+		Vuelo vuelo = new Vuelo();
+		
+		vuelo.setNroVuelo(this.nroVuelo);
+		vuelo.setAerolinea(this.getAerolinea());
+		vuelo.setAvion(this.getAvion());
+		vuelo.setFechaPartida(this.getFechaPartida());
+		vuelo.setHoraPartida(this.getHoraPartida());
+		vuelo.setNroFilas(this.getNroFilasAsientos());
+		vuelo.setNroColumnas(this.getNroColumnasAsientos());
+		vuelo.setOrigen(origen);
+		vuelo.setDestino(destino);
+		vuelo.setTipoVuelo();
+		vuelo.setPrecioNeto(this.getPrecioNeto());
+		
+		return vuelo;
+
 	}
 
 	public Long getNroVuelo() {
@@ -196,6 +242,7 @@ public class CrearVueloForm {
 	public void setCodPostal(String codPostal) {
 		this.codPostal = codPostal;
 	}
+	
 
 	@Override
 	public int hashCode() {
