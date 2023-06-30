@@ -17,7 +17,8 @@ import jakarta.validation.Validator;
 /**
  * 
  * @author cecilia
- *
+ *@apiNote Implementa los metodos para encontrar todos los clientes - encontrar clientes por id - Actualizar cliente
+ * insertar nuevo cliente- eliminar por dni 
  */
 
 @Service
@@ -31,12 +32,16 @@ public class ClienteServiceImpl implements IClienteService {
 	
 	@Override
 	public List<Clientes> getAll(){
+		
 		return dao.findAll();
 	}
 	
 	public Optional<Clientes> getById(Long id){
-		return dao.findById(id);
+		
+			return dao.findById(id);
 	}
+	
+	
 	
 	@Override
 	public void update(Clientes c) {
@@ -64,6 +69,11 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 	
 	@Override
+	public void deleteByDni(Long dni) {
+		dao.deleteByDni(dni);
+	}
+	
+	@Override
 	public List<Clientes> filtrar(String apellido, String nombre) {
 		if(apellido==null && nombre==null)
 			return dao.findAll();
@@ -72,7 +82,12 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 
 	
-
-
+	@Override
+	public Optional<Clientes> filtrarPorDni(Long dni){
+		
+			return dao.findByDni(dni);
+		
+	};
+	
 	
 }
