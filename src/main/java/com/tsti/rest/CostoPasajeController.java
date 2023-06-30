@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tsti.dto.PasajeDTO;
+import com.tsti.excepcion.VueloException;
 import com.tsti.servicios.VueloServiceImpl;
 import com.tsti.servicios.PasajeServiceImpl;
 /**
@@ -47,11 +48,12 @@ public class CostoPasajeController {
 	 * @return ResponseEntity<EntityModel<PasajeDTO>> con los datos del pasaje actualizado
 	 * agregando la tasa, cotizacion si es internacional y links relacionados. 
 	 * Se asume el resultado siempre en pesos.
+	 * @throws VueloException 
 	 **/
 	@GetMapping("/pasaje/costo")
 	public ResponseEntity<EntityModel<PasajeDTO>> getCostoPasaje
 								(@RequestParam("nro-vuelo") Long nroVuelo, 
-									@RequestParam("dni") Long dni){
+									@RequestParam("dni") Long dni) throws VueloException{
 		
 		if(nroVuelo == null || dni == null ){
 			
