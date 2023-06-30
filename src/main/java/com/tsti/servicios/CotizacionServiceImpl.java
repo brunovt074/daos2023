@@ -22,8 +22,7 @@ import com.tsti.excepcion.CostoPasajeException;
 public class CotizacionServiceImpl {
 
 	private static final String URL_COTIZACION_DOLAR = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
-	private final RestTemplate restTemplate;
-	private HttpStatusCode httpStatusCode;
+	private final RestTemplate restTemplate;	
 	
     public CotizacionServiceImpl() {
 		this.restTemplate = new RestTemplate();        
@@ -32,6 +31,7 @@ public class CotizacionServiceImpl {
 	public BigDecimal getCotizacionDolarOficial(){
 		
 		try {
+			
 			ResponseEntity<CotizacionDolarDTO[]> response = restTemplate.getForEntity(URL_COTIZACION_DOLAR, CotizacionDolarDTO[].class);
 			
 
