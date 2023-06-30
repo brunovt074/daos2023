@@ -3,9 +3,12 @@ package com.tsti.dto;
 import java.math.BigDecimal;
 
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tsti.entidades.Clientes;
+import com.tsti.entidades.Pasaje;
 import com.tsti.entidades.Vuelo;
 import com.tsti.entidades.Vuelo.TipoVuelo;
 import com.tsti.rest.VueloController;
@@ -14,9 +17,14 @@ import com.tsti.rest.VueloController;
  * @author JOA
  *
  */
-public class PasajeDTO {
+public class PasajeDTO extends RepresentationModel<PasajeDTO> {
+	@JsonProperty
+	private Long id;
+	@JsonProperty
 	private Clientes pasajero;
+	@JsonProperty
 	private Vuelo vuelo;
+	@JsonProperty
 	private Long nroVuelo;
 	private Long dni;
     private Integer numeroAsiento;
@@ -29,6 +37,13 @@ public class PasajeDTO {
 	//CONSTRUCTORES
 	public PasajeDTO() {
 		super();
+	}
+	public PasajeDTO(Pasaje p) {
+		super();
+		this.vuelo = p.getVuelo();
+		this.pasajero = p.getPasajero();
+		this.nroVuelo = this.vuelo.getNroVuelo();
+		this.dni = this.pasajero.getDni();
 	}
 	public PasajeDTO(Vuelo vuelo, Clientes pasajero, BigDecimal precio, TipoVuelo tipoVuelo) {
 		super();
@@ -114,4 +129,10 @@ public class PasajeDTO {
         return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(VueloController.class).getVueloById(nroVuelo))
                 .withRel("vuelo");
     }
+	public void setId(Long id) {
+		this.id=id;
+	}
+	public Object getId() {
+		return this.id;
+	}
 } 

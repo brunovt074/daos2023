@@ -9,6 +9,5 @@ import com.tsti.entidades.Vuelo;
 
 public interface IPasajeService {
     Pasaje crearPasaje(Vuelo vuelo, Clientes pasajero);
-    Pasaje consultarPasaje(Long pasajeId);
-	List<Pasaje> obtenerPasajesPorPasajero(Optional<Clientes> pasajero);
+	Optional<Pasaje> findById(Long id);
 }

@@ -1,26 +1,26 @@
-/**
- * 
- */
 package com.tsti.servicios;
 
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tsti.dao.CiudadDAO;
+import com.tsti.entidades.Ciudad;
 
-
-/**
- * @author Bruno
- *
- */
 @Service
-public class CiudadServiceImpl {
-		
-	public CiudadServiceImpl(CiudadDAO ciudadDAO) {
-		
-	}
-	
-	
-	
+public class CiudadServiceImpl implements ICiudadService {
+	@Autowired
+	private CiudadDAO dao;
 
+	@Override
+	public java.util.List<Ciudad> findAll() {
+		return dao.findAll();
+	}
+
+	@Override
+	public Optional<Ciudad> getById(Long id) {
+		return dao.findById(id);
+
+	}
 }

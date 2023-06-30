@@ -66,7 +66,7 @@ public class VueloServiceImpl {
 			
 		}else{
 						
-			destino.setCodAeropuerto(vueloForm.getCodAeropuerto());
+			destino.setcodAeropuerto(vueloForm.getCodAeropuerto());
 			destino.setNombreCiudad(vueloForm.getNombreCiudad());
 			destino.setProvincia(vueloForm.getProvincia());
 			destino.setPais(vueloForm.getPais());
@@ -81,8 +81,8 @@ public class VueloServiceImpl {
 		vuelo.setAvion(vueloForm.getAvion());
 		vuelo.setFechaPartida(vueloForm.getFechaPartida());
 		vuelo.setHoraPartida(vueloForm.getHoraPartida());
-		vuelo.setNroFilasAsientos(vueloForm.getNroFilasAsientos());
-		vuelo.setNroColumnasAsientos(vueloForm.getNroColumnasAsientos());
+		vuelo.setNroFilas(vueloForm.getNroFilasAsientos());
+		vuelo.setNroColumnas(vueloForm.getNroColumnasAsientos());
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();

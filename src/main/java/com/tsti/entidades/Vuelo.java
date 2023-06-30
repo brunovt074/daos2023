@@ -276,6 +276,10 @@ public class Vuelo {
 		Vuelo other = (Vuelo) obj;
 		return Objects.equals(nroVuelo, other.nroVuelo);
 	}
+
+	public Long getId() {
+		return this.id;
+	}
 	
 	
 

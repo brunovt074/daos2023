@@ -1,18 +1,12 @@
-/**
- * 
- */
 package com.tsti.servicios;
 
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
+import com.tsti.entidades.Ciudad;
 
-
-/**
- * @author Bruno
- *
- */
-@Service
 public interface ICiudadService {
-	
+	public java.util.List<Ciudad> findAll();
+
+	public Optional<Ciudad> getById(Long id);
 
 }

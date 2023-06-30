@@ -5,6 +5,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 /**
  * @author JOA
@@ -20,10 +23,12 @@ public class Pasaje {
 	 
     
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "vuelo_id")
     private Vuelo vuelo;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "pasajero_id")
     private Clientes pasajero;
 
@@ -52,10 +57,22 @@ public class Pasaje {
     public Integer getNumeroAsiento() {
         return numeroAsiento;
     }
+	public Clientes getPasajero() {
+		return pasajero;
+	}
+	public Vuelo getVuelo() {
+		return vuelo;
+	}
     
 
     //SETTERS
     public void setNumeroAsiento(Integer numeroAsiento) {
         this.numeroAsiento = numeroAsiento;
     }
+	public void setPasajero(Clientes pasajero) {
+		this.pasajero = pasajero;
+	}
+	public void setVuelo(Vuelo vuelo) {
+		this.vuelo = vuelo;
+	}
 }

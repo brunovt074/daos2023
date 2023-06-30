@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-//@ComponentScan(basePackages = {"com.tsti.faker"})
+@ComponentScan("com.tsti")
+@ComponentScan(basePackages = {"com.tsti.faker"})
 public class Daos2023Application {
 
 	public static void main(String[] args) {

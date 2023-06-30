@@ -4,6 +4,7 @@ package com.tsti.servicios;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tsti.dao.ClienteDAO;
 import com.tsti.dao.PasajeDAO;
@@ -20,7 +21,10 @@ import com.tsti.excepcion.ValidacionFallidaEnPasajeException;
 @Service
 public class PasajeServiceImpl implements IPasajeService {
 	private final PasajeDAO pasajeDAO;
+	@Autowired
 	private ClienteDAO clienteDAO;
+
+	@Autowired
 	private VueloDAO vueloDAO;
 
     public PasajeServiceImpl(PasajeDAO pasajeDAO) {
@@ -38,21 +42,15 @@ public class PasajeServiceImpl implements IPasajeService {
 	    if (!this.existeVuelo(vuelo)) {
 	        throw new ValidacionFallidaEnPasajeException("El vuelo con número " + vuelo.getNroVuelo() + " no existe.");
 	    }
+	    System.out.println(this.existeCliente(pasajero));
+	    System.out.println(this.existeVuelo(vuelo));
 	    
 	    //POSTING
 	    Pasaje pasaje = new Pasaje(vuelo, pasajero);
+	    System.out.println(pasaje.toString());
+	    System.out.println(pasaje.getVuelo().toString());
+		System.out.println(pasaje.getPasajero().toString());
 	    return pasajeDAO.save(pasaje);
-	}
-
-	@Override
-	public Pasaje consultarPasaje(Long pasajeId) {
-		return pasajeDAO.findById(pasajeId)
-                .orElseThrow(() -> new RuntimeException("Pasaje no encontrado"));
-	}
-	
-	@Override
-	public List<Pasaje> obtenerPasajesPorPasajero(Optional<Clientes> pasajero) {
-	    return pasajeDAO.findByPasajero(pasajero);
 	}
 	
     public Boolean existeCliente(Clientes cliente) {
@@ -61,5 +59,11 @@ public class PasajeServiceImpl implements IPasajeService {
     public Boolean existeVuelo(Vuelo vuelo) {
     	return vueloDAO.findById(vuelo.getNroVuelo()).isPresent();
     }
+	@Override
+	public Optional<Pasaje> findById(Long id){
+		
+		return pasajeDAO.findById(id);
+	
+	}
     
 }

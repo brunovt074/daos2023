@@ -7,9 +7,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tsti.dto.ClienteResponseDTO;
+
 import com.tsti.dao.ClienteDAO;
 import com.tsti.entidades.Clientes;
-import com.tsti.entidades.Pasaje;
 import com.tsti.excepcion.Excepcion;
 
 import jakarta.validation.ConstraintViolation;
@@ -32,12 +33,16 @@ public class ClienteServiceImpl implements IClienteService {
 	
 	@Override
 	public List<Clientes> getAll(){
+		
 		return dao.findAll();
 	}
 	
 	public Optional<Clientes> getById(Long id){
-		return dao.findById(id);
+		
+			return dao.findById(id);
 	}
+	
+	
 	
 	@Override
 	public void update(Clientes c) {
@@ -65,10 +70,30 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 	
 	@Override
+	public void deleteByDni(Long dni) {
+		dao.deleteByDni(dni);
+	}
+	
+	@Override
 	public List<Clientes> filtrar(String apellido, String nombre) {
 		if(apellido==null && nombre==null)
 			return dao.findAll();
 		else
 			return dao.findByApellidoOrNombre(apellido, nombre);
 	}
+
+	
+	@Override
+	public Optional<Clientes> filtrarPorDni(Long dni){
+		
+			return dao.findByDni(dni);
+		
+	};
+	
+
+	
+	
+
+
+	
 }

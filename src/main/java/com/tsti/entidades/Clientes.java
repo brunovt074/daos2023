@@ -1,6 +1,9 @@
 package com.tsti.entidades; 
 import java.time.LocalDate;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashSet;
 
 import jakarta.persistence.CascadeType;
@@ -49,7 +52,7 @@ public class Clientes {
 	@Column(name = "exp_pasaporte"/*, unique = true*/)
 	private LocalDate vencimientoPasaporte; // lo mismo que fechaNacimiento	
 	//atributo vuelos tipo HashSet.
-
+	@JsonIgnore
     @OneToMany(mappedBy = "pasajero")
     private Set<Pasaje> pasajes;
 

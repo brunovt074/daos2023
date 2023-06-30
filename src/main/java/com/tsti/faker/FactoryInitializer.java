@@ -15,17 +15,17 @@ import com.tsti.entidades.Vuelo.TipoVuelo;
 @Component
 public class FactoryInitializer {
 
-//    private final CiudadFactory ciudadFactory;
-    //private final ClienteFactory clienteFactory;
-//    private final DomicilioFactory domicilioFactory;
+    private final CiudadFactory ciudadFactory;
+    private final ClienteFactory clienteFactory;
+    private final DomicilioFactory domicilioFactory;
     private final VueloFactory vueloFactory;
     
     public FactoryInitializer(CiudadFactory ciudadFactory,ClienteFactory clienteFactory,
     						DomicilioFactory domicilioFactory, VueloFactory vueloFactory) {
         
-//    	this.ciudadFactory = ciudadFactory;
-        //this.clienteFactory = clienteFactory;
-//        this.domicilioFactory = domicilioFactory;
+    	this.ciudadFactory = ciudadFactory;
+        this.clienteFactory = clienteFactory;
+        this.domicilioFactory = domicilioFactory;
         this.vueloFactory = vueloFactory; 
     }  
     
@@ -33,7 +33,7 @@ public class FactoryInitializer {
     @EventListener(ApplicationReadyEvent.class)
     public void initialize() {
     	    	
-    	//creadorVuelos();
+//    	creadorVuelos();
     	
     }
     
