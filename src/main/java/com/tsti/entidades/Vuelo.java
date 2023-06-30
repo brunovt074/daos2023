@@ -1,13 +1,16 @@
 package tsti.entidades;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -43,8 +46,7 @@ public class Vuelo {
 	private LocalDate fechaPartida;
 	@Column(name = "hora_partida")	
 	@NotNull
-	private LocalTime horaPartida;
-	private Timestamp fechaHoraPartida;
+	private LocalTime horaPartida;	
 	@NotNull	
 	private String aerolinea;
 	private String avion;
@@ -52,21 +54,24 @@ public class Vuelo {
 	private int nroFilas;
 	@Transient
 	private int nroColumnas;
-	@Transient
-	private Clientes plazas[][];
+	//@Transient
+	//private Clientes plazas[][];
 	@Column(name = "nro_asientos")
 	@NotNull
 	private int nroAsientos;	
 	@Column(name = "tipo_vuelo")
 	@NotNull
 	private TipoVuelo tipoVuelo;
+	private BigDecimal precioNeto;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "origen_id")
 	private Ciudad origen;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "destino_id")	
-	private Ciudad destino;//creada la entidad Ciudad	
-	//@ManyToMany(mappedBy = "vuelos") //linkeamos al HashSet vuelos de Clientes	
+	private Ciudad destino;//creada la entidad Ciudad		
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 	    name = "vuelos_pasajeros",
@@ -78,17 +83,7 @@ public class Vuelo {
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   			//Creado tipo ENUM para este caso. 
 	
-	
-	/* 
-	 * El estado es autocalculado por el sistema, no puede ser establecido por
-		el usuario.
-		Una vez registrado, solo se permitirá cambiar la fecha y hora 
-		del mismo(lo cual pasa el vuelo al estado reprogramado) 
-		o eliminar el mismo (lo cual pasa el vuelo al estado cancelado).
-		Tanto la reprogramación como la cancelación de un vuelo dispararía la
-		notificación automática del evento a todos los pasajeros aunque por 
-		simplicidad, no se pide implementar el servicio de alertas.*/
-		
+			
 	//CONSTRUCTOR
 	public Vuelo() {
 		super();
@@ -96,10 +91,14 @@ public class Vuelo {
 	
 	//ENUM para estado de los vuelos. Se puede acceder por getEstadoVuelo(int estadoVuelo)
 	public enum EstadoVuelo {
-		REGISTRADO,
-	    DEMORADO,
-	    CANCELADO,
-	    REPROGRAMADO
+		REGISTRADO(0),
+		REPROGRAMADO(1),
+		DEMORADO(2),
+	    CANCELADO(3);
+
+		EstadoVuelo(int i) {
+			
+		}
 	}
 	
 	//ENUM para tipo de vuelo. Se puede acceder por getTipoVuelo(int tipoVuelo)
@@ -149,27 +148,22 @@ public class Vuelo {
 		this.horaPartida = horaPartida;
 	}
 	
-	public Timestamp getFechaHoraPartida() {
-		return fechaHoraPartida;
-	}
-
-	public void setFechaHoraPartida(Timestamp timestamp) {
-		this.fechaHoraPartida = timestamp;
-	}
-
-
 	public int getNroFilas() {
 		return nroFilas;
 	}
 
 
 	public void setNroFilas(int nroFila) {
+		setNroFilasAsientos(nroFila);
+	}
+
+	public void setNroFilasAsientos(int nroFila) {
 		this.nroFilas = nroFila;
 	}
 
-	public Clientes[][] getPlazas() {
-		return plazas;
-	}	
+//	public Clientes[][] getPlazas() {
+//		return plazas;
+//	}	
 	
 	public void setNroAsientos(int nroFilas, int nroColumnas) {
 		this.nroAsientos = nroFilas * nroColumnas;
@@ -184,12 +178,16 @@ public class Vuelo {
 	}
 
 	public void setNroColumnas(int nroColumnas) {
+		setNroColumnasAsientos(nroColumnas);
+	}
+
+	public void setNroColumnasAsientos(int nroColumnas) {
 		this.nroColumnas = nroColumnas;
 	}
 	
-	public void setPlazas(Clientes[][] plazas) {
-		this.plazas = plazas;
-	}
+//	public void setPlazas(Clientes[][] plazas) {
+//		this.plazas = plazas;
+//	}
 	
 	public TipoVuelo getTipoVuelo() {
 		
@@ -258,13 +256,38 @@ public class Vuelo {
 		
 	}
 
+	public BigDecimal getPrecioNeto() {
+		return precioNeto;
+	}
+
+	public void setPrecioNeto(BigDecimal precioNeto) {
+		this.precioNeto = precioNeto.setScale(2);
+	}
+
 	@Override
 	public String toString() {
-		return "Vuelo [nroVuelo=" + nroVuelo + ", fecha y hora de partida=" + fechaHoraPartida + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
+		return "Vuelo [nroVuelo=" + nroVuelo + ", hora de partida= " + horaPartida + ", nroFila=" + nroFilas
 				+ ", nroColumnas=" + nroColumnas + ", tipo_vuelo=" + tipoVuelo + ", Origen=" + origen + ", Destino="
 				+ destino + ", Estado=" + estadoVuelo + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(nroVuelo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vuelo other = (Vuelo) obj;
+		return Objects.equals(nroVuelo, other.nroVuelo);
+	}
+	
 	
 
 		

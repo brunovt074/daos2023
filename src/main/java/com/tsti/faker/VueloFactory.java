@@ -34,7 +34,6 @@ public class VueloFactory {
 	private Faker faker;	
 	private CiudadFactory ciudadFactory;
 	private ClienteFactory clienteFactory;
-	//private DomicilioFactory domicilioFactory;
 	private Ciudad origen;
 	private Ciudad destino;
 	
@@ -49,48 +48,62 @@ public class VueloFactory {
 	//private EstadoVuelo estadoVuelo;
 	//private TipoVuelo tipoVuelo;
 	
-	
+	@Autowired
 	public VueloFactory() {
 		this.faker = new Faker(new Locale("es") );
 		this.ciudadFactory = new CiudadFactory();
 		this.clienteFactory = new ClienteFactory();
-		//this.domicilioFactory = new DomicilioFactory();
+		
 	}
 	
+	public void crearVueloPorDTO(){
+		
+	}	
+	
 	public void crearVueloOrigenLocal(int nroPasajeros, EstadoVuelo estadoVuelo, TipoVuelo tipoVuelo) {
+		Vuelo vuelo = new Vuelo();			
 		
-		//this.estadoVuelo  = estadoVuelo;  
-		//this.tipoVuelo = tipoVuelo;		
-		
-		if(tipoVuelo.equals(TipoVuelo.NACIONAL)) {
+		if(!ciudadDAO.existsByCodAeropuerto("SAAV")){
 			origen = ciudadFactory.getCiudadSauceViejo();
-			destino = ciudadFactory.getCiudadArgentina();
 		
 		}else {
-			origen = ciudadFactory.getCiudadSauceViejo();
+			
+			origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
+					
+		}
+		
+		if(tipoVuelo.equals(TipoVuelo.NACIONAL)) {
+						
+			destino = ciudadFactory.getCiudadArgentina();
+			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoPesos());
+		
+		}else {
 			destino = ciudadFactory.getCiudadAleatoria();
+			vuelo.setPrecioNeto(GenerarPrecioNeto.generarPrecioNetoDolares());
 		}
 		
 		ciudadDAO.save(origen);
 		ciudadDAO.save(destino);
 		
-		Vuelo vuelo = new Vuelo();
+		
 		
 		//Metodo mejorado para obtener fecha y hora en un array y evitar repetir codigo.
-		Object[] fechaHoraPartida = fechaHora();
+		//1er parametro dias de partida hacia adelante, 2do: horas +
+		Object[] fechaHoraPartida = fechaHora(10,24);
 				
 		vuelo.setAerolinea(faker.aviation().airline());
 		vuelo.setAvion(faker.aviation().airplane());
-		vuelo.setNroFilas(6);
-		vuelo.setNroColumnas(15);
-		Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
-		vuelo.setPlazas(plazas); 
+		vuelo.setNroFilasAsientos(6);
+		vuelo.setNroColumnasAsientos(15);
+		//Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
+		//vuelo.setPlazas(plazas); 
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
 		vuelo.setEstadoVuelo(estadoVuelo);
 		vuelo.setFechaPartida((LocalDate) fechaHoraPartida[0]);
 		vuelo.setHoraPartida((LocalTime) fechaHoraPartida[1]);
+		
 		
 		cargarPasajeros(vuelo, clienteDAO, ciudadDAO, domicilioDAO, nroPasajeros);
 		
@@ -101,15 +114,15 @@ public class VueloFactory {
 	}
 	
 
-	private Object[] fechaHora() {
+	private Object[] fechaHora(int diasFechaPartida, int horasPartida) {
 		
 		Object[] fechaHoraPartida = new Object[2];		
 		
 		//Obtener fecha.
-		LocalDateTime fechaPartidaTimestamp = (faker.date().future(60,0,TimeUnit.DAYS)).toLocalDateTime();
+		LocalDateTime fechaPartidaTimestamp = (faker.date().future(diasFechaPartida,0,TimeUnit.DAYS)).toLocalDateTime();
 		LocalDate fechaPartida = fechaPartidaTimestamp.toLocalDate();
 		//Obtener hora.
-		LocalDateTime horaPartidaTimestamp = (faker.date().future(12,0,TimeUnit.HOURS)).toLocalDateTime();
+		LocalDateTime horaPartidaTimestamp = (faker.date().future(horasPartida,0,TimeUnit.HOURS)).toLocalDateTime();
 		LocalTime horaPartida = horaPartidaTimestamp.toLocalTime().truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
 		
 		fechaHoraPartida[0] = fechaPartida; //Elemento de tipo LocalDate
@@ -124,15 +137,27 @@ public class VueloFactory {
 				
 		if(nroPasajeros <= asientosDisponibles) {
 			
-			for (int i = 0; i < nroPasajeros; i++) {
-				Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
-				vuelo.addPasajero(pasajero);
-				asientosDisponibles--;
-				
-				System.out.println(pasajero.toString());
-				System.out.println(vuelo.getPasajeros().toString());
-				System.out.println(vuelo.toString());		
-			}		
+			if(vuelo.getTipoVuelo().equals(TipoVuelo.NACIONAL)) {
+				for (int i = 0; i < nroPasajeros; i++) {
+					Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
+					vuelo.addPasajero(pasajero);
+					asientosDisponibles--;
+					
+					System.out.println(pasajero.toString());
+					System.out.println(vuelo.getPasajeros().toString());
+					System.out.println(vuelo.toString());		
+				}
+			}else{
+				for (int i = 0; i < nroPasajeros; i++) {
+					Clientes pasajero = clienteFactory.getUnPasajeroInternacional(ciudadDAO, domicilioDAO);
+					vuelo.addPasajero(pasajero);
+					asientosDisponibles--;
+					
+					System.out.println(pasajero.toString());
+					System.out.println(vuelo.getPasajeros().toString());
+					System.out.println(vuelo.toString());	
+				}
+			}
 						
 		}		
 		
