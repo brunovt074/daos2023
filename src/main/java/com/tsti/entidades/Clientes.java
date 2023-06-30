@@ -20,12 +20,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 /**
- *
- * @author cecilia Establece/Actualiza/Retorna los datos de cliente
- * 
- *         LAS RESTRICCIONES UNIQUE ESTAN DESACTIVADAS PARA FACILITAR LA
- *         POBLACION DE LA BD CON FAKER.
- */
+*
+* @author cecilia Establece/Actualiza/Retorna los datos de cliente
+* 
+*         LAS RESTRICCIONES UNIQUE ESTAN DESACTIVADAS PARA FACILITAR LA
+*         POBLACION DE LA BD CON FAKER.
+*@author cecilia retorna un cliente por Id, Dni, apellido y/o por nombre. 
+*/
 @Entity
 public class Clientes {
 	
