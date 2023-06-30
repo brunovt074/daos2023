@@ -32,12 +32,7 @@ public class CostoPasajeController {
 		this.pasajeService = pasajeService;		
 		
 	}
-	
-	/* *
-	 * 
-	 * 
-	 * 
-	 * */
+		
 	/**
 	 * Obtiene el costo neto del pasaje, le suma la tasa y añade la cotizacion
 	 * del dolar si es un vuelo internacional.
@@ -77,11 +72,7 @@ public class CostoPasajeController {
 			
 			return ResponseEntity.notFound().build();
 			
-		}
-		
-			
-			
-			
+		}			
 		
 	}
 }
