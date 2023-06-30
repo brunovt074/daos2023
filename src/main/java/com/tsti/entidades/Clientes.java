@@ -6,6 +6,11 @@ import java.util.Date;
 import java.time.LocalDate;
 
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.HashSet;
 
 import jakarta.persistence.CascadeType;
@@ -16,6 +21,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
@@ -55,8 +61,9 @@ public class Clientes {
 	@Column(name = "exp_pasaporte"/* , unique = true */)
 	private LocalDate vencimientoPasaporte; // lo mismo que fechaNacimiento
 	// atributo vuelos tipo HashSet.
-	@ManyToMany(mappedBy = "pasajeros")
-	private Set<Vuelo> vuelos = new HashSet<>();
+	@JsonManagedReference
+    @OneToMany(mappedBy = "pasajero")
+    private Set<Pasaje> pasajes;
 
 	// CONSTRUCTOR
 	public Clientes() {
@@ -120,15 +127,14 @@ public class Clientes {
 		this.vencimientoPasaporte = vencimientoPasaporte;
 	}
 
-	public void addVuelo(Vuelo vuelo) {
-		vuelos.add(vuelo);
-		vuelo.getPasajeros().add(this);
-	}
-
-	public void removeVuelo(Vuelo vuelo) {
-		vuelos.remove(vuelo);
-		vuelo.getPasajeros().remove(this);
-	}
+	public void addVuelo(Pasaje vuelo) {
+        pasajes.add(vuelo);
+//        vuelo.getPasajeros().add(this);
+    }
+	public void removeVuelo(Pasaje vuelo) {
+        pasajes.remove(vuelo);
+//        pasajes.getPasajeros().remove(this);
+    }
 
 	@Override
 	public String toString() {
@@ -150,12 +156,12 @@ public class Clientes {
 	 * esPrimerVuelo; }
 	 */
 
-	public Set<Vuelo> getVuelos() {
-		return vuelos;
+	public Set<Pasaje> getVuelos() {
+		return pasajes;
 	}
 
-	public void setVuelos(HashSet<Vuelo> vuelos) {
-		this.vuelos = vuelos;
+	public void setVuelos(HashSet<Pasaje> pasajes) {
+		this.pasajes =pasajes;
 	}
 
 	public String getEmail() {
@@ -180,7 +186,18 @@ public class Clientes {
 	public void setNroPasaporte(Long nroPasaporte) {
 		this.nroPasaporte = nroPasaporte;
 	}
+	public boolean tieneDatosBasicos() {
+		return(
+				this.apellido != null &&
+				this.fechaNacimiento != null &&
+				this.dni != null &&
+				this.domicilio != null &&
+				this.nombre != null &&
+				this.tel != null
+			);
+	}
 
-	
-
+	public boolean tienePasaporte() {
+		return this.nroPasaporte != null;
+	}
 }

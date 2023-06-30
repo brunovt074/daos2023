@@ -59,7 +59,7 @@ public class CrearVueloForm {
 		this.nroFilasAsientos = pojo.getNroFilas();
 		this.nroColumnasAsientos = pojo.getNroColumnas();
 		this.idDestino = pojo.getDestino().getId();
-		this.codAeropuerto = pojo.getDestino().getCodAeropuerto();
+		this.codAeropuerto = pojo.getDestino().getcodAeropuerto();
 		this.nombreCiudad = pojo.getDestino().getNombreCiudad();
 		this.provincia = pojo.getDestino().getProvincia();
 		this.pais = pojo.getDestino().getPais();

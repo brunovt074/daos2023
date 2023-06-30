@@ -49,7 +49,6 @@ public class CostoPasajeController {
 													.add(AppLinks.getLinksCostoPasaje(nroVuelo, dni))
 													.add(AppLinks.getVueloPorId(nroVuelo))
 													.add(AppLinks.showVuelosLink());														
-					
 		
 			return ResponseEntity.ok(pasajeEntityModel);			
 		
@@ -57,12 +56,7 @@ public class CostoPasajeController {
 			
 			return ResponseEntity.notFound().build();
 			
-		}
-		
-			
-			
-			
-		
+		}	
 	}
 }
 
