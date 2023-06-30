@@ -1,11 +1,6 @@
 package com.tsti.dto;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import com.tsti.servicios.TasaServiceImpl;
-import com.tsti.entidades.Vuelo.TipoVuelo;
-import com.tsti.servicios.CotizacionServiceImpl;
 
 /**
  * @author JOA
@@ -17,7 +12,6 @@ public class PasajeResDTO {
     private VueloDTO vuelo;
     private Integer numeroAsiento;
     private BigDecimal costo;
-    private TasaServiceImpl tasaService;
     
     //CONSTRUCTORES
     public PasajeResDTO() {
@@ -28,11 +22,9 @@ public class PasajeResDTO {
         this.cliente = cliente;
         this.vuelo = vuelo;
         this.numeroAsiento = numeroAsiento;
-        this.tasaService = new TasaServiceImpl();
         this.costo = vuelo.getPrecioNeto();
     }
 
-    
     //GETTERS
     public Long getId() {
         return id;
@@ -62,18 +54,5 @@ public class PasajeResDTO {
     }
     public void setNumeroAsiento(Integer numeroAsiento) {
 		this.numeroAsiento = numeroAsiento;
-    }
-    
-    //OTROS METODOS
-    public BigDecimal setCosto() {
-    	BigDecimal precioNeto = vuelo.getPrecioNeto();			
-		BigDecimal tasa = tasaService.getTasa(vuelo.getTipoVuelo());			
-		BigDecimal precioFinal = precioNeto.add(tasa);
-		if(vuelo.getTipoVuelo() == TipoVuelo.INTERNACIONAL){
-			
-			CotizacionServiceImpl cotizacionService = new CotizacionServiceImpl();
-			precioFinal =  precioFinal.multiply(cotizacionService.getCotizacionDolarOficial()).setScale(2, RoundingMode.HALF_DOWN);			
-		}
-    	return null;
     }
 }
