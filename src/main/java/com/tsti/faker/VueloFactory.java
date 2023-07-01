@@ -49,11 +49,11 @@ public class VueloFactory {
 	//private TipoVuelo tipoVuelo;
 	
 	@Autowired
-	public VueloFactory() {
+	public VueloFactory(CiudadDAO ciudadDAO) {
 		this.faker = new Faker(new Locale("es") );
 		this.ciudadFactory = new CiudadFactory();
 		this.clienteFactory = new ClienteFactory();
-		
+		this.ciudadDAO = ciudadDAO;
 	}
 	
 	public void crearVueloPorDTO(){
@@ -68,7 +68,7 @@ public class VueloFactory {
 		
 		}else {
 			
-			origen = ciudadDAO.findByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
+			origen = ciudadDAO.findFirstByCodAeropuertoAndNombreCiudad("SAAV", "Sauce Viejo");
 					
 		}
 		
@@ -139,22 +139,24 @@ public class VueloFactory {
 			
 			if(vuelo.getTipoVuelo().equals(TipoVuelo.NACIONAL)) {
 				for (int i = 0; i < nroPasajeros; i++) {
-					Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
+					//Pasaje pasaje = new Pasaje();
+					
+					//Clientes pasajero = clienteFactory.getUnPasajeroNacional(ciudadDAO, domicilioDAO);
 //					vuelo.addPasajero(pasajero);
 					asientosDisponibles--;
 					
-					System.out.println(pasajero.toString());
-					System.out.println(vuelo.getPasajeros().toString());
+					//System.out.println(pasajero.toString());
+					//System.out.println(vuelo.getPasajeros().toString());
 					System.out.println(vuelo.toString());		
 				}
 			}else{
 				for (int i = 0; i < nroPasajeros; i++) {
-					Clientes pasajero = clienteFactory.getUnPasajeroInternacional(ciudadDAO, domicilioDAO);
+					//Clientes pasajero = clienteFactory.getUnPasajeroInternacional(ciudadDAO, domicilioDAO);
 //					vuelo.addPasajero(pasajero);
 					asientosDisponibles--;
 					
-					System.out.println(pasajero.toString());
-					System.out.println(vuelo.getPasajeros().toString());
+					//System.out.println(pasajero.toString());
+					//System.out.println(vuelo.getPasajeros().toString());
 					System.out.println(vuelo.toString());	
 				}
 			}

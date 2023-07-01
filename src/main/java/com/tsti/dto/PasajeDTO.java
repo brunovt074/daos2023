@@ -2,6 +2,8 @@ package com.tsti.dto;
 
 import java.math.BigDecimal;
 import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tsti.entidades.Clientes;
 import com.tsti.entidades.Pasaje;
@@ -16,9 +18,12 @@ public class PasajeDTO extends RepresentationModel<PasajeDTO> {
 	@JsonProperty
 	private Long id;
 	@JsonProperty
+	@JsonIgnore
 	private Clientes pasajero;
+	@JsonIgnore
 	@JsonProperty
 	private Vuelo vuelo;
+	@JsonIgnore
 	@JsonProperty
 	private Long nroVuelo;
 	private Long dni;

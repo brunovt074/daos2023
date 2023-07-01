@@ -169,6 +169,7 @@ public class VueloController {
     }    
     /**
      * Obtener vuelo por ID
+     * curl --location 'http://localhost:8081/vuelos/2'
      * 
      * @param id con nro_vuelo de tipo {@link Long}
      * @param request 

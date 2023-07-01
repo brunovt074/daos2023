@@ -75,7 +75,7 @@ public class Vuelo {
 	@JoinColumn(name = "destino_id")	
 	private Ciudad destino;//creada la entidad Ciudad		
 	@JsonIgnore
-	 @OneToMany(mappedBy = "vuelo")
+	@OneToMany(mappedBy = "vuelo")
     private Set<Pasaje> pasajes;
 
 	@NotNull
