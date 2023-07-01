@@ -2,13 +2,17 @@ package com.tsti.dto;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author JOA
  *
  */
 public class PasajeResDTO {
     private Long id;
+    @JsonIgnore
     private ClienteResponseDTO cliente;
+    @JsonIgnore
     private VueloDTO vuelo;
     private Integer numeroAsiento;
     private BigDecimal costo;
