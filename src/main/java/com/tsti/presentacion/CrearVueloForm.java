@@ -72,7 +72,7 @@ public class CrearVueloForm {
 		
     	Vuelo vuelo = new Vuelo();
 		
-		vuelo.setNroVuelo(this.nroVuelo);
+		vuelo.setNroVuelo();
 		
 		return vuelo;
 	}
@@ -80,7 +80,7 @@ public class CrearVueloForm {
     public Vuelo toPojo(){
 		Vuelo vuelo = new Vuelo();
 		
-		vuelo.setNroVuelo(this.nroVuelo);
+		vuelo.setNroVuelo();
 		vuelo.setAerolinea(this.getAerolinea());
 		vuelo.setAvion(this.getAvion());
 		vuelo.setFechaPartida(this.getFechaPartida());
@@ -96,7 +96,7 @@ public class CrearVueloForm {
 	public Vuelo toPojoConCiudad(Ciudad origen, Ciudad destino){
 		Vuelo vuelo = new Vuelo();
 		
-		vuelo.setNroVuelo(this.nroVuelo);
+		vuelo.setNroVuelo();
 		vuelo.setAerolinea(this.getAerolinea());
 		vuelo.setAvion(this.getAvion());
 		vuelo.setFechaPartida(this.getFechaPartida());
