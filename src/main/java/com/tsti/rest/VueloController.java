@@ -212,7 +212,12 @@ public class VueloController {
 
     
     /**
-     *Obtener vuelos por destino y fecha. 
+     *Obtener vuelos por destino y fecha.
+     *curl --location --request GET 'http://localhost:8081/vuelos/filtrar-destino-fecha?destino=mendoza&fecha=2023-07-10' \
+		--header 'Content-Type: text/plain' \
+		--data '
+		'
+     * 
      *Considerando que es una consulta frecuente obtiene todos los vuelos 
      *que coincidan con los parametros
      *
@@ -245,6 +250,8 @@ public class VueloController {
     /**
      *Obtener vuelos por destino. 
      *
+     *curl --location 'http://localhost:8081/vuelos/filtrar-por-destino?destino=buenos%20aires'
+     *
      *@param destino de tipo {@link String} correspondiente al nombre_ciudad de destino     
      *
      *@return Response Entity con CollectionModel<VueloDTO> de todos los vuelos que satisfacen los parametros.
@@ -270,6 +277,8 @@ public class VueloController {
     
     /**
      *Obtener vuelos fecha. 
+     *curl --location 'http://localhost:8081/vuelos/filtrar-por-fecha?fecha=2023-07-15' \
+		--data ''
      *
      *@param fecha de tipo {@link LocalDate}correspondiente a fecha de partida en formato (yyyy-MM-dd)
      *
@@ -296,7 +305,24 @@ public class VueloController {
     }
 	
     /**
-     *Crear un vuelo. 
+     *Crear un vuelo.
+     *
+     * curl --location 'http://localhost:8081/vuelos/estado-vuelo?estado=demorado' \
+		--header 'Content-Type: application/json' \
+		--data '{
+		  "aerolinea": "Lufthansa",
+		  "avion": "Airbus A380",
+		  "fechaPartida": "2023-07-15",
+		  "horaPartida": "11:30",
+		  "nroFilasAsientos": "6",
+		  "nroColumnasAsientos": "12",
+		  "precioNeto": "5321",
+		  "codAeropuerto": "FRA",
+		  "nombreCiudad": "Berlin",
+		  "provincia": "Berlin",
+		  "pais": "Alemania",
+		  "codPostal": "60311"
+		}
      *Recibe un formulario con todos los datos necesarios. 
      *La ciudad de origen se setea como Sauce Viejo por defecto. 
      *La ciudad de destino se busca en la BD 
@@ -329,6 +355,13 @@ public class VueloController {
     
     /**
      * Actualizar fecha y hora de vuelo.
+     * 
+     * curl --location --request PATCH 'http://localhost:8081/vuelos/11' \
+		--header 'Content-Type: application/json' \
+		--data '{
+		    "fechaPartida": "2023-07-15",
+		    "horaPartida": "12:45"
+}'
      * Se recibe un formulario con la fecha, hora de vuelo o ambas.
      * 
      * @param id como PathVariable correspondiente al nroVuelo de tipo {@link Long}
@@ -376,7 +409,7 @@ public class VueloController {
     /**
      *Cancelar vuelo.
      *
-     *curl --location 'http://localhost:8081/vuelos/23'
+     *curl --location --request DELETE 'http://localhost:8081/vuelos/2'
      *
      *Consiste en realizar un soft delete cambiando el estado del vuelo a {@link EstadoVuelo.CANCELADO}
      *y colocando el atributo {@link BigDecimal} precioNeto = 0.00

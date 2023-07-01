@@ -1,4 +1,4 @@
-
+//
 ///*
 // * ESTA CLASE ESTA CREADA PARA INICIALIZAR EL CIUDAD FACTORY AL PRINCIPIO DE
 // * LA APP Y ASI PODER POBLAR LA BD PARA ENTORNO DE DESARROLLO.
@@ -41,13 +41,13 @@
 //    @EventListener(ApplicationReadyEvent.class)
 //    public void initialize() {
 //    	
-////    	Ciudad nuevaCiudad = new Ciudad();
-////    	nuevaCiudad.setcodAeropuerto("SAAV");
-////		nuevaCiudad.setNombreCiudad("Sauce Viejo");
-////		nuevaCiudad.setProvincia("Santa Fe");
-////		nuevaCiudad.setCodPostal("S3017");
-////		nuevaCiudad.setPais("Argentina");
-////		ciudadDAO.save(nuevaCiudad);
+//    	Ciudad nuevaCiudad = new Ciudad();
+//    	nuevaCiudad.setcodAeropuerto("SAAV");
+//		nuevaCiudad.setNombreCiudad("Sauce Viejo");
+//		nuevaCiudad.setProvincia("Santa Fe");
+//		nuevaCiudad.setCodPostal("S3017");
+//		nuevaCiudad.setPais("Argentina");
+//		ciudadDAO.save(nuevaCiudad);
 //		
 //    	//ciudadFactory.getCiudadSauceViejo();
 //    	//creadorVuelos();
@@ -131,9 +131,9 @@
 //    	
 //    	//creando ciudades
 //    	//ciudadFactory.crearCiudadArgentina();
-//    	ciudadFactory.crearCiudadesArgentina();
+//    	//ciudadFactory.crearCiudadesArgentina();
 //        //ciudadFactory.crearCiudadAleatoria();
-//        ciudadFactory.crearCiudadesAleatoria();
+//        //ciudadFactory.crearCiudadesAleatoria();
 //    }
 //    
 //    private void crearClientes() {

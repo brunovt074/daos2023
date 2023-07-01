@@ -37,7 +37,11 @@ public class CostoPasajeController {
 	 * Obtiene el costo neto del pasaje, le suma la tasa y añade la cotizacion
 	 * del dolar si es un vuelo internacional.
 	 *
-	 *	@param nroVuelo tipo {@link Long}  
+	 *Debe crearse el pasaje primero!
+	 *curl --location 'http://localhost:8081/pasaje/costo?nro-vuelo=1&dni=31637426'
+	 *	
+	 *
+	 *@param nroVuelo tipo {@link Long}  
 	 *	@param dni de tipo {@link Long}
 	 *
 	 * @return ResponseEntity<EntityModel<PasajeDTO>> con los datos del pasaje actualizado

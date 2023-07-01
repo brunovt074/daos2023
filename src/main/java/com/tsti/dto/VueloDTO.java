@@ -42,7 +42,7 @@ public class VueloDTO {
 	
 	public VueloDTO(Vuelo pojo) {
 		super();
-		this.nroVuelo = pojo.getNroVuelo();
+		this.nroVuelo = pojo.getId();
 		this.aerolinea = pojo.getAerolinea();
 		this.destino = pojo.getDestino();
 		this.fechaPartida = pojo.getFechaPartida();

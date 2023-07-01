@@ -138,7 +138,7 @@ public class VueloServiceImpl implements IVueloService{
 				
 		vueloDTO = new VueloDTO(vuelo);
 		
-		vueloDTO.setNroVuelo(vuelo.getNroVuelo());
+		vueloDTO.setNroVuelo(vuelo.getId());
 		
 		return vueloDTO;
 				

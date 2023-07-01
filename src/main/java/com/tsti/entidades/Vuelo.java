@@ -39,7 +39,7 @@ public class Vuelo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "nro_vuelo")		
+	@Column(name = "nro_vuelo")
 	private Long nroVuelo;
 	//Se opto por separar fechas y horas para poder buscar los vuelos 
 	//por fechas y tratar de simplificar el manejo de las mismas.
@@ -112,8 +112,8 @@ public class Vuelo {
 		return nroVuelo;
 	}
 	
-	public void setNroVuelo(Long nroVuelo) {
-		this.nroVuelo = nroVuelo;
+	public void setNroVuelo() {
+		this.nroVuelo = this.getId();
 	}
 	
 	public String getAerolinea() {
