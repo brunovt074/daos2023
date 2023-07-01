@@ -40,7 +40,9 @@ public class PasajeController {
     public PasajeController(PasajeServiceImpl pasajeServiceImpl) {
         this.pasajeServiceImpl = pasajeServiceImpl;
     }
-     
+    
+    //    RECIBE UN FORMULARIO CON LOS DATOS NECESARIOS, GENERA EL PASAJE Y RETORNA UN MENSAJE CON LOS DATOS
+    //	  LA URL ES 'http://localhost:8081/pasajes' SE DEBE USAR POST
     @PostMapping("/pasajes")
     public ResponseEntity<?> crearPasaje(@Valid @RequestBody PasajeForm pasajeForm) {
         try {
@@ -55,7 +57,7 @@ public class PasajeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
-    
+    //curl --location --request GET 'http://localhost:8081/pasajes/1' 
     @GetMapping("/pasajes/{id}")
     public ResponseEntity<EntityModel<PasajeResDTO>> getPasajeById(@PathVariable Long id) {
         try {
