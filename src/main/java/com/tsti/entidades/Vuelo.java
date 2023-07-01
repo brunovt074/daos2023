@@ -112,8 +112,8 @@ public class Vuelo {
 		return nroVuelo;
 	}
 	
-	public void setNroVuelo() {
-		this.nroVuelo = this.getId();
+	public void setNroVuelo(Long l) {
+		this.nroVuelo = l;
 	}
 	
 	public String getAerolinea() {
