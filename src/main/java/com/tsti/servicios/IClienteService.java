@@ -2,6 +2,9 @@ package com.tsti.servicios;
 import java.util.List;
 import java.util.Optional;
 
+import com.tsti.dto.ClienteResponseDTO;
+
+import com.tsti.dao.ClienteDAO;
 import com.tsti.entidades.Clientes;
 /**
  * 
@@ -26,4 +29,5 @@ public interface IClienteService {
 	public List<Clientes> filtrar(String apellido, String nombre);
 	
 	public Optional<Clientes> filtrarPorDni(Long dni);
+
 }

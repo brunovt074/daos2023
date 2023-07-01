@@ -12,6 +12,8 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
+import com.tsti.excepcion.VueloException;
+
 import io.micrometer.common.lang.Nullable;
 
 /**
@@ -25,7 +27,7 @@ public class AppLinks {
 	
 		
 	public static List<Link> getLinksCostoPasaje(Long nro_vuelo,
-														Long dni){
+														Long dni) throws VueloException{
 		List <Link> links = new ArrayList<>();
 		
 		Link linkCostoPasaje= WebMvcLinkBuilder.linkTo(
@@ -138,7 +140,7 @@ public class AppLinks {
     
     public static Link getVueloPorId(Long nroVuelo){
     	Link link = WebMvcLinkBuilder.linkTo(methodOn(VueloController.class)
-									.getVueloById(nroVuelo))
+									.getVueloById(nroVuelo, null))
     								.withRel("nro-vuelo");
     	return link ; 
     }

@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
+
 import com.tsti.dto.ClienteResponseDTO;
 import com.tsti.entidades.Ciudad;
 import com.tsti.entidades.Clientes;
@@ -66,13 +69,13 @@ public class ClienteController {
 		return dtos;
 
 	}
-	
 	/**
 	 * http://localhost:8081/clientes/4
 	 * @param id
 	 * @return Devuelve un solo cliente que coicida con el id buscado
 	 * @throws Excepcion
 	 */
+
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getById(@PathVariable Long id) throws Excepcion
 	{
@@ -100,6 +103,7 @@ public class ClienteController {
 	 * @return Busca cliente por numero de dni  
 	 * @throws Excepcion
 	 */
+
 	@GetMapping(value = "/dni/{dni}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getByDni(@PathVariable("dni") Long dni) throws Excepcion
 	{
@@ -144,6 +148,7 @@ public class ClienteController {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dni}")
 				.buildAndExpand(c.getDni()).toUri(); 
 		return ResponseEntity.created(location).build();
+
 		
 
 	}
@@ -155,6 +160,7 @@ public class ClienteController {
 	 * @return Un cliente con los datos actualizados 
 	 * @throws Exception
 	 */
+
 	@PutMapping("/{dni}")
 	public ResponseEntity<Object>  actualizar(@RequestBody ClienteForm form, @PathVariable long dni) throws Exception
 	{
@@ -182,7 +188,6 @@ public class ClienteController {
 		
 	}
 	
-	
 	/**
 	 * http://localhost:8081/clientes/4567483
 	 * Elimina el cliente que se le pasa por parametro como dni
@@ -209,8 +214,6 @@ public class ClienteController {
 		return ResponseEntity.ok().build();
 		
 	}
-	
-	
 	private String getError(String code, String err, String descr) throws JsonProcessingException
 	{
 		MensajeError e1=new MensajeError();
@@ -259,6 +262,4 @@ public class ClienteController {
 			throw new Excepcion(e.getMessage(), 500);
 		}
 	}
-	
-	
 }

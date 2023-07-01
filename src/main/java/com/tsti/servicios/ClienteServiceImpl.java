@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.tsti.dao.ClienteDAO;
 import com.tsti.entidades.Clientes;
 import com.tsti.excepcion.Excepcion;
@@ -84,6 +85,4 @@ public class ClienteServiceImpl implements IClienteService {
 			return dao.findByDni(dni);
 		
 	};
-	
-	
 }
