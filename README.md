@@ -1,8 +1,9 @@
 # TRABAJO PRACTICO Aplicacion para Gestión de aeropuertos daos2023
-##Integrantes:
+## Integrantes:
 - Courault, Joaquín
 - Lorenzini, Cecilia
 - Vargas Tettamanti, Bruno
+
 
 ## Configuracion de archivo application.properties con informacion de conexion y BD MySQL
 
@@ -15,8 +16,11 @@ spring.datasource.url=jdbc:mysql://localhost:3306/daos2023?serverTimezone=UTC
 spring.datasource.username=root
 spring.datasource.password=9844`
 
+## Los ejemplos de uso curl se encuentran documentados con comentarios en los metodos de la carpeta rest
 
-## Script para la Base de Datos MySQL (Tambien se encuentra el archivo .sql anexado al proyecto)
+## Script para la Base de Datos MySQL (Tambien se encuentra el archivo .sql en la carpeta raiz del proyecto en el archivo daos2023-sql-script.zip)
+
+
 CREATE DATABASE  IF NOT EXISTS `daos2023` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `daos2023`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
