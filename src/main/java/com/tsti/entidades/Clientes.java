@@ -189,7 +189,7 @@ public class Clientes {
 	public boolean tieneDatosBasicos() {
 		return(
 				this.apellido != null &&
-				this.fechaNacimiento != null &&
+				//this.fechaNacimiento != null &&
 				this.dni != null &&
 				this.domicilio != null &&
 				this.nombre != null &&

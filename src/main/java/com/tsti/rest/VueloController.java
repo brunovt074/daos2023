@@ -212,11 +212,10 @@ public class VueloController {
 
     
     /**
-     *Obtener vuelos por destino y fecha.
-     *curl --location --request GET 'http://localhost:8081/vuelos/filtrar-destino-fecha?destino=mendoza&fecha=2023-07-10' \
+     *curl --location --request GET 'http://localhost:8081/vuelos/filtrar-destino-fecha?destino=inca&fecha=2023-07-06' \
 		--header 'Content-Type: text/plain' \
 		--data '
-		'
+'
      * 
      *Considerando que es una consulta frecuente obtiene todos los vuelos 
      *que coincidan con los parametros
@@ -250,7 +249,7 @@ public class VueloController {
     /**
      *Obtener vuelos por destino. 
      *
-     *curl --location 'http://localhost:8081/vuelos/filtrar-por-destino?destino=buenos%20aires'
+     *curl --location 'http://localhost:8081/vuelos/filtrar-por-destino?destino=inca'
      *
      *@param destino de tipo {@link String} correspondiente al nombre_ciudad de destino     
      *
@@ -277,7 +276,7 @@ public class VueloController {
     
     /**
      *Obtener vuelos fecha. 
-     *curl --location 'http://localhost:8081/vuelos/filtrar-por-fecha?fecha=2023-07-15' \
+     *curl --location 'http://localhost:8081/vuelos/filtrar-por-fecha?fecha=2023-07-06' \
 		--data ''
      *
      *@param fecha de tipo {@link LocalDate}correspondiente a fecha de partida en formato (yyyy-MM-dd)
@@ -307,22 +306,21 @@ public class VueloController {
     /**
      *Crear un vuelo.
      *
-     * curl --location 'http://localhost:8081/vuelos/estado-vuelo?estado=demorado' \
-		--header 'Content-Type: application/json' \
-		--data '{
-		  "aerolinea": "Lufthansa",
-		  "avion": "Airbus A380",
-		  "fechaPartida": "2023-07-15",
-		  "horaPartida": "11:30",
-		  "nroFilasAsientos": "6",
-		  "nroColumnasAsientos": "12",
-		  "precioNeto": "5321",
-		  "codAeropuerto": "FRA",
-		  "nombreCiudad": "Berlin",
-		  "provincia": "Berlin",
-		  "pais": "Alemania",
-		  "codPostal": "60311"
-		}
+     * curl --location 'http://localhost:8081/vuelos' \
+	--header 'Content-Type: application/json' \
+	--data '{
+	  "aerolinea": "Lufthansa",
+	  "avion": "Airbus A380",
+	  "fechaPartida": "2023-07-16",
+	  "horaPartida": "11:30",
+	  "nroAsientos": "12",
+	  "precioNeto": "5321",
+	  "codAeropuerto": "BER",
+	  "nombreCiudad": "Berlin",
+	  "provincia": "Berlin",
+	  "pais": "Alemania",
+	  "codPostal": "60311"
+	}
      *Recibe un formulario con todos los datos necesarios. 
      *La ciudad de origen se setea como Sauce Viejo por defecto. 
      *La ciudad de destino se busca en la BD 

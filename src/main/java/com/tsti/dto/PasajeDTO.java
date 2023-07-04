@@ -56,13 +56,15 @@ public class PasajeDTO extends RepresentationModel<PasajeDTO> {
 		this.tipoVuelo = tipoVuelo;				
 	}
 		
-	public PasajeDTO(Long nroVuelo, Long dni, BigDecimal precioNeto, BigDecimal tasa2, BigDecimal precioFinal2,
+	public PasajeDTO(Long nroVuelo, Long dni, BigDecimal precioNeto, BigDecimal tasa, BigDecimal precioFinal,
 							TipoVuelo tipoVuelo) {
 		super();
 		this.nroVuelo = nroVuelo;
 		this.dni = dni;		
 		this.precioNeto = precioNeto;
+		this.tasa = tasa;
 		this.tipoVuelo = tipoVuelo;
+		this.precioFinal = precioFinal;
 	}
 	//GETTERS
 	public Long getNroVuelo() {

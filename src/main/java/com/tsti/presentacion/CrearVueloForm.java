@@ -43,12 +43,9 @@ public class CrearVueloForm {
 	@NotNull(message = "El campo hora no puede estar vacio")
 	@DateTimeFormat
 	private LocalTime horaPartida;
-	@NotNull(message = "El número de filas de asientos no puede estar vacío")
+	@NotNull(message = "El número de asientos no puede estar vacío")
 	@Min(value = 1, message = "El número de filas de asientos debe ser mayor a cero")
-	private Integer nroFilasAsientos;
-	@NotNull(message = "El número de columnas de asientos no puede estar vacío")
-	@Min(value = 1, message = "El número de columnas de asientos debe ser mayor a cero")
-	private Integer nroColumnasAsientos;
+	private Integer nroAsientos;
 	@NotNull (message = "El campo precio no puede estar vacio")
 	@DecimalMin(value = "0.00", inclusive = true, message = "El precio debe ser mayor a 0.00")
 	@Digits(integer = Integer.MAX_VALUE, fraction=2)
@@ -85,8 +82,7 @@ public class CrearVueloForm {
 		vuelo.setAvion(this.getAvion());
 		vuelo.setFechaPartida(this.getFechaPartida());
 		vuelo.setHoraPartida(this.getHoraPartida());
-		vuelo.setNroFilas(this.getNroFilasAsientos());
-		vuelo.setNroColumnas(this.getNroColumnasAsientos());		
+		vuelo.setNroAsientos(this.getNroAsientos());				
 		vuelo.setTipoVuelo();
 		vuelo.setPrecioNeto(this.getPrecioNeto());
 		
@@ -101,8 +97,7 @@ public class CrearVueloForm {
 		vuelo.setAvion(this.getAvion());
 		vuelo.setFechaPartida(this.getFechaPartida());
 		vuelo.setHoraPartida(this.getHoraPartida());
-		vuelo.setNroFilas(this.getNroFilasAsientos());
-		vuelo.setNroColumnas(this.getNroColumnasAsientos());
+		vuelo.setNroAsientos(this.getNroAsientos());
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
@@ -152,40 +147,14 @@ public class CrearVueloForm {
 		this.horaPartida = horaPartida;
 	}
 
-	public int getNroFilas() {
-		return getNroFilasAsientos();
+	public int getNroAsientos() {
+		return nroAsientos;
 	}
 
-
-	public int getNroFilasAsientos() {
-		return nroFilasAsientos;
+	public void setNroAsientos(int nroAsientos) {
+		this.nroAsientos = nroAsientos;
 	}
 
-	public void setNroFilas(int nroFilas) {
-		setNroFilasAsientos(nroFilas);
-	}
-
-
-	public void setNroFilasAsientos(int nroFilas) {
-		this.nroFilasAsientos = nroFilas;
-	}
-
-	public int getNroColumnas() {
-		return getNroColumnasAsientos();
-	}
-
-
-	public int getNroColumnasAsientos() {
-		return nroColumnasAsientos;
-	}
-
-	public void setNroColumnas(int nroColumnas) {
-		setNroColumnasAsientos(nroColumnas);
-	}
-
-	public void setNroColumnasAsientos(int nroColumnas) {
-		this.nroColumnasAsientos = nroColumnas;
-	}
 
 	public BigDecimal getPrecioNeto() {
 		return precioNeto;
@@ -269,8 +238,8 @@ public class CrearVueloForm {
 	@Override
 	public String toString() {
 		return "CrearVueloForm [nroVuelo=" + nroVuelo + ", aerolinea=" + aerolinea + ", destino=" + nombreCiudad
-				+ ", fechaPartida=" + fechaPartida + ", horaPartida=" + horaPartida + ", nroFilasAsientos="
-				+ nroFilasAsientos + ", nroColumnasAsientos=" + nroColumnasAsientos + ", precioNeto=" + precioNeto
+				+ ", fechaPartida=" + fechaPartida + ", horaPartida=" + horaPartida + ", nroAsientos="
+				+ nroAsientos + ", precioNeto=" + precioNeto
 				+ "]";
 	}
 

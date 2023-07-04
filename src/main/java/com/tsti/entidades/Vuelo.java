@@ -40,9 +40,7 @@ public class Vuelo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "nro_vuelo")
-	private Long nroVuelo;
-	//Se opto por separar fechas y horas para poder buscar los vuelos 
-	//por fechas y tratar de simplificar el manejo de las mismas.
+	private Long nroVuelo;	
 	@Column(name = "fecha_partida")
 	@DateTimeFormat
 	@NotNull
@@ -165,7 +163,10 @@ public class Vuelo {
 
 //	public Clientes[][] getPlazas() {
 //		return plazas;
-//	}	
+//	}
+	public void setNroAsientos(int nroAsientos) {
+		this.nroAsientos = nroAsientos;
+	}
 	
 	public void setNroAsientos(int nroFilas, int nroColumnas) {
 		this.nroAsientos = nroFilas * nroColumnas;

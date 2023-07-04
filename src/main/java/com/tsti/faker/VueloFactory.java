@@ -93,10 +93,11 @@ public class VueloFactory {
 				
 		vuelo.setAerolinea(faker.aviation().airline());
 		vuelo.setAvion(faker.aviation().airplane());
-		vuelo.setNroFilas(6);
-		vuelo.setNroColumnas(15);
+//		vuelo.setNroFilas(6);
+//		vuelo.setNroColumnas(15);
 		//Clientes [][] plazas  = new Clientes[vuelo.getNroFilas()][vuelo.getNroColumnas()];
-		//vuelo.setPlazas(plazas); 
+		//vuelo.setPlazas(plazas);
+		vuelo.setNroAsientos(90);
 		vuelo.setOrigen(origen);
 		vuelo.setDestino(destino);
 		vuelo.setTipoVuelo();
@@ -105,12 +106,15 @@ public class VueloFactory {
 		vuelo.setHoraPartida((LocalTime) fechaHoraPartida[1]);
 		
 		
-		cargarPasajeros(vuelo, clienteDAO, ciudadDAO, domicilioDAO, nroPasajeros);
+		//cargarPasajeros(vuelo, clienteDAO, ciudadDAO, domicilioDAO, nroPasajeros);
 		
-		System.out.println(vuelo.getPasajeros().toString());
+		//System.out.println(vuelo.getPasajeros().toString());
 		System.out.println(vuelo.toString());				
 		
+		vuelo = vueloDAO.save(vuelo);
+		vuelo.setNroVuelo();
 		vueloDAO.save(vuelo);
+		
 	}
 	
 

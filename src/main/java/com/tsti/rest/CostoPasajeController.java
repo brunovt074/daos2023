@@ -38,7 +38,14 @@ public class CostoPasajeController {
 	 * del dolar si es un vuelo internacional.
 	 *
 	 *Debe crearse el pasaje primero!
-	 *curl --location 'http://localhost:8081/pasaje/costo?nro-vuelo=1&dni=31637426'
+	 *curl --location --request GET 'http://localhost:8081/pasaje/costo?nro-vuelo=63&dni=24895356' \
+		--header 'Content-Type: application/json' \
+		--data '{
+		    "nroVuelo": 64,
+		    "dni": 54300494,
+		    "precioNeto": 153116.29
+
+		}'
 	 *	
 	 *
 	 *@param nroVuelo tipo {@link Long}  

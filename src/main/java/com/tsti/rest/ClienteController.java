@@ -70,7 +70,7 @@ public class ClienteController {
 
 	}
 	/**
-	 * 
+	 * curl --location 'http://localhost:8081/clientes/400'
 	 * @param id
 	 * @return Devuelve un solo cliente que coicida con el id buscado
 	 * @throws Excepcion
@@ -127,6 +127,19 @@ public class ClienteController {
 	
 	/**
 	 * Guarda cliente nuevo en la bd
+	 * curl --location 'http://localhost:8081/clientes/guardarCliente' \
+	--header 'Content-Type: application/json' \
+	--data-raw '{
+   	"dni":"3698785",
+		"nombre":"pepe", 
+		"apellido":"Argento",	
+		"domicilio":"calle falsa 123",
+		"email":"pepe@gmail.com",
+		"fechaNacimiento":"1990-12-12",
+		"nroPasaporte":"3569878",
+		"vencimientoPasaporte":"2025-12-12", 
+		"idCiudad":"5"
+}'
 	 * @param form
 	 * @param result
 	 * @return Cliente nuevo en la bd de datos. Lo agrega al final
@@ -154,6 +167,14 @@ public class ClienteController {
 	
 	/**
 	 * Actualiza cliente
+	 * curl --location --request PUT 'http://localhost:8081/clientes/33886850' \
+		--header 'Content-Type: application/json' \
+		--data-raw '{
+    	"apellido": "Zemlak",
+    	"nombre": "Maurice",
+    	"email": "tamiko.tromp@gmail.com",
+    	"fecha_nac": "1990-06-06"
+}'
 	 * @param form
 	 * @param dni
 	 * @return Un cliente con los datos actualizados 
@@ -189,6 +210,7 @@ public class ClienteController {
 	
 	/**
 	 * Elimina el cliente que se le pasa por parametro como dni
+	 * curl --location --request DELETE 'http://localhost:8081/clientes/11772317'
 	 * @param dni
 	 * @return 
 	 */
