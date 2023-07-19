@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import tsti.entidades.Vuelo;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -17,7 +18,7 @@ import jakarta.validation.constraints.NotNull;
  */
 public class EditarVueloForm {
 	
-	@NotNull
+	//@NotNull
 	private Long nroVuelo;
 	@NotNull
 	private LocalDate fechaPartida;
@@ -56,6 +57,12 @@ public class EditarVueloForm {
 	public void setHoraPartida(LocalTime horaPartida) {
 		this.horaPartida = horaPartida;
 	}
+	
+//	@AssertTrue(message = "Debe especificar la fecha de partida o la hora de partida")
+//    public boolean isFechaPartidaOrHoraPartidaPresent() {
+//        return fechaPartida != null || horaPartida != null;
+//    }
+
 	
 	@Override
 	public int hashCode() {

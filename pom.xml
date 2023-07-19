@@ -4,8 +4,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
+<<<<<<< HEAD
 		<version>3.0.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
+=======
+		<version>3.1.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+>>>>>>> refs/heads/main
 	</parent>
 	<groupId>com.tsti</groupId>
 	<artifactId>DAOS2023</artifactId>
@@ -88,8 +93,17 @@
 		    <groupId>org.modelmapper</groupId>
 		    <artifactId>modelmapper</artifactId>
 		    <version>3.1.1</version>
+<<<<<<< HEAD
 		</dependency>		
 
+=======
+		</dependency>	
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		</dependency>	
+>>>>>>> refs/heads/main
 	</dependencies>
 
 	<build>

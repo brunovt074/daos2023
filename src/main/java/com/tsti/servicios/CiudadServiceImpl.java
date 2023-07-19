@@ -12,7 +12,6 @@ import tsti.entidades.Ciudad;
 public class CiudadServiceImpl implements ICiudadService {
 	@Autowired
 	private CiudadDAO dao;
-
 	@Override
 	public java.util.List<Ciudad> findAll() {
 		return dao.findAll();
@@ -25,5 +24,3 @@ public class CiudadServiceImpl implements ICiudadService {
 	}
 
 }
-
-

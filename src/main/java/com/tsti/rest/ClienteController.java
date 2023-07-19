@@ -31,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.Valid;
+
 import tsti.dto.ClienteResponseDTO;
 import tsti.entidades.Clientes;
 import tsti.excepcion.Excepcion;
@@ -42,16 +43,16 @@ import tsti.servicios.IClienteService;
  * @author cecilia
  * Maneja datos de los clientes Elimina, agrega, y busca clientes en la bd
  */
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-
 	@Autowired
 	private IClienteService service;
 
 
 	/**
-	 * 
+
 	 * @param apellido
 	 * @param nombre
 	 * @return Lista de clietes que conincidan con el apellido o nombre buscado por parametro
@@ -71,13 +72,7 @@ public class ClienteController {
 		return dtos;
 
 	}
-	
-	/**
-	 * 
-	 * @param id
-	 * @return Devuelve un solo cliente que coicida con el id buscado
-	 * @throws Excepcion
-	 */
+
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getById(@PathVariable Long id) throws Excepcion
 	{
@@ -105,6 +100,7 @@ public class ClienteController {
 	 * @return Busca cliente por numero de dni  
 	 * @throws Excepcion
 	 */
+
 	@GetMapping(value = "/dni/{dni}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ClienteResponseDTO> getByDni(@PathVariable("dni") Long dni) throws Excepcion
 	{
@@ -126,28 +122,29 @@ public class ClienteController {
 	}
 	
 	
-	/**
-	 * Guarda cliente nuevo en la bd
-	 * @param form
-	 * @param result
-	 * @return Cliente nuevo en la bd de datos. Lo agrega al final
-	 * @throws Exception
-	 */
-	@PostMapping("/guardarCliente")
-	public ResponseEntity<Object> guardar( @Valid @RequestBody ClienteForm form, BindingResult result) throws Exception
+
+
+	@GetMapping(value = "/dni/{dni}", produces = { MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<ClienteResponseDTO> getByDni(@PathVariable("dni") Long dni) throws Excepcion
 	{
-		
-		if(result.hasErrors())
+			
+			Optional<Clientes> rta = service.filtrarPorDni(dni);
+	
+		if(rta.isPresent())
 		{
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( this.formatearError(result));
+			Clientes pojo = rta.get();
+			
+			return new ResponseEntity<ClienteResponseDTO>(buildResponse(pojo), HttpStatus.OK);
+			
 		}
+		else
+			System.out.print("no se encuentra el cliente con ese dni");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+					
 		
-		Clientes c = form.toPojo();
-		
-		service.insert(c);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dni}")
-				.buildAndExpand(c.getDni()).toUri(); 
-		return ResponseEntity.created(location).build();
+	}
+	
+
 		
 
 	}
@@ -159,6 +156,8 @@ public class ClienteController {
 	 * @return Un cliente con los datos actualizados 
 	 * @throws Exception
 	 */
+
+
 	@PutMapping("/{dni}")
 	public ResponseEntity<Object>  actualizar(@RequestBody ClienteForm form, @PathVariable long dni) throws Exception
 	{
@@ -186,8 +185,8 @@ public class ClienteController {
 		
 	}
 	
-	
 	/**
+	 * http://localhost:8081/clientes/4567483
 	 * Elimina el cliente que se le pasa por parametro como dni
 	 * @param dni
 	 * @return 
@@ -212,8 +211,7 @@ public class ClienteController {
 		return ResponseEntity.ok().build();
 		
 	}
-	
-	
+
 	private String getError(String code, String err, String descr) throws JsonProcessingException
 	{
 		MensajeError e1=new MensajeError();

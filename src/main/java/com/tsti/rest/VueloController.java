@@ -12,7 +12,9 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,8 +34,17 @@ import tsti.servicios.VueloServiceImpl;
 import tsti.dto.VueloDTO;
 
 import tsti.entidades.Vuelo.EstadoVuelo;
+import tsti.excepcion.VueloException;
 import tsti.presentacion.CrearVueloForm;
 import tsti.presentacion.EditarVueloForm;
+
+import tsti.servicios.VueloServiceImpl;
+import tsti.rest.error.VueloErrorInfo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
 /**
  *
  *Controlador del Servicio de Gestion de Vuelos
@@ -41,6 +52,7 @@ import tsti.presentacion.EditarVueloForm;
  *crear nuevos vuelos, actualizar vuelos existentes y cancelar vuelos. *
  *   
  **/
+@Validated
 @RestController
 public class VueloController {
 
@@ -55,6 +67,11 @@ public class VueloController {
     
     /**
      * Obtener todo los vuelos
+     * 
+     * curl --location --request GET 'http://localhost:8081/vuelos' \
+	 *	--header 'Content-Type: text/plain' \
+	 * 	--data '
+	 * 	'
      * 
      * @return Response entitiy con CollectionModel<VueloDTO> de todos los vuelos
      *  
@@ -84,88 +101,114 @@ public class VueloController {
     /**
      * Obtener vuelos por estado del vuelo
      * 
-     * @param estado de tipo {@link String}: "registrado" - "reprogramado" - "demorado" - "cancelado". Las cadenas pueden ser en mayuscula o minuscula.     *  
+     * curl --location 'http://localhost:8081/vuelos/estado-vuelo?estado=RegIsTrado'
+     * 
+     * @param estado: "registrado" - "reprogramado" - "demorado" - "cancelado". Las cadenas pueden ser en mayuscula o minuscula.  
      * 
      * @return Response Entity con CollectionModel<VueloDTO> de todos los vuelos y links relacionados. 
+     * @throws VueloException 
     **/
     @GetMapping("/vuelos/estado-vuelo")
-    public ResponseEntity<CollectionModel<VueloDTO>> showVuelosPorEstadoVuelo(
-    							@RequestParam("estado") String estado){
+    public ResponseEntity<?> showVuelosPorEstadoVuelo(
+    							@RequestParam("estado") String estado, HttpServletRequest request) throws VueloException{
     	
-    	List<VueloDTO> vuelosDTO;
+    	try {
+            if (!isValidEstado(estado)) {
+                
+            	throw new VueloException("Estado inválido: " + estado, HttpStatus.BAD_REQUEST);
+            	
+            }
     	
-    	if(estado.equalsIgnoreCase("registrado")){
-    		vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.REGISTRADO);
+			List<VueloDTO> vuelosDTO;
+			
+			if(estado.equalsIgnoreCase("registrado")){
+				vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.REGISTRADO);
+			
+			}else if(estado.equalsIgnoreCase("reprogramado")) {
+				
+				vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.REPROGRAMADO);
+			
+			}else if(estado.equalsIgnoreCase("demorado")){
+				
+				vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.DEMORADO);
+			
+			}else if(estado.equalsIgnoreCase("cancelado")) { 
+			
+				vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.CANCELADO);
+			
+			} else {
+				
+				return ResponseEntity.badRequest().build();
+				
+			}  		
+			
+			if(vuelosDTO == null){
+				
+				return ResponseEntity.notFound().build();
+			
+			}else{
+				
+				//Coleccion que agrupa varias Entities
+		        CollectionModel<VueloDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+		        
+		        //Link a si mismo
+		        vuelosCollectionModel.add(Link.of("/vuelos/estado-vuelo?estado="+estado,"self"))
+		        					 .add(AppLinks.showVuelosLink());
+		
+		        return ResponseEntity.ok(vuelosCollectionModel);    		
+			}
     	
-    	}else if(estado.equalsIgnoreCase("reprogramado")) {
-    		
-    		vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.REPROGRAMADO);
-    	
-    	}else if(estado.equalsIgnoreCase("demorado")){
-    		
-    		vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.DEMORADO);
-    	
-    	}else if(estado.equalsIgnoreCase("cancelado")) { 
-    	
-    		vuelosDTO = vueloService.findAllByEstadoVuelo(EstadoVuelo.CANCELADO);
-    	
-    	} else {
-    		
-    		return ResponseEntity.badRequest().build();
-    		
-    	}  		
-    	
-    	if(vuelosDTO == null){
-    		
-    		return ResponseEntity.notFound().build();
-    	
-    	}else{
-    		
-    		//Coleccion que agrupa varias Entities
-            CollectionModel<VueloDTO> vuelosCollectionModel = CollectionModel.of(vuelosDTO);
+    	} catch (VueloException ex) {
             
-            //Link a si mismo
-            vuelosCollectionModel.add(Link.of("/vuelos/estado-vuelo?estado="+estado,"self"))
-            					 .add(AppLinks.showVuelosLink());
-
-            return ResponseEntity.ok(vuelosCollectionModel);    		
-    	}
+    		VueloErrorInfo errorInfo = new VueloErrorInfo(ex.getStatusCode(), ex.getMessage(), request.getRequestURI());
+            
+    		errorInfo.setErrorCode(HttpStatus.BAD_REQUEST.value());
+    		
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInfo);
+        }
     }    
     /**
      * Obtener vuelo por ID
      * 
      * @param id con nro_vuelo de tipo {@link Long}
+     * @param request 
      * 
      * @return ResponseEntity con EntityModel<VueloDTO> que contiene el vuelo buscado.
      **/
     @GetMapping("/vuelos/{id}")
-    public ResponseEntity<EntityModel<VueloDTO>> getVueloById(@PathVariable Long id){
-		
-    	if(id == null){
-    		
-    		return ResponseEntity.badRequest().build();
-    		
-    	}else{
-    		
-    		Optional<Vuelo> vueloOptional = vueloService.findById(id);
-    		
-    		if(vueloOptional.isPresent()){
-    			
-    			VueloDTO vueloDTO = new VueloDTO(vueloOptional.get());  
-    		
-    			EntityModel<VueloDTO> vueloEntityModel = EntityModel.of(vueloDTO)
-    										.add(Link.of("/vuelos/"+ id,"self"))
-    										.add(AppLinks.showVuelosLink());
-    			
-    			return ResponseEntity.ok().body(vueloEntityModel);
-    		
-    		}else {
-    			
-    			return ResponseEntity.notFound().build();
-    		}
-    		
-    	}
+    public ResponseEntity<?> getVueloById(@PathVariable @Min(value= 1, message="id debe ser mayor 0") Long id, HttpServletRequest request) {
+
+        try {
+            if (id == null) {
+                throw new VueloException("ID de vuelo inválido", HttpStatus.BAD_REQUEST);
+            } else if (id < 1) {
+                throw new VueloException("ID de vuelo inválido: debe ser mayor o igual a 1", HttpStatus.BAD_REQUEST);
+            } else {
+                Optional<Vuelo> vueloOptional = vueloService.findById(id);
+
+                if (vueloOptional.isPresent()) {
+                    VueloDTO vueloDTO = new VueloDTO(vueloOptional.get());
+                    EntityModel<VueloDTO> vueloEntityModel = EntityModel.of(vueloDTO)
+                            .add(Link.of("/vuelos/" + id, "self"))
+                            .add(AppLinks.showVuelosLink());
+
+                    return ResponseEntity.ok().body(vueloEntityModel);
+                } else {
+                    throw new VueloException("Vuelo no encontrado", HttpStatus.NOT_FOUND);
+                }
+            }
+        } catch (VueloException ex) {
+            VueloErrorInfo errorInfo = new VueloErrorInfo(ex.getStatusCode(), ex.getMessage(), request.getRequestURI());
+            errorInfo.setErrorCode(HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInfo);
+        } catch (Exception ex) {
+            VueloErrorInfo errorInfo = new VueloErrorInfo(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), request.getRequestURI());
+            errorInfo.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorInfo);
+        }
     }
+
+
     
     /**
      *Obtener vuelos por destino y fecha. 
@@ -260,23 +303,28 @@ public class VueloController {
      *
      * @param vueloForm formulario de tipo {@link CrearVueloForm}
      * @return ResponseEntity<EntityModel<VueloDTO>> con la informacion del nuevo vuelo creado
+     * @throws VueloException 
      **/
-    @PostMapping("/vuelos")    
-    public ResponseEntity<EntityModel<VueloDTO>> crearVuelo(
-    											@RequestBody CrearVueloForm vueloForm) {
-        //retornar id para el DTO
-    	VueloDTO vueloDTO = vueloService.crearVuelo(vueloForm);
-    	   	
-    	EntityModel<VueloDTO> nuevoVueloEntity = EntityModel.of(vueloDTO)
-												.add(WebMvcLinkBuilder.linkTo(
-								    					methodOn(VueloController.class)
-								    					.getVueloById(vueloDTO.getNroVuelo()))
-														.withSelfRel())
-												.add(AppLinks.showVuelosLink());
-        
-     	
-        return ResponseEntity.ok().body(nuevoVueloEntity);
-    }
+	@PostMapping("/vuelos")    
+	public ResponseEntity<?> crearVuelo(@Valid @RequestBody CrearVueloForm vueloForm, HttpServletRequest request) {
+	    try {
+	        VueloDTO vueloDTO = vueloService.crearVuelo(vueloForm);
+
+	        EntityModel<VueloDTO> nuevoVueloEntity = EntityModel.of(vueloDTO)
+	                .add(WebMvcLinkBuilder.linkTo(methodOn(VueloController.class).getVueloById(vueloDTO.getNroVuelo(), request))
+	                        .withSelfRel())
+	                .add(AppLinks.showVuelosLink());
+
+	        return ResponseEntity.ok().body(nuevoVueloEntity);
+	    
+	    } catch (VueloException ex) {
+	        
+	    	VueloErrorInfo errorInfo = new VueloErrorInfo(ex.getStatusCode(), ex.getMessage(), request.getRequestURI());
+	        
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInfo);
+	    }
+	}
+
     
     /**
      * Actualizar fecha y hora de vuelo.
@@ -286,17 +334,20 @@ public class VueloController {
      * @param vueloForm del tipo {@link EditarVueloForm} con los datos necesarios para la actualizacion 
      * 
      * @return ResponseEntity<EntityModel<VueloDTO>> con los datos del vuelo actualizados. 
+     * @throws VueloException 
      ***/
     @PatchMapping("/vuelos/{id}")
     public ResponseEntity<EntityModel<VueloDTO>> actualizarFechaHoraVuelo(
             									@PathVariable("id") Long vueloId,
-            									@RequestBody EditarVueloForm vueloForm) {
+            									@RequestBody EditarVueloForm vueloForm) 
+            											throws VueloException {
     	
     	VueloDTO vueloDTO;
     	
     	if (vueloForm.getFechaPartida() == null && vueloForm.getHoraPartida() == null) {
     		
-    		return ResponseEntity.badRequest().build();
+    		throw new VueloException ("Debe ingresar al menos un campo para actualizar ", HttpStatus.BAD_REQUEST.value());
+    		//return ResponseEntity.badRequest().build();
     		
     	} else {
     		
@@ -304,12 +355,14 @@ public class VueloController {
     		
     		if (vueloDTO.getNroVuelo() == null) {
     	    	
-        		return ResponseEntity.notFound().build();
-        	}else {
+    			throw new VueloException("El vuelo con numero: "+ vueloId +" no encontrado", HttpStatus.NOT_FOUND.value());
+        	
+    		}else {
+    			
     			EntityModel<VueloDTO> vueloReprogramadoEntity = EntityModel.of(vueloDTO)
 											    					.add(WebMvcLinkBuilder.linkTo(
 													    					methodOn(VueloController.class)
-													    					.getVueloById(vueloDTO.getNroVuelo()))
+													    					.getVueloById(vueloDTO.getNroVuelo(), null))
 													    					.withSelfRel())							
 											    					.add(AppLinks.showVuelosLink());																	
                 
@@ -321,29 +374,33 @@ public class VueloController {
     
     /**
      *Cancelar vuelo.
+     *
+     *curl --location 'http://localhost:8081/vuelos/23'
+     *
      *Consiste en realizar un soft delete cambiando el estado del vuelo a {@link EstadoVuelo.CANCELADO}
      *y colocando el atributo {@link BigDecimal} precioNeto = 0.00
      * 
      *@param id en PathVariable correspondiente al nro_vuelo
      *
      *@return ResponseEntity<EntityModel<VueloDTO>> con los datos del vuelo actualizado y links relacionados. 
+     * @throws VueloException 
      **/
     @DeleteMapping("/vuelos/{id}")
     public ResponseEntity<EntityModel<VueloDTO>> cancelarVuelo(
-            							@PathVariable("id") Long vueloId) {
+            							@PathVariable("id") Long vueloId) throws VueloException {
         
         // Realizar soft delete (cambiar estado a CANCELADO)            
         VueloDTO vueloCanceladoDTO = vueloService.cancelarVuelo(vueloId);
         
         if(vueloCanceladoDTO.getNroVuelo() == null){
         	
-        	return ResponseEntity.notFound().build();
+        	throw new VueloException("El vuelo con numero: "+ vueloId +" no encontrado", HttpStatus.NOT_FOUND.value());
         	
         }else {
         	EntityModel<VueloDTO> vueloCanceladoEntity = EntityModel.of(vueloCanceladoDTO)
 								        			.add(WebMvcLinkBuilder.linkTo(
 									    					methodOn(VueloController.class)
-									    					.getVueloById(vueloCanceladoDTO.getNroVuelo()))
+									    					.getVueloById(vueloCanceladoDTO.getNroVuelo(), null))
 									    					.withSelfRel())
 													.add(Link.of("/vuelos/estado-vuelo?estado=CANCELADO","self"))
 													.add(AppLinks.showVuelosLink());	    				
@@ -351,7 +408,15 @@ public class VueloController {
         	return ResponseEntity.ok().body(vueloCanceladoEntity);
         	
         }
-    }   
+    }
+    
+    private boolean isValidEstado(String estado) {
+        
+    	return estado.equalsIgnoreCase("registrado") ||
+                estado.equalsIgnoreCase("reprogramado") ||
+                estado.equalsIgnoreCase("demorado") ||
+                estado.equalsIgnoreCase("cancelado");
+    }
     
 }
  

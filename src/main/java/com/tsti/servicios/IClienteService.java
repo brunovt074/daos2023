@@ -6,6 +6,7 @@ import tsti.dto.ClienteResponseDTO;
 
 import tsti.dao.ClienteDAO;
 import tsti.entidades.Clientes;
+
 /**
  * 
  * @author cecilia
@@ -13,6 +14,7 @@ import tsti.entidades.Clientes;
  */
 public interface IClienteService {
 	
+
 	public List<Clientes> getAll();
 	
 	public Optional<Clientes> getById(Long id);
@@ -28,7 +30,5 @@ public interface IClienteService {
 	public List<Clientes> filtrar(String apellido, String nombre);
 	
 	public Optional<Clientes> filtrarPorDni(Long dni);
-	
-	
-	
+
 }

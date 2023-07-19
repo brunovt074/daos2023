@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +37,8 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "vuelos")
 public class Vuelo {	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@Column(name = "nro_vuelo")		
 	private Long nroVuelo;
 	//Se opto por separar fechas y horas para poder buscar los vuelos 
@@ -72,13 +75,9 @@ public class Vuelo {
 	@JoinColumn(name = "destino_id")	
 	private Ciudad destino;//creada la entidad Ciudad		
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-	    name = "vuelos_pasajeros",
-	    joinColumns = @JoinColumn(name = "vuelo_id"),
-	    inverseJoinColumns = @JoinColumn(name = "pasajero_id")
-	)
-	private Set<Clientes> pasajeros = new HashSet<>();	
+	 @OneToMany(mappedBy = "vuelo")
+    private Set<Pasaje> pasajes;
+
 	@NotNull
 	private EstadoVuelo estadoVuelo; // (registrado / reprogramado / cancelado) lo mismo quiza, se debe agregar en la base las opciones					
 						   			//Creado tipo ENUM para este caso. 
@@ -92,10 +91,11 @@ public class Vuelo {
 	//ENUM para estado de los vuelos. Se puede acceder por getEstadoVuelo(int estadoVuelo)
 	public enum EstadoVuelo {
 		REGISTRADO(0),
-		REPROGRAMADO(1),
-		DEMORADO(2),
-	    CANCELADO(3);
-
+	    DEMORADO(1),
+	    CANCELADO(2),
+	    REPROGRAMADO(3),
+	    TERMINADO(4);
+		
 		EstadoVuelo(int i) {
 			
 		}
@@ -154,10 +154,6 @@ public class Vuelo {
 
 
 	public void setNroFilas(int nroFila) {
-		setNroFilasAsientos(nroFila);
-	}
-
-	public void setNroFilasAsientos(int nroFila) {
 		this.nroFilas = nroFila;
 	}
 
@@ -170,7 +166,7 @@ public class Vuelo {
 	}
 	
 	public int getNroAsientos() {
-		return nroFilas * nroColumnas;
+		return nroAsientos;
 	}
 
 	public int getNroColumnas() {
@@ -178,10 +174,6 @@ public class Vuelo {
 	}
 
 	public void setNroColumnas(int nroColumnas) {
-		setNroColumnasAsientos(nroColumnas);
-	}
-
-	public void setNroColumnasAsientos(int nroColumnas) {
 		this.nroColumnas = nroColumnas;
 	}
 	
@@ -238,21 +230,20 @@ public class Vuelo {
 		this.estadoVuelo = estado;
 	}
 	
-	public Set<Clientes> getPasajeros(){
+	public Set<Pasaje> getPasajeros(){
 		
-		return pasajeros;
-		
-	}
-	
-	public void setPasajeros(HashSet<Clientes> pasajeros){
-		
-		this.pasajeros = pasajeros;	
+		return pasajes;
 		
 	}
 	
-	public void addPasajero(Clientes pasajero){
+	public void setPasajeros(HashSet<Pasaje> pasajes){
+		this.pasajes = pasajes;	
 		
-		this.pasajeros.add(pasajero);		
+	}
+	
+	public void addPasajero(Pasaje pasaje){
+		
+		this.pasajes.add(pasaje);		
 		
 	}
 
@@ -287,9 +278,18 @@ public class Vuelo {
 		Vuelo other = (Vuelo) obj;
 		return Objects.equals(nroVuelo, other.nroVuelo);
 	}
-	
-	
 
-		
-	
+	public Long getId() {
+		return this.id;
+	}
+
+	public boolean asientoOcupado(Integer nroAsiento) {
+		boolean r = false;
+		Iterator<Pasaje> it = pasajes.iterator();
+		while (it.hasNext() && r==false) {
+			Pasaje i = it.next();
+		    if(i.getNumeroAsiento() == nroAsiento) r = true;
+		}
+		return r;
+	}
 }

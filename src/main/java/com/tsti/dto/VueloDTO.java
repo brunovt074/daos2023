@@ -4,13 +4,16 @@ package tsti.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
+
 
 import tsti.entidades.Ciudad;
 import tsti.entidades.Vuelo;
 import tsti.entidades.Vuelo.TipoVuelo;
 import tsti.entidades.Vuelo.EstadoVuelo;
 import tsti.serializer.CiudadSerializer;
+
 
 /**
  * @author Bruno
@@ -29,6 +32,7 @@ public class VueloDTO {
 	private BigDecimal precioNeto;
 	private TipoVuelo tipoVuelo;
 	private EstadoVuelo estadoVuelo;
+	private List<String> errors;
 	
 	public VueloDTO() {
 		// TODO Auto-generated constructor stub
@@ -151,6 +155,12 @@ public class VueloDTO {
 	public void setEstadoVuelo(EstadoVuelo estadoVuelo) {
 		this.estadoVuelo = estadoVuelo;
 	}
+	
+    // Otros atributos y métodos
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
 
 
 	@Override

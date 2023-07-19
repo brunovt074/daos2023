@@ -21,9 +21,11 @@ import net.datafaker.Faker;
 @Component
 public class CiudadFactory {
 	
-	private final Faker faker;
 	@Autowired
 	private CiudadDAO ciudadDAO;
+	
+	private final Faker faker;
+	
 	private Ciudad nuevaCiudad;
 	
 	@Autowired
@@ -31,18 +33,16 @@ public class CiudadFactory {
 
 		this.faker = new Faker(new Locale("es"));		
 		this.nuevaCiudad = new Ciudad();
-		//this.ciudadDAO = ciudadDAO;
 	}
 	
 	public Ciudad getCiudadSauceViejo() {
-		
 		if(ciudadDAO.existsByCodAeropuerto("SAAV")){
 			
 			nuevaCiudad = ciudadDAO.findFirstByCodAeropuertoAndNombreCiudad
 														("SAAV", "Sauce Viejo");
 		} else{
 		
-		nuevaCiudad.setCodAeropuerto("SAAV");
+		nuevaCiudad.setcodAeropuerto("SAAV");
 		nuevaCiudad.setNombreCiudad("Sauce Viejo");
 		nuevaCiudad.setProvincia("Santa Fe");
 		nuevaCiudad.setCodPostal("S3017");
@@ -125,7 +125,7 @@ public class CiudadFactory {
 		
 		if(esNacional) {
 			
-			nuevaCiudad.setCodAeropuerto(faker.aviation().airport());
+			nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
 			nuevaCiudad.setNombreCiudad(faker.address().cityName());
 			nuevaCiudad.setProvincia(faker.address().state());
 			nuevaCiudad.setCodPostal(faker.address().zipCode());
@@ -136,7 +136,7 @@ public class CiudadFactory {
 		
 		else {
 		
-			nuevaCiudad.setCodAeropuerto(faker.aviation().airport());
+			nuevaCiudad.setcodAeropuerto(faker.aviation().airport());
 			nuevaCiudad.setNombreCiudad(faker.address().cityName());
 			nuevaCiudad.setProvincia(faker.address().state());
 			nuevaCiudad.setPais(faker.address().country());

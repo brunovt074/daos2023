@@ -1,7 +1,7 @@
 package tsti.presentacion;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 import tsti.entidades.Clientes;
 
@@ -17,7 +17,7 @@ public class ClienteForm {
 	private String email;
 	private LocalDate fechaNacimiento;
 	private long nroPasaporte;
-	private Date vencimientoPasaporte;
+	private LocalDate vencimientoPasaporte;
 	private Long idCiudad;
 	
 	
@@ -71,10 +71,10 @@ public class ClienteForm {
 	public void setNroPasaporte(long nroPasaporte) {
 		this.nroPasaporte = nroPasaporte;
 	}
-	public Date getVencimientoPasaporte() {
+	public LocalDate getVencimientoPasaporte() {
 		return vencimientoPasaporte;
 	}
-	public void setVencimientoPasaporte(Date vencimientoPasaporte) {
+	public void setVencimientoPasaporte(LocalDate vencimientoPasaporte) {
 		this.vencimientoPasaporte = vencimientoPasaporte;
 	}
 	
@@ -86,8 +86,6 @@ public class ClienteForm {
 		c.setEmail(this.getEmail());
 		c.setFechaNacimiento(this.getFechaNacimiento());
 		c.setNroPasaporte(this.getNroPasaporte());
-		
-		
 		return c;
 	}
 }

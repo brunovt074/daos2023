@@ -3,8 +3,6 @@ package tsti.entidades;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +32,7 @@ public class Ciudad {
 	private String provincia;	
 	@NotNull
 	private String pais;	
-	//@NotNull
+	@NotNull
 	@Column(name="cod_postal")
 	private String codPostal;	
 	//Una ciudad puede tener muchos domicilios
@@ -64,14 +62,12 @@ public class Ciudad {
 		this.id = id;
 	}
 	
-	public String getCodAeropuerto() {
+	public String getcodAeropuerto() {
 		return codAeropuerto;
-	}	
-
-	public void setCodAeropuerto(String codAeropuerto) {
-		this.codAeropuerto = codAeropuerto;
 	}
-	
+	public void setcodAeropuerto(String codCiudad) {
+		this.codAeropuerto = codCiudad;
+	}
 	public String getNombreCiudad() {
 		return nombreCiudad;
 	}

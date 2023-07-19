@@ -1,13 +1,18 @@
+
 package tsti.servicios;
+
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import tsti.dto.ClienteResponseDTO;
 import tsti.dao.ClienteDAO;
 import tsti.entidades.Clientes;
 import tsti.excepcion.Excepcion;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 
@@ -85,6 +90,7 @@ public class ClienteServiceImpl implements IClienteService {
 			return dao.findByDni(dni);
 		
 	};
+<<<<<<< HEAD
 	
 
 	
@@ -92,4 +98,6 @@ public class ClienteServiceImpl implements IClienteService {
 
 
 	
+=======
+>>>>>>> refs/heads/main
 }
